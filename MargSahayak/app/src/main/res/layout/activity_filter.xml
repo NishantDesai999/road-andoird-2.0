@@ -1,0 +1,71 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="25dp">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/notification_activity_actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/colorAccent"
+        android:elevation="@dimen/dim12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/filter_activity_back_btn"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/ic_back_arrow_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/filter_activity_filter_btn"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_filter_symbol_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/filter_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notification_activity_actionbar">
+
+
+    </android.support.v7.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/no_data_found_imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="120dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="120dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/filter_recyclerview"
+        app:layout_constraintDimensionRatio="w,2:3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notification_activity_actionbar"
+        app:srcCompat="@drawable/nodatafoundimg" />
+
+</android.support.constraint.ConstraintLayout>
