@@ -1,5 +1,6 @@
 package ml.uncoded.margsahayak.Auth;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import ml.uncoded.margsahayak.FilterActivity;
 import ml.uncoded.margsahayak.Individual_Detail_Activity;
 import ml.uncoded.margsahayak.Input.InputActivity2;
 import ml.uncoded.margsahayak.MainActivity;
@@ -24,8 +26,7 @@ public class AuthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        startActi
-// vity(new Intent(AuthActivity.this, Individual_Detail_Activity.class));
+        //startActivity(new Intent(AuthActivity.this, FilterActivity.class));
 
         SharedPrefrenceUser mSharedUser = SharedPrefrenceUser.getInstance(this);
         if(mSharedUser.getState().equals(Constant.home_state)){

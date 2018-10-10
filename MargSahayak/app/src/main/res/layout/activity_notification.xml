@@ -6,39 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".History.NotificationActivity">
 
-
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/notification_activity_actionbar"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_notification_activity"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/colorAccent"
-        android:elevation="@dimen/dim12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/notification_activity_back_btn"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="16dp"
-            android:background="@drawable/ic_back_arrow_white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/notification_activity_refresh_btn"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/ic_refresh_white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </android.support.constraint.ConstraintLayout>
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <ProgressBar
         android:id="@+id/notification_progressBar"
@@ -52,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notification_activity_actionbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_notification_activity" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/notification_recycleview"
@@ -66,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notification_progressBar">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_notification_activity">
 
 
     </android.support.v7.widget.RecyclerView>

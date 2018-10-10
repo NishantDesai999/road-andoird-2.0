@@ -165,6 +165,8 @@ public class InputActivity2 extends AppCompatActivity {
                 Date date = new Date();
                 mInputData.setTime(formatter.format(date));
 
+
+                //Give save offline or cancel dialog with pls enable internet to ulasd internet
                 if (!StaticMethods.checkInternetConnectivity(InputActivity2.this)) {
                     saveOffline(mInputData);
                 } else {
@@ -206,7 +208,6 @@ public class InputActivity2 extends AppCompatActivity {
                                 @Override
                                 public void onSuccessfullResponse(View progressBar, List<BisagResponse> response, Context c) {
 
-                                    Toast.makeText(c, "Bisag Call", Toast.LENGTH_SHORT).show();
                                     float minD = Float.parseFloat(response.get(0).distance), tempD;
                                     int index = 0;
                                     for (int i = 0; i < response.size(); i++) {
@@ -216,6 +217,10 @@ public class InputActivity2 extends AppCompatActivity {
                                             minD = tempD;
                                         }
                                     }
+
+                                    //Show you are too far away from road
+                                    //Canot upload complain
+                                    // ok
 
 //                                    if(minD > 0.15){
 //
@@ -238,6 +243,7 @@ public class InputActivity2 extends AppCompatActivity {
 
                                     ComplainModel mComplainModel = new ComplainModel();
                                     mComplainModel.setDescription(mInputData.getGrievanceDescription());
+                                    Log.d("debug", "onSuccessfullResponse: " + mComplainModel.getComplaintStatus());
                                     mComplainModel.setGrivType(mInputData.getGrievanceName());
                                     mComplainModel.setTime(mInputData.getTime());
                                     mComplainModel.setUrl(mInputData.getImgurl());

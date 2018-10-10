@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,7 +42,6 @@ public class FilterActivity extends AppCompatActivity {
     private FilterDataAdapter adapter;
     Spinner mSpinnerStatus, mSpinnerGrievance;
     TextView mStartingDatePick, mEndingDatePick;
-    Button mFilterButton,mBackButton;
 
     String mStartDateString;
     String mEndDateString;
@@ -57,10 +59,9 @@ public class FilterActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_filter);
 
+        setToolBar();
 
         mNoDataFoundImage = (ImageView) findViewById(R.id.no_data_found_imageView);
-        mFilterButton = (Button) findViewById(R.id.filter_activity_filter_btn);
-        mBackButton=(Button)findViewById(R.id.filter_activity_back_btn);
         mRecycleView = (RecyclerView) findViewById(R.id.filter_recyclerview);
 
         //initialize both spinner to zero
@@ -75,26 +76,10 @@ public class FilterActivity extends AppCompatActivity {
         mEndDateString = mDayTo + "-" + mMonthTo + "-" + mYearTo;
 
 
-        mFilterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showFilterDialog();
-            }
-        });
-
-        mBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent mFilterToMain=new Intent(FilterActivity.this,MainActivity.class);
-                startActivity(mFilterToMain);
-            }
-        });
-
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(FilterActivity.this, LinearLayoutManager.VERTICAL, false);
         Realm.init(FilterActivity.this);
         r = Realm.getDefaultInstance();
-
         List<ComplainModel> complainList = r.where(ComplainModel.class).findAll();
         adapter = new FilterDataAdapter(FilterActivity.this, new ArrayList<ComplainModel>(complainList));
         mRecycleView.setLayoutManager(layoutManager);
@@ -124,6 +109,34 @@ public class FilterActivity extends AppCompatActivity {
 
 //        r.addChangeListener(mRealmChangeListner);
 
+    }
+    private void setToolBar() {
+        Toolbar mFilterToolbar = (Toolbar) findViewById(R.id.toolbar_filter_activity);
+        setSupportActionBar(mFilterToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mFilterToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_arrow_white));
+        mFilterToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FilterActivity.this, MainActivity.class));
+            }
+        });
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_filter, menu);
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.filter_btn:
+                showFilterDialog();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
 

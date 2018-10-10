@@ -116,10 +116,28 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
                 @Override
                 public void onClick(View v) {
 
+                   int index = getAdapterPosition();
 
                   Intent mIntentToIndividuaalCard =new Intent(mContext,Individual_Detail_Activity.class);
-//                  mIntentToIndividuaalCard.putExtra("MDATA",singleItem);
-                  mContext.startActivity(mIntentToIndividuaalCard);
+                    mIntentToIndividuaalCard.putExtra("MGrivTypekey",itemsList.get(index).getGrivType());
+                    mIntentToIndividuaalCard.putExtra("MComplainIdkey",itemsList.get(index).getId());
+                    mIntentToIndividuaalCard.putExtra("MComplaintStatuskey",itemsList.get(index).getComplaintStatus());
+                    mIntentToIndividuaalCard.putExtra("MSubmittedDatekey",itemsList.get(index).getTime());
+                    mIntentToIndividuaalCard.putExtra("MRoadNamekey",itemsList.get(index).getRoadName());
+                    mIntentToIndividuaalCard.putExtra("MOfficerNamekey",itemsList.get(index).getOfficerName());
+                    mIntentToIndividuaalCard.putExtra("MEstimatedTimekey",itemsList.get(index).getEstimatedTime());
+                    mIntentToIndividuaalCard.putExtra("MDescriptionkey",itemsList.get(index).getDescription());
+                    mIntentToIndividuaalCard.putExtra("MURLkey",itemsList.get(index).getUrl());
+                    StringBuilder mComments = new StringBuilder(itemsList.get(index).getGrivType());
+                    mIntentToIndividuaalCard.putExtra("MCommentkey",mComments.toString());
+
+
+
+
+
+
+
+                    mContext.startActivity(mIntentToIndividuaalCard);
 
                 }
             });

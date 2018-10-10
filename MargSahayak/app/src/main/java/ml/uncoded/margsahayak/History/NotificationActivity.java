@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -36,22 +39,24 @@ import retrofit2.Response;
 public class NotificationActivity extends AppCompatActivity {
 
     private String strErrMsg;
-    private Dialogs dialogs ;
+    private Dialogs dialogs;
     private RecyclerView mRecycleView;
     private NotificationListDataAdapter adapter;
     private ProgressBar p;
     Realm r1;
-    private RealmChangeListener mRealmChangeListner ;
-
+    private RealmChangeListener mRealmChangeListner;
+    LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
-        p=findViewById(R.id.notification_progressBar);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(NotificationActivity.this,LinearLayoutManager.VERTICAL,false);
-        r1=Realm.getDefaultInstance();
-        mRecycleView=findViewById(R.id.notification_recycleview);
+
+        setToolBar();
+        p = findViewById(R.id.notification_progressBar);
+        layoutManager = new LinearLayoutManager(NotificationActivity.this, LinearLayoutManager.VERTICAL, false);
+        r1 = Realm.getDefaultInstance();
+        mRecycleView = findViewById(R.id.notification_recycleview);
         List<NotificationComplaintModel> complainList = r1.where(NotificationComplaintModel.class).findAll();
         Log.d("test", "onCreate: " + complainList.size());
         adapter = new NotificationListDataAdapter(NotificationActivity.this, new ArrayList<NotificationComplaintModel>(complainList));
@@ -63,42 +68,63 @@ public class NotificationActivity extends AppCompatActivity {
 //                List<NotificationComplaintModel> complainList = r1.where(NotificationComplaintModel.class).findAll();
 //                adapter = new NotificationListDataAdapter(NotificationActivity.this, new ArrayList<NotificationComplaintModel>(complainList));
 //                mRecycleView.setAdapter(adapter);
-                Toast.makeText(NotificationActivity.this,"Realm refreseh ",Toast.LENGTH_LONG).show();
+                Toast.makeText(NotificationActivity.this, "Realm refreseh ", Toast.LENGTH_LONG).show();
             }
         };
         r1.addChangeListener(mRealmChangeListner);
 
 
+    }
 
-        ((Button)findViewById(R.id.notification_activity_back_btn)).setOnClickListener(new View.OnClickListener() {
+    private void setToolBar() {
+        Toolbar mNotificationToolbar = (Toolbar) findViewById(R.id.toolbar_notification_activity);
+        setSupportActionBar(mNotificationToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mNotificationToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_arrow_white));
+        mNotificationToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mNotificationToMainActivity=new Intent(NotificationActivity.this, MainActivity.class);
-                startActivity(mNotificationToMainActivity);
+                startActivity(new Intent(NotificationActivity.this, MainActivity.class));
             }
         });
+    }
 
-        ((Button) findViewById(R.id.notification_activity_refresh_btn)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean flag = StaticMethods.checkInternetConnectivity(NotificationActivity.this);
-                if (!flag){}else{
-                    p.setVisibility(View.VISIBLE);
-                    MainApplication m = (MainApplication) getApplicationContext();
-                    m.mApi.getComplaintNotification(SharedPrefrenceUser.getInstance(NotificationActivity.this).getToken()).enqueue(new Callback<List<NotificationComplaintModel>>() {
-                        private final String TAG = "complain";
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_notification, menu);
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.refresh_btn:
+                onRefreshNotification();
+                return true;
 
-                        @Override
-                        public void onResponse(Call<List<NotificationComplaintModel>> call, final Response<List<NotificationComplaintModel>> response) {
-                            if (response.isSuccessful()) {
-                                Log.d(TAG, "response : " + response.headers());
-                                final Realm r = Realm.getDefaultInstance();
-                                r.executeTransactionAsync(new Realm.Transaction() {
-                                    @Override
-                                    public void execute(Realm realm) {
-                                        List<NotificationComplaintModel> notificationList = response.body();
-                                        ComplainModel complainModel;
-                                        for(NotificationComplaintModel notificationComplaintModel : notificationList) {
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    public void onRefreshNotification(){
+            boolean flag = StaticMethods.checkInternetConnectivity(NotificationActivity.this);
+            if (!flag) {
+            } else {
+                p.setVisibility(View.VISIBLE);
+                MainApplication m = (MainApplication) getApplicationContext();
+                m.mApi.getComplaintNotification(SharedPrefrenceUser.getInstance(NotificationActivity.this).getToken()).enqueue(new Callback<List<NotificationComplaintModel>>() {
+                    private final String TAG = "complain";
+
+                    @Override
+                    public void onResponse(Call<List<NotificationComplaintModel>> call, final Response<List<NotificationComplaintModel>> response) {
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "response : " + response.headers());
+                            final Realm r = Realm.getDefaultInstance();
+                            r.executeTransactionAsync(new Realm.Transaction() {
+                                @Override
+                                public void execute(Realm realm) {
+                                    List<NotificationComplaintModel> notificationList = response.body();
+                                    ComplainModel complainModel;
+                                    for (NotificationComplaintModel notificationComplaintModel : notificationList) {
 //                                            complainModel = realm.where(ComplainModel.class).equalTo("id", notificationComplaintModel.getId()).findFirst();
 //                                            complainModel.setId(notificationComplaintModel.getId());
 //                                            complainModel.setComplaintStatus(notificationComplaintModel.getComplaintStatus());
@@ -108,91 +134,73 @@ public class NotificationActivity extends AppCompatActivity {
 //                                            complainModel.setOfficerId(notificationComplaintModel.getOfficerId());
 //                                            complainModel.setOfficerName(notificationComplaintModel.getOfficerName());
 //                                            notificationComplaintModel.setImgUrl(complainModel.getUrl());
-                                            Log.d("test", "execute: " + notificationComplaintModel.getEstimatedDate());
-                                            realm.copyToRealm(notificationComplaintModel);
+                                        Log.d("test", "execute: " + notificationComplaintModel.getEstimatedDate());
+                                        realm.copyToRealm(notificationComplaintModel);
 //                                            realm.insertOrUpdate(complainModel);
-                                        }
-
-
                                     }
-                                }, new Realm.Transaction.OnSuccess() {
-                                    @Override
-                                    public void onSuccess() {
+
+
+                                }
+                            }, new Realm.Transaction.OnSuccess() {
+                                @Override
+                                public void onSuccess() {
 //                                        Intent i = new Intent(Main2Activity.this, MainActivity.class);
 //                                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //                                        startActivity(i);
-                                        List<NotificationComplaintModel> complainList = r1.where(NotificationComplaintModel.class).findAll();
-                                        adapter = new NotificationListDataAdapter(NotificationActivity.this, new ArrayList<NotificationComplaintModel>(complainList));
-                                        mRecycleView.setLayoutManager(layoutManager);
-                                        mRecycleView.setAdapter(adapter);
-                                        //Log.d(TAG, "data : " + complainModel.getId());
-                                        p.setVisibility(View.INVISIBLE);
+                                    List<NotificationComplaintModel> complainList = r1.where(NotificationComplaintModel.class).findAll();
+                                    adapter = new NotificationListDataAdapter(NotificationActivity.this, new ArrayList<NotificationComplaintModel>(complainList));
+                                    mRecycleView.setLayoutManager(layoutManager);
+                                    mRecycleView.setAdapter(adapter);
+                                    //Log.d(TAG, "data : " + complainModel.getId());
+                                    p.setVisibility(View.INVISIBLE);
 
-                                    }
-                                });
+                                }
+                            });
 
 //                                Log.d(TAG, "Db : " + r.where(ComplainModel.class).findAll().size());
 
-                            }
-                            //Checking server Internal Errors
-                            else {
-                                Log.d(TAG, "Code: " + response.code() + " Message: " + response.message());
-                                p.setVisibility(View.INVISIBLE);
-                                Toast.makeText(NotificationActivity.this, "" + response.code() + " " + response.message(), Toast.LENGTH_SHORT).show();
-                                strErrMsg = response.code() + " " + response.message();
-                                dialogs = new Dialogs(strErrMsg);
-                                dialogs.show(getFragmentManager(), "ErrMSG");
-                            }
                         }
-
-                        @Override
-                        public void onFailure(Call<List<NotificationComplaintModel>> call, Throwable t) {
-
-
-                            t.printStackTrace();
-                            Log.d(TAG, "OnFailure");
+                        //Checking server Internal Errors
+                        else {
+                            Log.d(TAG, "Code: " + response.code() + " Message: " + response.message());
                             p.setVisibility(View.INVISIBLE);
-                            Toast.makeText(NotificationActivity.this, "" + t.getCause() + " :: " + " ---> " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                            if (t.getCause() != null && t.getCause().toString().contains("java.net.ConnectException")) {
-                                strErrMsg = "FAILED TO CONNECT TO SERVER\nNETWORK IS UNREACHABLE";
-                                dialogs = new Dialogs(strErrMsg);
-                            } else if (t.getCause() == null) {
-
-                                strErrMsg = "CONNECTION TIMED OUT";
-                                dialogs = new Dialogs(strErrMsg);
-
-                            } else {
-
-                                strErrMsg = "JSON PARSING ERROR";
-                                dialogs = new Dialogs(strErrMsg);
-
-                            }
+                            Toast.makeText(NotificationActivity.this, "" + response.code() + " " + response.message(), Toast.LENGTH_SHORT).show();
+                            strErrMsg = response.code() + " " + response.message();
+                            dialogs = new Dialogs(strErrMsg);
                             dialogs.show(getFragmentManager(), "ErrMSG");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<NotificationComplaintModel>> call, Throwable t) {
+
+
+                        t.printStackTrace();
+                        Log.d(TAG, "OnFailure");
+                        p.setVisibility(View.INVISIBLE);
+                        Toast.makeText(NotificationActivity.this, "" + t.getCause() + " :: " + " ---> " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        if (t.getCause() != null && t.getCause().toString().contains("java.net.ConnectException")) {
+                            strErrMsg = "FAILED TO CONNECT TO SERVER\nNETWORK IS UNREACHABLE";
+                            dialogs = new Dialogs(strErrMsg);
+                        } else if (t.getCause() == null) {
+
+                            strErrMsg = "CONNECTION TIMED OUT";
+                            dialogs = new Dialogs(strErrMsg);
+
+                        } else {
+
+                            strErrMsg = "JSON PARSING ERROR";
+                            dialogs = new Dialogs(strErrMsg);
 
                         }
-                    });
+                        dialogs.show(getFragmentManager(), "ErrMSG");
 
-                }
+                    }
+                });
+
             }
 
+        }
 
-
-
-
-
-        });
-    }
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        Toast.makeText(this, "On resume notification", Toast.LENGTH_SHORT).show();
-//        LinearLayoutManager layoutManager=new LinearLayoutManager(NotificationActivity.this,LinearLayoutManager.VERTICAL,false);
-//        r1=Realm.getDefaultInstance();
-//        mRecycleView=findViewById(R.id.notification_recycleview);
-//        List<NotificationComplaintModel> complainList = r1.where(NotificationComplaintModel.class).findAll();
-//        adapter = new NotificationListDataAdapter(NotificationActivity.this, new ArrayList<NotificationComplaintModel>(complainList));
-//        mRecycleView.setAdapter(adapter);
-//    }
 }
 

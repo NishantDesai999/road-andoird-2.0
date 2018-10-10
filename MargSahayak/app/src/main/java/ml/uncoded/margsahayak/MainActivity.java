@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         mOptions=(ImageView)findViewById(R.id.optionsIcon);
         mAddComplainButton=(Button)findViewById(R.id.add_new_complain_btn);
         mBottomLayout = findViewById(R.id.bottomLayout);
-    }
+}
 
     public void initListners(){
 

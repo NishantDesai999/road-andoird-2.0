@@ -10,7 +10,7 @@ import java.util.List;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
-public class ComplainModel extends RealmObject {
+public class ComplainModel extends RealmObject{
 
 
     @SerializedName("_id")
