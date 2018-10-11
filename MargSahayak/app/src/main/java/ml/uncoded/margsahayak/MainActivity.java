@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView mNotification, mOptions;
     Button mAddComplainButton;
     View mBottomLayout;
+    private long lastBackPressTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +96,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Toast toast = Toast.makeText(this, "Press back again to close this app",Toast.LENGTH_SHORT);
+        if (this.lastBackPressTime < System.currentTimeMillis() - 2000) {
+            toast.show();
+            this.lastBackPressTime = System.currentTimeMillis();
+        } else {
+            if (toast != null) {
+                toast.cancel();
+            }
+            this.lastBackPressTime = 0;
+            finish();
+        }
     }
 
 }

@@ -59,6 +59,7 @@ public class AuthActivity extends AppCompatActivity {
                    .replace(R.id.auth_framelayout, new RegisterFragment()).commit();
                 break;
             default:
+                finish();
 
         }
     }
