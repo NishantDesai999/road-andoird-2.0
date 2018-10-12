@@ -12,7 +12,11 @@
         android:id="@+id/cardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/card_constraint"
@@ -34,7 +38,7 @@
                 android:layout_marginTop="50dp"
                 android:text="Status"
                 android:textColor="#5e5e5e"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@+id/filter_heading"
                 app:layout_constraintTop_toBottomOf="@+id/filter_heading" />
 
@@ -57,7 +61,7 @@
                 android:layout_marginTop="32dp"
                 android:text="Grievance"
                 android:textColor="#5e5e5e"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@+id/filter_heading"
                 app:layout_constraintTop_toBottomOf="@+id/status" />
 
@@ -78,7 +82,7 @@
                 android:layout_marginTop="32dp"
                 android:text="From"
                 android:textColor="#5e5e5e"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@+id/filter_heading"
                 app:layout_constraintTop_toBottomOf="@+id/grievance" />
 
@@ -89,7 +93,7 @@
                 android:layout_marginTop="32dp"
                 android:text="To"
                 android:textColor="#5e5e5e"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@+id/filter_heading"
                 app:layout_constraintTop_toBottomOf="@+id/from" />
 
@@ -104,7 +108,7 @@
                 android:paddingRight="12dp"
                 android:text="STARTING DATE"
                 android:textColor="#000"
-                android:textSize="17sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/from"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier2"
@@ -115,12 +119,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:drawableRight="@drawable/ic_date_drop_symbol"
                 android:paddingLeft="10dp"
                 android:paddingRight="12dp"
                 android:text="ENDING DATE"
                 android:textColor="#000"
-                android:textSize="17sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/to"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/grievance"
@@ -151,30 +156,30 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/to" />
 
-            <TextView
+            <Button
                 android:id="@+id/cancel_complaint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="24dp"
                 android:layout_marginTop="24dp"
+                android:background="@drawable/btn_style_2"
                 android:text="CANCEL"
                 android:textColor="#0277bd"
                 android:textSize="14sp"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/save_offline_complaint"
                 app:layout_constraintTop_toTopOf="@+id/divider" />
 
-            <TextView
+            <Button
                 android:id="@+id/save_offline_complaint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
+                android:background="@drawable/btn_style"
                 android:text="APPLY"
-                android:textColor="#0277bd"
+                android:textColor="@color/colorWhite"
                 android:textSize="14sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/cancel_complaint" />
 

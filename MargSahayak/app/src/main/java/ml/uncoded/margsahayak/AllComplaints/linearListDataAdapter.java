@@ -65,7 +65,7 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
 
         Log.v("debug",itemsList.toString());
 
-        Toast.makeText(mContext, ""+singleItem.getUrl(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "itemUrl"+singleItem.getUrl(), Toast.LENGTH_SHORT).show();
         Glide.with(mContext)
                 .load(singleItem.getUrl())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

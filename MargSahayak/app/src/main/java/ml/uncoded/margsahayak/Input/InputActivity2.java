@@ -1,6 +1,7 @@
 package ml.uncoded.margsahayak.Input;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -9,9 +10,11 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,8 +53,11 @@ import ml.uncoded.margsahayak.Network.mCallBack;
 import ml.uncoded.margsahayak.R;
 import ml.uncoded.margsahayak.models.BisagResponse;
 import ml.uncoded.margsahayak.models.ComplainModel;
+import ml.uncoded.margsahayak.models.Dialogs;
 import ml.uncoded.margsahayak.models.OfflineComplainModel;
 import ml.uncoded.margsahayak.models.StaticMethods;
+
+import static com.bumptech.glide.load.resource.bitmap.TransformationUtils.rotateImage;
 
 public class InputActivity2 extends AppCompatActivity {
 
@@ -155,7 +162,7 @@ public class InputActivity2 extends AppCompatActivity {
                 mInputData.setGrievanceDescription(mDiscription);
                 mInputData.setGrievanceName(mGri);
                 String[] path = fileUri.getPath().split("/");
-                mInputData.setImgurl(path[path.length-1]);
+                mInputData.setImgurl(path[path.length - 1]);
 
 
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -163,27 +170,31 @@ public class InputActivity2 extends AppCompatActivity {
                 mInputData.setTime(formatter.format(date));
 
                 //code to get Location from gps
-                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                MyLocationListener locationListener = MyLocationListener.getInstance();
-                String lon=null,lat=null;
+                LocationManager locationManager = SingletonLocationManager.getInstance(getApplication(), "From Upload Button");
+                MyLocationListener locationListener = MyLocationListener.getInstance("Upload Button Input Activity");
+                String lon = null, lat = null;
                 if (locationManager != null) {
-
                     Log.d("MyLocationListner", "LocationListner Stopped");
                     if (ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         return;
                     }
                     Location l = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    lon = ""+l.getLongitude();
-                    lat = ""+l.getLatitude();
+
+
+                    lon = "" + l.getLongitude();
+                    lat = "" + l.getLatitude();
+
+                    if (locationListener.lon != null && locationListener.lat != null) {
+                        Toast.makeText(InputActivity2.this, "" + locationListener.lon + locationListener.lat, Toast.LENGTH_SHORT).show();
+                        lon = locationListener.lon;
+                        lat = locationListener.lat;
+                    }
+
+
                     locationManager.removeUpdates(locationListener);
-                    locationManager = null;
+                    locationListener = null;
                 }
 
-                Toast.makeText(InputActivity2.this, "" + locationListener.lon + locationListener.lat, Toast.LENGTH_SHORT).show();
-                if(locationListener.lon != null && locationListener.lat!=null){
-                    lon  = locationListener.lon;
-                    lat = locationListener.lat;
-                }
                 lat = "23.10524664";
                 lon = "72.58701144";
                 //location set in offline complain model
@@ -191,32 +202,30 @@ public class InputActivity2 extends AppCompatActivity {
                 mInputData.setLocation(mLocationList);
 
 
-
-
-
-
-
                 //Give save offline or cancel dialog with pls enable internet to ulasd internet
                 if (!StaticMethods.checkInternetConnectivity(InputActivity2.this)) {
                     //diaog
-                    Dialog mOfflineDialog=new Dialog(InputActivity2.this);
+                    final Dialog mOfflineDialog = new Dialog(InputActivity2.this);
                     mOfflineDialog.setContentView(R.layout.save_to_offline_dialog_layout);
                     mOfflineDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
                     mOfflineDialog.show();
 
-                    ((TextView)mOfflineDialog.findViewById(R.id.save_offline_complaint)).setOnClickListener(new View.OnClickListener() {
+                    ((Button) mOfflineDialog.findViewById(R.id.save_offline_complaint)).setOnClickListener(new View.OnClickListener() {
 
                         @Override
                         public void onClick(View v) {
+                            mOfflineDialog.dismiss();
                             saveOffline(mInputData);
+
                         }
                     });
 
-                    ((TextView)mOfflineDialog.findViewById(R.id.cancel_complaint)).setOnClickListener(new View.OnClickListener() {
+                    ((Button) mOfflineDialog.findViewById(R.id.cancel_complaint)).setOnClickListener(new View.OnClickListener() {
 
                         @Override
                         public void onClick(View v) {
-                            startActivity(new Intent(InputActivity2.this,MainActivity.class));
+                            mOfflineDialog.dismiss();
+                            //startActivity(new Intent(InputActivity2.this, MainActivity.class));
                             finish();
                         }
                     });
@@ -252,13 +261,12 @@ public class InputActivity2 extends AppCompatActivity {
 //                    }
 
 
-
-                    Log.d("MyLocationListner",lon+lat);
+                    Log.d("MyLocationListner", lon + lat);
                     lat = "23.10524664";
                     lon = "72.58701144";
-                    Toast.makeText(InputActivity2.this, "" +lat+lon , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InputActivity2.this, "" + lat + lon, Toast.LENGTH_SHORT).show();
 
-                    m.mApi.callBisagApi(lat,lon)
+                    m.mApi.callBisagApi(lat, lon)
                             .enqueue(new mCallBack<List<BisagResponse>>(InputActivity2.this, mProgressBar) {
 
                                 @Override
@@ -278,20 +286,25 @@ public class InputActivity2 extends AppCompatActivity {
                                     //Canot upload complain
                                     // ok
 
-                                    if(minD > 1.5){
-                                        Dialog mDistanceDialog=new Dialog(InputActivity2.this);
-                                        mDistanceDialog.setContentView(R.layout.custom_dialog_layout);
-                                        ((TextView)mDistanceDialog.findViewById(R.id.customDialog_tv_message)).setText("You are too far away from road");
-                                        mDistanceDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
-                                        mDistanceDialog.show();
+                                    if (minD > 1.5) {
+                                        String strErrMsg = "You are too far away from road.";
+                                        Dialogs dialogs;
+                                        dialogs = new Dialogs(strErrMsg);
+                                        dialogs.show(((Activity) c).getFragmentManager(), "ErrMSG");
 
-                                        ((Button)mDistanceDialog.findViewById(R.id.customDialog_btn_Ok)).setOnClickListener(new View.OnClickListener() {
-
-                                            @Override
-                                            public void onClick(View v) {
-                                                finish();
-                                            }
-                                        });
+//      Dialog mDistanceDialog=new Dialog(InputActivity2.this);
+//                                        mDistanceDialog.setContentView(R.layout.custom_dialog_layout);
+//                                        ((TextView)mDistanceDialog.findViewById(R.id.customDialog_tv_message)).setText("You are too far away from road");
+//                                        mDistanceDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+//                                        mDistanceDialog.show();
+//
+//                                        ((Button)mDistanceDialog.findViewById(R.id.customDialog_btn_Ok)).setOnClickListener(new View.OnClickListener() {
+//
+//                                            @Override
+//                                            public void onClick(View v) {
+//                                                finish();
+//                                            }
+//                                        });
                                         return;
                                     }
 
@@ -304,8 +317,8 @@ public class InputActivity2 extends AppCompatActivity {
                                     //Upload image ---
                                     //String filePath = "/storage/emulated/0/Pictures/Marg_Sahayak/IMG_20180928_155751.jpg";
                                     String filePath = fileUri.getPath();
-                                    Toast.makeText(c, "Filepath : "+filePath, Toast.LENGTH_SHORT).show();
-                                    Log.d("debug",filePath);
+                                    Toast.makeText(c, "Filepath : " + filePath, Toast.LENGTH_SHORT).show();
+                                    Log.d("debug", filePath);
                                     ImageUpload mImageUpload = new ImageUpload(InputActivity2.this, filePath, mProgressBar);
                                     ImageUpload.uploadImage();
                                     ComplainModel mComplainModel = new ComplainModel();
@@ -321,42 +334,42 @@ public class InputActivity2 extends AppCompatActivity {
                                     mComplainModel.setRoadType(mBisagresponse.raodType);
                                     // Upload Complain ---
                                     ((MainApplication) getApplicationContext()).mApi
-                                            .postComplaint(SharedPrefrenceUser.getInstance(InputActivity2.this).getToken(),mComplainModel)
+                                            .postComplaint(SharedPrefrenceUser.getInstance(InputActivity2.this).getToken(), mComplainModel)
                                             .enqueue(new mCallBack<ComplainModel>(InputActivity2.this, mProgressBar) {
 
-                                        @Override
-                                        public void onSuccessfullResponse(final View progressBar, final ComplainModel response, Context c) {
+                                                @Override
+                                                public void onSuccessfullResponse(final View progressBar, final ComplainModel response, Context c) {
 
 
-                                            if(Boolean.parseBoolean(response.getSuccess())){
+                                                    if (Boolean.parseBoolean(response.getSuccess())) {
 
-                                                Realm r = Realm.getDefaultInstance();
-                                                progressBar.setVisibility(View.INVISIBLE);
-                                                r.executeTransactionAsync(new Realm.Transaction() {
-                                                    @Override
-                                                    public void execute(Realm realm) {
-                                                        realm.copyToRealm(response);
+                                                        Realm r = Realm.getDefaultInstance();
+                                                        progressBar.setVisibility(View.INVISIBLE);
+                                                        r.executeTransactionAsync(new Realm.Transaction() {
+                                                            @Override
+                                                            public void execute(Realm realm) {
+                                                                realm.copyToRealm(response);
 
+                                                            }
+                                                        }, new Realm.Transaction.OnSuccess() {
+                                                            @Override
+                                                            public void onSuccess() {
+//                                                                Intent i = new Intent(InputActivity2.this, MainActivity.class);
+//                                                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                                                                startActivity(i);
+                                                                finish();
+                                                            }
+                                                        });
+                                                    } else {
+                                                        Toast.makeText(c, "" + response.getMsg(), Toast.LENGTH_SHORT).show();
                                                     }
-                                                }, new Realm.Transaction.OnSuccess() {
-                                                    @Override
-                                                    public void onSuccess() {
-                                                        Intent i = new Intent(InputActivity2.this, MainActivity.class);
-                                                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                                        startActivity(i);
-                                                        finish();
-                                                    }
-                                                });
-                                            }else{
-                                                Toast.makeText(c, "" + response.getMsg(), Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
+                                                }
 
-                                        @Override
-                                        public void onFailureResponse(View progressBar, Context c) {
+                                                @Override
+                                                public void onFailureResponse(View progressBar, Context c) {
 
-                                        }
-                                    });
+                                                }
+                                            });
 
                                 }
 
@@ -379,7 +392,7 @@ public class InputActivity2 extends AppCompatActivity {
             try {
                 Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
                 m.invoke(null);
-            }catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -421,7 +434,7 @@ public class InputActivity2 extends AppCompatActivity {
         if (type == MEDIA_TYPE_IMAGE) {
             mediaFile = new File(mediaStorageDir.getPath() + File.separator
                     + "IMG_" + timeStamp + ".jpg");
-        }else {
+        } else {
             return null;
         }
 
@@ -433,7 +446,7 @@ public class InputActivity2 extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLERY_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
             Cursor cursor = getContentResolver().query(selectedImage,
                     filePathColumn, null, null, null);
@@ -442,7 +455,7 @@ public class InputActivity2 extends AppCompatActivity {
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
-            Toast.makeText(this, ""+picturePath, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "" + picturePath, Toast.LENGTH_SHORT).show();
             //  fileUri = Uri.fromFile(new File(picturePath));
             fileUri = Uri.parse(picturePath);
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -456,8 +469,8 @@ public class InputActivity2 extends AppCompatActivity {
             showImage();
 
 
-        }else if (requestCode == 1) {
-            Intent i = new Intent(this,MainActivity.class);
+        } else if (requestCode == 1) {
+            Intent i = new Intent(this, MainActivity.class);
             // startActivity(i);
             Toast.makeText(getApplicationContext(),
                     "User cancelled permission", Toast.LENGTH_SHORT)
@@ -470,10 +483,38 @@ public class InputActivity2 extends AppCompatActivity {
 
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 1;
-//                    String path = MediaStore.Images.Media.insertImage(InputActivity.this.getContentResolver(), bitmap, "Title", "Image stored");
+                bitmap = BitmapFactory.decodeFile(fileUri.getPath(), options);
+
+//                String path = MediaStore.Images.Media.insertImage(InputActivity2.this.getContentResolver(), bitmap, "Title", "Image stored");
 //                    fileUri =  Uri.parse(path);
 
-                bitmap = BitmapFactory.decodeFile(fileUri.getPath(), options);
+                try {
+                    ExifInterface ei = new ExifInterface(fileUri.getPath());
+                    int ori = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
+                    Bitmap rotatedBitmap = null;
+                    switch (ori) {
+
+                        case ExifInterface.ORIENTATION_ROTATE_90:
+                            rotatedBitmap = rotateImage(bitmap, 90);
+                            break;
+
+                        case ExifInterface.ORIENTATION_ROTATE_180:
+                            rotatedBitmap = rotateImage(bitmap, 180);
+                            break;
+
+                        case ExifInterface.ORIENTATION_ROTATE_270:
+                            rotatedBitmap = rotateImage(bitmap, 270);
+                            break;
+
+                        case ExifInterface.ORIENTATION_NORMAL:
+                        default:
+                            rotatedBitmap = bitmap;
+                    }
+                    bitmap = rotatedBitmap;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 showImage();
 
             } else if (resultCode == RESULT_CANCELED) {
@@ -492,10 +533,17 @@ public class InputActivity2 extends AppCompatActivity {
         }
     }
 
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                matrix, true);
+    }
+
     private void showImage() {
         findViewById(R.id.cameraIcon).setVisibility(View.INVISIBLE);
         findViewById(R.id.cameraText).setVisibility(View.INVISIBLE);
-        ImageView mImageView = (ImageView)findViewById(R.id.imagePriview);
+        ImageView mImageView = (ImageView) findViewById(R.id.imagePriview);
         mImageView.setVisibility(View.VISIBLE);
         mImageView.setImageBitmap(bitmap);
 
@@ -516,15 +564,15 @@ public class InputActivity2 extends AppCompatActivity {
                 offlineComplainModel.setGrievanceDescription(mInputData.getGrievanceDescription());
                 offlineComplainModel.setLocation(mInputData.getLocation());
                 offlineComplainModel.setGrievanceName(mInputData.getGrievanceName());
-                offlineComplainModel.setImgurl(fileUri.getPath() );
+                offlineComplainModel.setImgurl(fileUri.getPath());
 
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
             public void onSuccess() {
-                Intent i = new Intent(InputActivity2.this, MainActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(i);
+//                Intent i = new Intent(InputActivity2.this, MainActivity.class);
+//                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                startActivity(i);
                 finish();
 
             }

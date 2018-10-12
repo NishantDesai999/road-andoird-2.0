@@ -78,6 +78,8 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
     }
 
     void deleteComplaint(int index) {
+        Log.d("adapterPos",String.valueOf(index));
+
         if(index < 0) return;
         OfflineComplainModel singleItem = itemsList.get(index);
         Realm r = Realm.getDefaultInstance();
@@ -109,8 +111,6 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
             c.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), v.getId() + "", Toast.LENGTH_LONG);
-
                 }
             });
 
@@ -126,27 +126,12 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                 @Override
                 public void onClick(View v) {
                     MainApplication m = (MainApplication) mContext.getApplicationContext();
-
-                    OfflineComplainModel singleItem = itemsList.get(getAdapterPosition());
+                    final int complainIndex = getAdapterPosition();
+                    OfflineComplainModel singleItem = itemsList.get(complainIndex);
                     Realm r = Realm.getDefaultInstance();
                     final OfflineComplainModel mInputData = r.where(OfflineComplainModel.class).equalTo("id", singleItem.getId()).findFirst();
                     //Give save offline or cancel dialog with pls enable internet to ulasd internet
-                    if (!StaticMethods.checkInternetConnectivity(mContext)) {
-                        //diaog
-                        final Dialog mOfflineDialog = new Dialog(mContext);
-                        mOfflineDialog.setContentView(R.layout.custom_dialog_layout);
-                        ((TextView) mOfflineDialog.findViewById(R.id.customDialog_tv_message)).setText("Please enable internet to post complaint");
-                        mOfflineDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
-                        mOfflineDialog.show();
-                        mOfflineDialog.findViewById(R.id.customDialog_btn_Ok).setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View v) {
-                                mOfflineDialog.dismiss();
-                            }
-                        });
-
-                    } else {
+                    if (StaticMethods.checkInternetConnectivity(mContext)){
                         m.mApi.callBisagApi(mInputData.getLocation().get(0), mInputData.getLocation().get(1))
                                 .enqueue(new mCallBack<List<BisagResponse>>(mContext, mProgressBar) {
 
@@ -179,7 +164,7 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                                                 @Override
                                                 public void onClick(View v) {
                                                     mDistanceDialog.dismiss();
-                                                    deleteComplaint(getAdapterPosition());
+                                                    deleteComplaint(complainIndex);
 
                                                 }
                                             });
@@ -204,6 +189,8 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                                         Log.d("debug", "onSuccessfullResponse: " + mComplainModel.getComplaintStatus());
                                         mComplainModel.setGrivType(mInputData.getGrievanceName());
                                         mComplainModel.setTime(mInputData.getTime());
+                                        //Log.d("ImageUrl from offAdap",mInputData.getImgurl());
+                                       // Toast.makeText(c, "ImgaeURl"+mInputData.getImgurl(), Toast.LENGTH_SHORT).show();
                                         mComplainModel.setUrl(mInputData.getImgurl());
                                         mComplainModel.setLocation(mInputData.getLocation());
                                         mComplainModel.setComplaintStatus("Pending.");
@@ -232,13 +219,12 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                                                             }, new Realm.Transaction.OnSuccess() {
                                                                 @Override
                                                                 public void onSuccess() {
-                                                                    deleteComplaint(getAdapterPosition());
+                                                                    deleteComplaint(complainIndex);
                                                                     final Dialog mSuccessDialog = new Dialog(mContext);
                                                                     mSuccessDialog.setContentView(R.layout.custom_dialog_layout);
                                                                     ((TextView) mSuccessDialog.findViewById(R.id.customDialog_tv_message)).setText("Complaint Posted Successfully");
                                                                     mSuccessDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
                                                                     mSuccessDialog.show();
-
                                                                     ((Button) mSuccessDialog.findViewById(R.id.customDialog_btn_Ok)).setOnClickListener(new View.OnClickListener() {
 
                                                                         @Override

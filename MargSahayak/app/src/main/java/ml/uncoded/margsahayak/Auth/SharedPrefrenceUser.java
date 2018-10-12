@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import io.realm.Realm;
+
 public class SharedPrefrenceUser {
 
     private static final String USER_Login_SHARED_PREFRENCE = "user";
@@ -90,6 +92,10 @@ public class SharedPrefrenceUser {
 //    }
 //
     public void logout() {
+        Realm r=Realm.getDefaultInstance();
+        r.beginTransaction();
+        r.deleteAll();
+        r.commitTransaction();
         SharedPreferences sharedPreferences = context_to_use.getSharedPreferences(USER_Login_SHARED_PREFRENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
@@ -97,5 +103,6 @@ public class SharedPrefrenceUser {
         Intent intent = new Intent(context_to_use, AuthActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         context_to_use.startActivity(intent);
+
     }
 }

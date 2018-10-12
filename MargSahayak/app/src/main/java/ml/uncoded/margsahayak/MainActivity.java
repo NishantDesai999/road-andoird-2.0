@@ -20,6 +20,7 @@ import io.realm.Realm;
 import ml.uncoded.margsahayak.History.NotificationActivity;
 import ml.uncoded.margsahayak.Input.InputActivity2;
 import ml.uncoded.margsahayak.Input.MyLocationListener;
+import ml.uncoded.margsahayak.Input.SingletonLocationManager;
 import ml.uncoded.margsahayak.Network.Api;
 import ml.uncoded.margsahayak.Network.mCallBack;
 import ml.uncoded.margsahayak.models.StaticMethods;
@@ -67,12 +68,13 @@ public class MainActivity extends AppCompatActivity {
 
                 } else {
 
-                          MyLocationListener locationListener = MyLocationListener.getInstance();
-
-                          ((LocationManager) getSystemService(Context.LOCATION_SERVICE))
-                          .requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+                          MyLocationListener locationListener = MyLocationListener.getInstance("mAIN Activity");
+                          LocationManager l = SingletonLocationManager.getInstance(getApplication(),"From Main Activity");
+                          l.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, locationListener);
                 }
+
                 startActivity(new Intent(MainActivity.this,InputActivity2.class));
+
             }
         });
 
