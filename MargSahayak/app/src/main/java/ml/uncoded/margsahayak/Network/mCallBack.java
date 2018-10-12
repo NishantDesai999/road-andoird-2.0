@@ -2,6 +2,8 @@ package ml.uncoded.margsahayak.Network;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
@@ -44,7 +46,7 @@ public abstract class mCallBack<T> implements interClassBack<T> {
             } else {
                 Dialogs dialogs;
                 progressBar.setVisibility(View.INVISIBLE);
-                dialogs = new Dialogs(response.code() + " " + response.message());
+                dialogs = new Dialogs(response.code() + " " + response.message()+" Body : "+response.body());
                 dialogs.show(((Activity) c).getFragmentManager(), "ErrMSG");
             }
 

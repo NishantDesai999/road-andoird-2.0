@@ -23,30 +23,43 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Auth.AuthActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".Main2Activity" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Main2Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Input.InputActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Input.InputActivity2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".History.NotificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FilterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Individual_Detail_Activity"
+            android:label="@string/title_activity_individual__detail_"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
 
         <receiver android:name=".Auth.MySMSBroadCastReceiver">
             <intent-filter android:priority="999">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-
-        <activity android:name=".Input.InputActivity" />
-        <activity android:name=".Input.InputActivity2" />
-        <activity android:name=".History.NotificationActivity" />
-        <activity android:name=".FilterActivity" />
-        <activity
-            android:name=".Individual_Detail_Activity"
-            android:label="@string/title_activity_individual__detail_"
-            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

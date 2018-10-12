@@ -152,7 +152,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/to" />
 
             <TextView
-                android:id="@+id/cancle"
+                android:id="@+id/cancel_complaint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
@@ -163,11 +163,11 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/apply"
+                app:layout_constraintEnd_toStartOf="@+id/save_offline_complaint"
                 app:layout_constraintTop_toTopOf="@+id/divider" />
 
             <TextView
-                android:id="@+id/apply"
+                android:id="@+id/save_offline_complaint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
@@ -176,7 +176,7 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/cancle" />
+                app:layout_constraintTop_toTopOf="@+id/cancel_complaint" />
 
             <android.support.constraint.Guideline
                 android:id="@+id/guideline4"

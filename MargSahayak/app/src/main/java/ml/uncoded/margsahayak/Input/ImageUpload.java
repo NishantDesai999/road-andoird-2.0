@@ -17,7 +17,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-class ImageUpload {
+public class ImageUpload {
 
     @SuppressLint("StaticFieldLeak")
     private static Context context;
@@ -29,7 +29,7 @@ class ImageUpload {
     ImageUpload() {
     }
 
-    ImageUpload(Context context, String filePath, View mImageUploadProgressBar) {
+    public ImageUpload(Context context, String filePath, View mImageUploadProgressBar) {
         ImageUpload.filePath = filePath;
         ImageUpload.context = context;
         ImageUpload.mImageUploadProgressBar = mImageUploadProgressBar;

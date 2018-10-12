@@ -20,7 +20,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface Api {
-    String BASE_URL = "http://192.168.2.10:3003/api/android/";
+    String BASE_URL = "http://192.168.43.172:3000/api/android/";
 
     @GET("testLate")
     Call<ComplainModel> getLateReply();
@@ -53,7 +53,7 @@ public interface Api {
 
     @GET("https://ncog.gov.in/RNB_mob_data/get_road?code=4862")
         //PAss Code 4862
-    Call<List<BisagResponse>> callBisagApi(@Query("lon") String lon, @Query("lat") String lat);
+    Call<List<BisagResponse>> callBisagApi(@Query("lat") String lat, @Query("lon") String lon);
 
 
 //    @DELETE("delete")

@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -110,6 +109,8 @@ public class FilterActivity extends AppCompatActivity {
 //        r.addChangeListener(mRealmChangeListner);
 
     }
+
+
     private void setToolBar() {
         Toolbar mFilterToolbar = (Toolbar) findViewById(R.id.toolbar_filter_activity);
         setSupportActionBar(mFilterToolbar);
@@ -119,6 +120,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(FilterActivity.this, MainActivity.class));
+                finish();
             }
         });
     }
@@ -150,7 +152,7 @@ public class FilterActivity extends AppCompatActivity {
         errorInvalidDate = (TextView) mFilterDialog.findViewById(R.id.error_invalid_dates);
         errorInvalidDate.setVisibility(View.GONE);
 
-        mFilterDialog.findViewById(R.id.apply).setOnClickListener(new View.OnClickListener() {
+        mFilterDialog.findViewById(R.id.save_offline_complaint).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 applyFilter();
@@ -162,7 +164,7 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
-        mFilterDialog.findViewById(R.id.cancle).setOnClickListener(new View.OnClickListener() {
+        mFilterDialog.findViewById(R.id.cancel_complaint).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mFilterDialog.dismiss();
@@ -351,6 +353,13 @@ public class FilterActivity extends AppCompatActivity {
                 mNoDataFoundImage.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
 }

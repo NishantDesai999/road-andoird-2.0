@@ -85,6 +85,7 @@ public class NotificationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(NotificationActivity.this, MainActivity.class));
+                finish();
             }
         });
     }
@@ -201,6 +202,14 @@ public class NotificationActivity extends AppCompatActivity {
             }
 
         }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
 
 }
 

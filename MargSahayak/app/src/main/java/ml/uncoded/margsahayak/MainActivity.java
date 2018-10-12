@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         init();
         initListners();
         StaticMethods.permissionmethod(MainActivity.this);
+
     }
 
     public void init(){
@@ -81,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this,NotificationActivity.class);
                 startActivity(i);
 
-
-
             }
         });
 
@@ -91,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 OptionsBottomSheet optionsBottomSheet=OptionsBottomSheet.getInstance();
                 optionsBottomSheet.show(getSupportFragmentManager(),"First Bottom sheet");
-
 
             }
         });

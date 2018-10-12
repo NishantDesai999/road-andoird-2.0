@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,7 +12,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +30,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -157,51 +156,108 @@ public class InputActivity2 extends AppCompatActivity {
                 mInputData.setGrievanceName(mGri);
                 String[] path = fileUri.getPath().split("/");
                 mInputData.setImgurl(path[path.length-1]);
-                RealmList<String> mLocationList = new RealmList<String>("23.456574", "72.234324");
-                mInputData.setLocation(mLocationList);
 
 
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = new Date();
                 mInputData.setTime(formatter.format(date));
 
+                //code to get Location from gps
+                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                MyLocationListener locationListener = MyLocationListener.getInstance();
+                String lon=null,lat=null;
+                if (locationManager != null) {
+
+                    Log.d("MyLocationListner", "LocationListner Stopped");
+                    if (ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        return;
+                    }
+                    Location l = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    lon = ""+l.getLongitude();
+                    lat = ""+l.getLatitude();
+                    locationManager.removeUpdates(locationListener);
+                    locationManager = null;
+                }
+
+                Toast.makeText(InputActivity2.this, "" + locationListener.lon + locationListener.lat, Toast.LENGTH_SHORT).show();
+                if(locationListener.lon != null && locationListener.lat!=null){
+                    lon  = locationListener.lon;
+                    lat = locationListener.lat;
+                }
+                lat = "23.10524664";
+                lon = "72.58701144";
+                //location set in offline complain model
+                RealmList<String> mLocationList = new RealmList<String>(lat, lon);
+                mInputData.setLocation(mLocationList);
+
+
+
+
+
+
 
                 //Give save offline or cancel dialog with pls enable internet to ulasd internet
                 if (!StaticMethods.checkInternetConnectivity(InputActivity2.this)) {
-                    saveOffline(mInputData);
+                    //diaog
+                    Dialog mOfflineDialog=new Dialog(InputActivity2.this);
+                    mOfflineDialog.setContentView(R.layout.save_to_offline_dialog_layout);
+                    mOfflineDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                    mOfflineDialog.show();
+
+                    ((TextView)mOfflineDialog.findViewById(R.id.save_offline_complaint)).setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            saveOffline(mInputData);
+                        }
+                    });
+
+                    ((TextView)mOfflineDialog.findViewById(R.id.cancel_complaint)).setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(InputActivity2.this,MainActivity.class));
+                            finish();
+                        }
+                    });
+
                 } else {
 
                     //Check Bisag APi
                     final ProgressBar mProgressBar = findViewById(R.id.InputProgressBar);
                     mProgressBar.setVisibility(View.VISIBLE);
                     final MainApplication m = ((MainApplication) getApplicationContext());
-                    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                    MyLocationListener locationListener = MyLocationListener.getInstance();
-                    String lon=null,lat=null;
-                    if (locationManager != null) {
 
-                        Log.d("MyLocationListner", "LocationListner Stopped");
-                        if (ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            return;
-                        }
-                        Location l = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        lon = ""+l.getLongitude();
-                        lat = ""+l.getLatitude();
-                        locationManager.removeUpdates(locationListener);
-                        locationManager = null;
-                    }
 
-                    Toast.makeText(InputActivity2.this, "" + locationListener.lon + locationListener.lat, Toast.LENGTH_SHORT).show();
-                    if(locationListener.lon != null && locationListener.lat!=null){
-                        lon  = locationListener.lon;
-                        lat = locationListener.lat;
-                    }
+//                    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//                    MyLocationListener locationListener = MyLocationListener.getInstance();
+//                    String lon=null,lat=null;
+//                    if (locationManager != null) {
+//
+//                        Log.d("MyLocationListner", "LocationListner Stopped");
+//                        if (ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                            return;
+//                        }
+//                        Location l = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//                        lon = ""+l.getLongitude();
+//                        lat = ""+l.getLatitude();
+//                        locationManager.removeUpdates(locationListener);
+//                        locationManager = null;
+//                    }
+//
+//                    Toast.makeText(InputActivity2.this, "" + locationListener.lon + locationListener.lat, Toast.LENGTH_SHORT).show();
+//                    if(locationListener.lon != null && locationListener.lat!=null){
+//                        lon  = locationListener.lon;
+//                        lat = locationListener.lat;
+//                    }
 
 
 
                     Log.d("MyLocationListner",lon+lat);
                     lat = "23.10524664";
                     lon = "72.58701144";
+                    Toast.makeText(InputActivity2.this, "" +lat+lon , Toast.LENGTH_SHORT).show();
+
                     m.mApi.callBisagApi(lat,lon)
                             .enqueue(new mCallBack<List<BisagResponse>>(InputActivity2.this, mProgressBar) {
 
@@ -222,10 +278,22 @@ public class InputActivity2 extends AppCompatActivity {
                                     //Canot upload complain
                                     // ok
 
-//                                    if(minD > 0.15){
-//
-//                                        return;
-//                                    }
+                                    if(minD > 1.5){
+                                        Dialog mDistanceDialog=new Dialog(InputActivity2.this);
+                                        mDistanceDialog.setContentView(R.layout.custom_dialog_layout);
+                                        ((TextView)mDistanceDialog.findViewById(R.id.customDialog_tv_message)).setText("You are too far away from road");
+                                        mDistanceDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                                        mDistanceDialog.show();
+
+                                        ((Button)mDistanceDialog.findViewById(R.id.customDialog_btn_Ok)).setOnClickListener(new View.OnClickListener() {
+
+                                            @Override
+                                            public void onClick(View v) {
+                                                finish();
+                                            }
+                                        });
+                                        return;
+                                    }
 
                                     BisagResponse mBisagresponse = response.get(index);
 
@@ -240,7 +308,6 @@ public class InputActivity2 extends AppCompatActivity {
                                     Log.d("debug",filePath);
                                     ImageUpload mImageUpload = new ImageUpload(InputActivity2.this, filePath, mProgressBar);
                                     ImageUpload.uploadImage();
-
                                     ComplainModel mComplainModel = new ComplainModel();
                                     mComplainModel.setDescription(mInputData.getGrievanceDescription());
                                     Log.d("debug", "onSuccessfullResponse: " + mComplainModel.getComplaintStatus());
@@ -249,11 +316,9 @@ public class InputActivity2 extends AppCompatActivity {
                                     mComplainModel.setUrl(mInputData.getImgurl());
                                     mComplainModel.setLocation(mInputData.getLocation());
                                     mComplainModel.setComplaintStatus("Pending.");
-
                                     mComplainModel.setRoadCode(mBisagresponse.roadCode);
                                     mComplainModel.setRoadName(mBisagresponse.roadName);
                                     mComplainModel.setRoadType(mBisagresponse.raodType);
-
                                     // Upload Complain ---
                                     ((MainApplication) getApplicationContext()).mApi
                                             .postComplaint(SharedPrefrenceUser.getInstance(InputActivity2.this).getToken(),mComplainModel)
@@ -279,6 +344,7 @@ public class InputActivity2 extends AppCompatActivity {
                                                         Intent i = new Intent(InputActivity2.this, MainActivity.class);
                                                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                                         startActivity(i);
+                                                        finish();
                                                     }
                                                 });
                                             }else{
@@ -450,9 +516,8 @@ public class InputActivity2 extends AppCompatActivity {
                 offlineComplainModel.setGrievanceDescription(mInputData.getGrievanceDescription());
                 offlineComplainModel.setLocation(mInputData.getLocation());
                 offlineComplainModel.setGrievanceName(mInputData.getGrievanceName());
-
-
                 offlineComplainModel.setImgurl(fileUri.getPath() );
+
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
@@ -460,6 +525,7 @@ public class InputActivity2 extends AppCompatActivity {
                 Intent i = new Intent(InputActivity2.this, MainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(i);
+                finish();
 
             }
         });

@@ -31,6 +31,7 @@ public class OptionsBottomSheet extends BottomSheetDialogFragment {
          filter.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
+                 dismiss();
                  Intent i = new Intent(getActivity(),FilterActivity.class);
                  startActivity(i);
              }
@@ -61,6 +62,7 @@ public class OptionsBottomSheet extends BottomSheetDialogFragment {
              @Override
              public void onClick(View v) {
                  SharedPrefrenceUser.getInstance(getActivity()).logout();
+                 getActivity().finish();
              }
          });
 

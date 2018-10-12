@@ -19,6 +19,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
+import io.realm.RealmList;
 import ml.uncoded.margsahayak.Individual_Detail_Activity;
 import ml.uncoded.margsahayak.R;
 import ml.uncoded.margsahayak.models.ComplainModel;
@@ -128,7 +129,11 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
                     mIntentToIndividuaalCard.putExtra("MEstimatedTimekey",itemsList.get(index).getEstimatedTime());
                     mIntentToIndividuaalCard.putExtra("MDescriptionkey",itemsList.get(index).getDescription());
                     mIntentToIndividuaalCard.putExtra("MURLkey",itemsList.get(index).getUrl());
-                    StringBuilder mComments = new StringBuilder(itemsList.get(index).getGrivType());
+                    StringBuilder mComments = new StringBuilder();
+                    RealmList<String> commentData = itemsList.get(index).getComment();
+                    for(int i=0; i < commentData.size(); i++){
+                        mComments.append(commentData.get(i));
+                    }
                     mIntentToIndividuaalCard.putExtra("MCommentkey",mComments.toString());
 
 
