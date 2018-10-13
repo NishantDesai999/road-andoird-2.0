@@ -118,7 +118,6 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
                 public void onClick(View v) {
 
                    int index = getAdapterPosition();
-
                   Intent mIntentToIndividuaalCard =new Intent(mContext,Individual_Detail_Activity.class);
                     mIntentToIndividuaalCard.putExtra("MGrivTypekey",itemsList.get(index).getGrivType());
                     mIntentToIndividuaalCard.putExtra("MComplainIdkey",itemsList.get(index).getId());
@@ -135,13 +134,6 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
                         mComments.append(commentData.get(i));
                     }
                     mIntentToIndividuaalCard.putExtra("MCommentkey",mComments.toString());
-
-
-
-
-
-
-
                     mContext.startActivity(mIntentToIndividuaalCard);
 
                 }

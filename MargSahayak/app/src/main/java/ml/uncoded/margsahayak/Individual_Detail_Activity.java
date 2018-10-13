@@ -23,6 +23,8 @@ import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.util.concurrent.ExecutionException;
 
+import io.realm.Realm;
+import io.realm.RealmList;
 import ml.uncoded.margsahayak.models.ComplainModel;
 
 public class Individual_Detail_Activity extends AppCompatActivity {
@@ -49,7 +51,7 @@ public class Individual_Detail_Activity extends AppCompatActivity {
     }
 
     void init() {
-        Intent i = getIntent();
+        Intent intent = getIntent();
         mGriType = (TextView) findViewById(R.id.griTypeScroll);
         mComplainId = (TextView) findViewById(R.id.complain_id);
         mStatus = (TextView) findViewById(R.id.statusScroll);
@@ -60,17 +62,40 @@ public class Individual_Detail_Activity extends AppCompatActivity {
         mComment = (TextView) findViewById(R.id.comment);
         mDescription = (TextView) findViewById(R.id.descriptions);
 
-        Toast.makeText(this, "GrievanceType"+i.getStringExtra("MGrivTypekey"), Toast.LENGTH_SHORT).show();
-        mGriType.setText(i.getStringExtra("MGrivTypekey"));
-        mComplainId.setText(i.getStringExtra("MComplainIdkey"));
-        mStatus.setText(i.getStringExtra("MComplaintStatuskey"));
-        mOfficerName.setText(i.getStringExtra("MOfficerNamekey"));
-        mSubmittedDate.setText(i.getStringExtra("MSubmittedDatekey"));
-        mRoadName.setText(i.getStringExtra("MRoadNamekey"));
-        mOfficerName.setText(i.getStringExtra("MOfficerNamekey"));
-        mEstimatedDate.setText(i.getStringExtra("MEstimatedTimekey"));
-        mComment.setText(i.getStringExtra("MCommentkey"));
-        mDescription.setText(i.getStringExtra("MDescriptionkey"));
+//        Realm r=Realm.getDefaultInstance();
+//        ComplainModel complainModel=r.where(ComplainModel.class).equalTo("id",intent.getStringExtra("MComplainIdkey")).findFirst();
+//        mGriType.setText(complainModel.getGrivType());
+//        mComplainId.setText(complainModel.getId());
+//        mStatus.setText(complainModel.getComplaintStatus());
+//        mOfficerName.setText(complainModel.getOfficerName());
+//        mSubmittedDate.setText(complainModel.getTime());
+//        mRoadName.setText(complainModel.getRoadName());
+//        mEstimatedDate.setText(complainModel.getEstimatedTime());
+//        StringBuilder mCommentsString = new StringBuilder();
+//        RealmList<String> commentData = complainModel.getComment();
+//        for(int i=0; i < commentData.size(); i++){
+//            mCommentsString.append(commentData.get(i));
+//        }
+//        mComment.setText(mCommentsString);
+//        mDescription.setText(complainModel.getDescription());
+//        Glide.with(Individual_Detail_Activity.this).load(complainModel.getUrl()).into(new SimpleTarget<GlideDrawable>() {
+//            @Override
+//            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+//                ((android.support.design.widget.CollapsingToolbarLayout)findViewById(R.id.toolbar_layout)).setBackground(resource);
+//            }
+//        });
+
+        Toast.makeText(this, "GrievanceType"+intent.getStringExtra("MGrivTypekey"), Toast.LENGTH_SHORT).show();
+        mGriType.setText(intent.getStringExtra("MGrivTypekey"));
+        mComplainId.setText(intent.getStringExtra("MComplainIdkey"));
+        mStatus.setText(intent.getStringExtra("MComplaintStatuskey"));
+        mOfficerName.setText(intent.getStringExtra("MOfficerNamekey"));
+        mSubmittedDate.setText(intent.getStringExtra("MSubmittedDatekey"));
+        mRoadName.setText(intent.getStringExtra("MRoadNamekey"));
+        mOfficerName.setText(intent.getStringExtra("MOfficerNamekey"));
+        mEstimatedDate.setText(intent.getStringExtra("MEstimatedTimekey"));
+        mComment.setText(intent.getStringExtra("MCommentkey"));
+        mDescription.setText(intent.getStringExtra("MDescriptionkey"));
 
 
 
@@ -86,7 +111,7 @@ public class Individual_Detail_Activity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 
-        Glide.with(Individual_Detail_Activity.this).load(i.getStringExtra("MURLkey")).into(new SimpleTarget<GlideDrawable>() {
+        Glide.with(Individual_Detail_Activity.this).load(intent.getStringExtra("MURLkey")).into(new SimpleTarget<GlideDrawable>() {
             @Override
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
                 ((android.support.design.widget.CollapsingToolbarLayout)findViewById(R.id.toolbar_layout)).setBackground(resource);
