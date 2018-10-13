@@ -62,7 +62,7 @@ public class Individual_Detail_Activity extends AppCompatActivity {
         mComment = (TextView) findViewById(R.id.comment);
         mDescription = (TextView) findViewById(R.id.descriptions);
 
-//        Realm r=Realm.getDefaultInstance();
+        Realm r=Realm.getDefaultInstance();
 //        ComplainModel complainModel=r.where(ComplainModel.class).equalTo("id",intent.getStringExtra("MComplainIdkey")).findFirst();
 //        mGriType.setText(complainModel.getGrivType());
 //        mComplainId.setText(complainModel.getId());
