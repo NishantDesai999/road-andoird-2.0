@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white">
 
     <LinearLayout
@@ -14,7 +15,7 @@
         <ImageView
             android:layout_width="@dimen/img_width_height"
             android:layout_height="@dimen/img_width_height"
-            android:src="@drawable/ic_add_complaint" />
+            app:srcCompat="@drawable/ic_add_complaint" />
 
         <TextView
             android:layout_width="wrap_content"
