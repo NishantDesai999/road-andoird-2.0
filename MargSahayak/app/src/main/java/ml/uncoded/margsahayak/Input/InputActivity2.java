@@ -84,21 +84,37 @@ public class InputActivity2 extends AppCompatActivity {
 
     private void initListners() {
 
-
+        final Button btnDescription=findViewById(R.id.add_discription);
         //Code for both add discription and select greivance
-        findViewById(R.id.add_discription).setOnClickListener(new View.OnClickListener() {
+        btnDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Dialog mAdd_discription_dialog = new Dialog(InputActivity2.this);
                 mAdd_discription_dialog.setContentView(R.layout.discription_add_dialog_layout);
+                final EditText edtDescription=mAdd_discription_dialog.findViewById(R.id.discription_edit_text);
                 mAdd_discription_dialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                if(mDiscription == "No Description")
+                    edtDescription.setText("");
+                else
+                    edtDescription.setText(mDiscription);
+
                 mAdd_discription_dialog.show();
 
                 mAdd_discription_dialog.findViewById(R.id.add_discription_dialog).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mDiscription = ((EditText) mAdd_discription_dialog.findViewById(R.id.discription_edit_text)).getText().toString().trim();
+                        mDiscription = edtDescription.getText().toString().trim();
+                        if(!mDiscription.equals("No Description")){
+                            btnDescription.setText("Edit Description");
+                           edtDescription.setText(mDiscription);
+                        }
+                        if(mDiscription==null||mDiscription.trim().length()==0){
+                            mDiscription = "No Description";
+                            btnDescription.setText("Add Description");
+
+                        }
                         mAdd_discription_dialog.dismiss();
+
                     }
                 });
 
@@ -108,7 +124,6 @@ public class InputActivity2 extends AppCompatActivity {
                         mAdd_discription_dialog.dismiss();
                     }
                 });
-
             }
         });
 
@@ -121,7 +136,6 @@ public class InputActivity2 extends AppCompatActivity {
                 final ListView mGrievanceListView = (ListView) mSelect_grievance_dialog.findViewById(R.id.select_grievance_list);
                 String[] mListOfGrievance = getResources().getStringArray(R.array.select_grievance_array);
                 ArrayAdapter mGrievanceAdapter = new ArrayAdapter(InputActivity2.this, android.R.layout.simple_list_item_1, mListOfGrievance);
-
                 mGrievanceListView.setAdapter(mGrievanceAdapter);
                 mGrievanceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -156,146 +170,132 @@ public class InputActivity2 extends AppCompatActivity {
         findViewById(R.id.btn_upload).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Dialogs dialogs;
                 //Get input data & put into mInput Data
-                final OfflineComplainModel mInputData = new OfflineComplainModel();
-                mInputData.setGrievanceDescription(mDiscription);
-                mInputData.setGrievanceName(mGri);
-                String[] path = fileUri.getPath().split("/");
-                mInputData.setImgurl(path[path.length - 1]);
-
-
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                Date date = new Date();
-                mInputData.setTime(formatter.format(date));
-
-                //code to get Location from gps
-                LocationManager locationManager = SingletonLocationManager.getInstance(getApplication(), "From Upload Button");
-                MyLocationListener locationListener = MyLocationListener.getInstance("Upload Button Input Activity");
-                String lon = null, lat = null;
-                if (locationManager != null) {
-                    Log.d("MyLocationListner", "LocationListner Stopped");
-                    if (ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        return;
+                    if(mGri==null||mGri.length()==0){
+                        dialogs = new Dialogs("Please Select Grievance");
+                        dialogs.show(getFragmentManager(), "ErrMSG");
                     }
-                    Location l = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    if(l==null){
-                        l = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    else if(fileUri==null){
+                        dialogs = new Dialogs("Please Capture An Image");
+                        dialogs.show(getFragmentManager(), "ErrMSG");
                     }
-                    if(l==null){
-                        l = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-                    }
-                    if(l!=null) {
-                        lon = "" + l.getLongitude();
-                        lat = "" + l.getLatitude();
-                    }
-                    if (locationListener.lon != null && locationListener.lat != null) {
-                        Toast.makeText(InputActivity2.this, "" + locationListener.lon + locationListener.lat, Toast.LENGTH_SHORT).show();
-                        lon = locationListener.lon;
-                        lat = locationListener.lat;
-                    }
+                    else{
+                    final OfflineComplainModel mInputData = new OfflineComplainModel();
+                    mInputData.setGrievanceDescription(mDiscription);
+                    mInputData.setGrievanceName(mGri);
+                    String[] path = fileUri.getPath().split("/");
+                    mInputData.setImgurl(path[path.length - 1]);
 
 
-                    locationManager.removeUpdates(locationListener);
-                    locationListener = null;
-                }
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    Date date = new Date();
+                    mInputData.setTime(formatter.format(date));
 
-                lat = "23.10524664";
-                lon = "72.58701144";
-                //location set in offline complain model
-                RealmList<String> mLocationList = new RealmList<String>(lat, lon);
-                mInputData.setLocation(mLocationList);
-
-
-                //Give save offline or cancel dialog with pls enable internet to ulasd internet
-                if (!StaticMethods.checkInternetConnectivity(InputActivity2.this)) {
-                    //diaog
-                    final Dialog mOfflineDialog = new Dialog(InputActivity2.this);
-                    mOfflineDialog.setContentView(R.layout.save_to_offline_dialog_layout);
-                    mOfflineDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
-                    mOfflineDialog.show();
-
-                    ((Button) mOfflineDialog.findViewById(R.id.save_offline_complaint)).setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-                            mOfflineDialog.dismiss();
-                            saveOffline(mInputData);
-
+                    //code to get Location from gps
+                    LocationManager locationManager = SingletonLocationManager.getInstance(getApplication(), "From Upload Button");
+                    MyLocationListener locationListener = MyLocationListener.getInstance("Upload Button Input Activity");
+                    String lon = null, lat = null;
+                    if (locationManager != null) {
+                        Log.d("MyLocationListner", "LocationListner Stopped");
+                        if (ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            return;
                         }
-                    });
-
-                    ((Button) mOfflineDialog.findViewById(R.id.cancel_complaint)).setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-                            mOfflineDialog.dismiss();
-                            //startActivity(new Intent(InputActivity2.this, MainActivity.class));
-                            finish();
+                        Location l = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        if (l == null) {
+                            l = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         }
-                    });
-
-                } else {
-
-                    //Check Bisag APi
-                    final ProgressBar mProgressBar = findViewById(R.id.InputProgressBar);
-                    mProgressBar.setVisibility(View.VISIBLE);
-                    final MainApplication m = ((MainApplication) getApplicationContext());
-
-
-//                    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//                    MyLocationListener locationListener = MyLocationListener.getInstance();
-//                    String lon=null,lat=null;
-//                    if (locationManager != null) {
-//
-//                        Log.d("MyLocationListner", "LocationListner Stopped");
-//                        if (ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                            return;
-//                        }
-//                        Location l = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//                        lon = ""+l.getLongitude();
-//                        lat = ""+l.getLatitude();
-//                        locationManager.removeUpdates(locationListener);
-//                        locationManager = null;
-//                    }
-//
-//                    Toast.makeText(InputActivity2.this, "" + locationListener.lon + locationListener.lat, Toast.LENGTH_SHORT).show();
-//                    if(locationListener.lon != null && locationListener.lat!=null){
-//                        lon  = locationListener.lon;
-//                        lat = locationListener.lat;
-//                    }
+                        if (l == null) {
+                            l = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                        }
+                        if (l != null) {
+                            lon = "" + l.getLongitude();
+                            lat = "" + l.getLatitude();
+                        }
+                        if (locationListener.lon != null && locationListener.lat != null) {
+                            Toast.makeText(InputActivity2.this, "" + locationListener.lon + locationListener.lat, Toast.LENGTH_SHORT).show();
+                            lon = locationListener.lon;
+                            lat = locationListener.lat;
+                        }
 
 
-                    Log.d("MyLocationListner", lon + lat);
+                        locationManager.removeUpdates(locationListener);
+                        locationListener = null;
+                    }
+
                     lat = "23.10524664";
                     lon = "72.58701144";
-                    Toast.makeText(InputActivity2.this, "" + lat + lon, Toast.LENGTH_SHORT).show();
+                    //location set in offline complain model
+                    RealmList<String> mLocationList = new RealmList<String>(lat, lon);
+                    mInputData.setLocation(mLocationList);
 
-                    m.mApi.callBisagApi(lat, lon)
-                            .enqueue(new mCallBack<List<BisagResponse>>(InputActivity2.this, mProgressBar) {
 
-                                @Override
-                                public void onSuccessfullResponse(View progressBar, List<BisagResponse> response, Context c) {
+                    //Give save offline or cancel dialog with pls enable internet to ulasd internet
+                    if (!StaticMethods.checkInternetConnectivity(InputActivity2.this)) {
+                        //diaog
+                        final Dialog mOfflineDialog = new Dialog(InputActivity2.this);
+                        mOfflineDialog.setContentView(R.layout.save_to_offline_dialog_layout);
+                        mOfflineDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                        mOfflineDialog.show();
 
-                                    float minD = Float.parseFloat(response.get(0).distance), tempD;
-                                    int index = 0;
-                                    for (int i = 0; i < response.size(); i++) {
-                                        index = i;
-                                        tempD = Float.parseFloat(response.get(0).distance);
-                                        if (minD > tempD) {
-                                            minD = tempD;
+                        ((Button) mOfflineDialog.findViewById(R.id.save_offline_complaint)).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+                                mOfflineDialog.dismiss();
+                                saveOffline(mInputData);
+
+                            }
+                        });
+
+                        ((Button) mOfflineDialog.findViewById(R.id.cancel_complaint)).setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+                                mOfflineDialog.dismiss();
+                                //startActivity(new Intent(InputActivity2.this, MainActivity.class));
+                                finish();
+                            }
+                        });
+
+                    } else {
+
+                        //Check Bisag APi
+                        final ProgressBar mProgressBar = findViewById(R.id.InputProgressBar);
+                        mProgressBar.setVisibility(View.VISIBLE);
+                        final MainApplication m = ((MainApplication) getApplicationContext());
+
+
+                        Log.d("MyLocationListner", lon + lat);
+                        lat = "23.10524664";
+                        lon = "72.58701144";
+                        Toast.makeText(InputActivity2.this, "" + lat + lon, Toast.LENGTH_SHORT).show();
+
+                        m.mApi.callBisagApi(lat, lon)
+                                .enqueue(new mCallBack<List<BisagResponse>>(InputActivity2.this, mProgressBar) {
+
+                                    @Override
+                                    public void onSuccessfullResponse(View progressBar, List<BisagResponse> response, Context c) {
+
+                                        float minD = Float.parseFloat(response.get(0).distance), tempD;
+                                        int index = 0;
+                                        for (int i = 0; i < response.size(); i++) {
+                                            index = i;
+                                            tempD = Float.parseFloat(response.get(0).distance);
+                                            if (minD > tempD) {
+                                                minD = tempD;
+                                            }
                                         }
-                                    }
 
-                                    //Show you are too far away from road
-                                    //Canot upload complain
-                                    // ok
+                                        //Show you are too far away from road
+                                        //Canot upload complain
+                                        // ok
 
-                                    if (minD > 1.5) {
-                                        String strErrMsg = "You are too far away from road.";
-                                        Dialogs dialogs;
-                                        dialogs = new Dialogs(strErrMsg);
-                                        dialogs.show(((Activity) c).getFragmentManager(), "ErrMSG");
+                                        if (minD > 1.5) {
+                                            String strErrMsg = "You are too far away from road.";
+                                            Dialogs dialogs;
+                                            dialogs = new Dialogs(strErrMsg);
+                                            dialogs.show(((Activity) c).getFragmentManager(), "ErrMSG");
 
 //      Dialog mDistanceDialog=new Dialog(InputActivity2.this);
 //                                        mDistanceDialog.setContentView(R.layout.custom_dialog_layout);
@@ -310,80 +310,84 @@ public class InputActivity2 extends AppCompatActivity {
 //                                                finish();
 //                                            }
 //                                        });
-                                        return;
-                                    }
+                                            return;
+                                        }
 
-                                    BisagResponse mBisagresponse = response.get(index);
+                                        BisagResponse mBisagresponse = response.get(index);
 
-                                    Toast.makeText(InputActivity2.this, "" +
-                                            mBisagresponse.roadCode + " " + mBisagresponse.roadName + " " +
-                                            mBisagresponse.raodType, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(InputActivity2.this, "" +
+                                                mBisagresponse.roadCode + " " + mBisagresponse.roadName + " " +
+                                                mBisagresponse.raodType, Toast.LENGTH_SHORT).show();
 
-                                    //Upload image ---
-                                    //String filePath = "/storage/emulated/0/Pictures/Marg_Sahayak/IMG_20180928_155751.jpg";
-                                    String filePath = fileUri.getPath();
-                                 //   Toast.makeText(c, "Filepath : " + filePath, Toast.LENGTH_SHORT).show();
-                                    Log.d("debug", filePath);
-                                    ImageUpload mImageUpload = new ImageUpload(InputActivity2.this, filePath, mProgressBar);
-                                    ImageUpload.uploadImage();
-                                    ComplainModel mComplainModel = new ComplainModel();
-                                    mComplainModel.setDescription(mInputData.getGrievanceDescription());
-                                    Log.d("debug", "onSuccessfullResponse: " + mComplainModel.getComplaintStatus());
-                                    mComplainModel.setGrivType(mInputData.getGrievanceName());
-                                    mComplainModel.setTime(mInputData.getTime());
-                                    mComplainModel.setUrl(mInputData.getImgurl());
-                                    mComplainModel.setLocation(mInputData.getLocation());
-                                    mComplainModel.setComplaintStatus("Pending.");
-                                    mComplainModel.setRoadCode(mBisagresponse.roadCode);
-                                    mComplainModel.setRoadName(mBisagresponse.roadName);
-                                    mComplainModel.setRoadType(mBisagresponse.raodType);
-                                    // Upload Complain ---
-                                    ((MainApplication) getApplicationContext()).mApi
-                                            .postComplaint(SharedPrefrenceUser.getInstance(InputActivity2.this).getToken(), mComplainModel)
-                                            .enqueue(new mCallBack<ComplainModel>(InputActivity2.this, mProgressBar) {
+                                        //Upload image ---
+                                        //String filePath = "/storage/emulated/0/Pictures/Marg_Sahayak/IMG_20180928_155751.jpg";
+                                        String filePath = fileUri.getPath();
+                                        //   Toast.makeText(c, "Filepath : " + filePath, Toast.LENGTH_SHORT).show();
+                                        Log.d("debug", filePath);
+                                        ImageUpload mImageUpload = new ImageUpload(InputActivity2.this, filePath, mProgressBar);
+                                        ImageUpload.uploadImage();
+                                        ComplainModel mComplainModel = new ComplainModel();
+                                        mComplainModel.setDescription(mInputData.getGrievanceDescription());
+                                        Log.d("debug", "onSuccessfullResponse: " + mComplainModel.getComplaintStatus());
+                                        mComplainModel.setGrivType(mInputData.getGrievanceName());
+                                        mComplainModel.setTime(mInputData.getTime());
+                                        mComplainModel.setUrl(mInputData.getImgurl());
+                                        mComplainModel.setLocation(mInputData.getLocation());
+                                        mComplainModel.setComplaintStatus("Pending.");
+                                        mComplainModel.setRoadCode(mBisagresponse.roadCode);
+                                        mComplainModel.setRoadName(mBisagresponse.roadName);
+                                        mComplainModel.setRoadType(mBisagresponse.raodType);
+                                        // Upload Complain ---
+                                        ((MainApplication) getApplicationContext()).mApi
+                                                .postComplaint(SharedPrefrenceUser.getInstance(InputActivity2.this).getToken(), mComplainModel)
+                                                .enqueue(new mCallBack<ComplainModel>(InputActivity2.this, mProgressBar) {
 
-                                                @Override
-                                                public void onSuccessfullResponse(final View progressBar, final ComplainModel response, Context c) {
+                                                    @Override
+                                                    public void onSuccessfullResponse(final View progressBar, final ComplainModel response, Context c) {
 
 
-                                                    if (Boolean.parseBoolean(response.getSuccess())) {
+                                                        if (Boolean.parseBoolean(response.getSuccess())) {
 
-                                                        Realm r = Realm.getDefaultInstance();
-                                                        progressBar.setVisibility(View.INVISIBLE);
-                                                        r.executeTransactionAsync(new Realm.Transaction() {
-                                                            @Override
-                                                            public void execute(Realm realm) {
-                                                                realm.copyToRealm(response);
+                                                            Realm r = Realm.getDefaultInstance();
+                                                            progressBar.setVisibility(View.INVISIBLE);
+                                                            r.executeTransactionAsync(new Realm.Transaction() {
+                                                                @Override
+                                                                public void execute(Realm realm) {
+                                                                    realm.copyToRealm(response);
 
-                                                            }
-                                                        }, new Realm.Transaction.OnSuccess() {
-                                                            @Override
-                                                            public void onSuccess() {
+                                                                }
+                                                            }, new Realm.Transaction.OnSuccess() {
+                                                                @Override
+                                                                public void onSuccess() {
 //                                                                Intent i = new Intent(InputActivity2.this, MainActivity.class);
 //                                                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //                                                                startActivity(i);
-                                                                finish();
-                                                            }
-                                                        });
-                                                    } else {
-                                                        Toast.makeText(c, "" + response.getMsg(), Toast.LENGTH_SHORT).show();
+                                                                    finish();
+                                                                }
+                                                            });
+                                                        } else {
+                                                            Toast.makeText(c, "" + response.getMsg(), Toast.LENGTH_SHORT).show();
+                                                        }
                                                     }
-                                                }
 
-                                                @Override
-                                                public void onFailureResponse(View progressBar, Context c) {
+                                                    @Override
+                                                    public void onFailureResponse(View progressBar, Context c) {
 
-                                                }
-                                            });
+                                                    }
+                                                });
 
-                                }
+                                    }
 
-                                @Override
-                                public void onFailureResponse(View progressBar, Context c) {
-                                    Toast.makeText(InputActivity2.this, "Bisag Response failure", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                }
+                                    @Override
+                                    public void onFailureResponse(View progressBar, Context c) {
+                                        Toast.makeText(InputActivity2.this, "Bisag Response failure", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+
+
+            }
+
             }
         });
     }
