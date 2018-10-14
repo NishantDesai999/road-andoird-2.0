@@ -126,18 +126,23 @@ public class NotificationActivity extends AppCompatActivity {
                                     List<NotificationComplaintModel> notificationList = response.body();
                                     ComplainModel complainModel;
                                     for (NotificationComplaintModel notificationComplaintModel : notificationList) {
-//                                            complainModel = realm.where(ComplainModel.class).equalTo("id", notificationComplaintModel.getId()).findFirst();
-//                                            complainModel.setId(notificationComplaintModel.getId());
-//                                            complainModel.setComplaintStatus(notificationComplaintModel.getComplaintStatus());
-//                                            complainModel.setComment(notificationComplaintModel.getComments());
-//                                            complainModel.setEstimatedTime(notificationComplaintModel.getEstimatedDate());
-//                                            complainModel.setOfficerEmail(notificationComplaintModel.getOfficerEmail());
-//                                            complainModel.setOfficerId(notificationComplaintModel.getOfficerId());
-//                                            complainModel.setOfficerName(notificationComplaintModel.getOfficerName());
-//                                            notificationComplaintModel.setImgUrl(complainModel.getUrl());
+                                            complainModel = realm.where(ComplainModel.class).equalTo("id", notificationComplaintModel.getId()).findFirst();
+                                        if(notificationComplaintModel.getComplaintStatus()!=null)
+                                            complainModel.setComplaintStatus(notificationComplaintModel.getComplaintStatus());
+                                        if(notificationComplaintModel.getComments()!=null)
+                                            complainModel.setComment(notificationComplaintModel.getComments());
+                                        if(notificationComplaintModel.getEstimatedDate()!=null)
+                                            complainModel.setEstimatedTime(notificationComplaintModel.getEstimatedDate());
+                                        if(notificationComplaintModel.getOfficerEmail()!=null)
+                                            complainModel.setOfficerEmail(notificationComplaintModel.getOfficerEmail());
+                                        if(notificationComplaintModel.getOfficerId()!=null)
+                                            complainModel.setOfficerId(notificationComplaintModel.getOfficerId());
+                                        if(notificationComplaintModel.getOfficerName()!=null)
+                                            complainModel.setOfficerName(notificationComplaintModel.getOfficerName());
+                                            notificationComplaintModel.setImgUrl(complainModel.getUrl());
                                         Log.d("test", "execute: " + notificationComplaintModel.getEstimatedDate());
                                         realm.copyToRealm(notificationComplaintModel);
-//                                            realm.insertOrUpdate(complainModel);
+                                      realm.insertOrUpdate(complainModel);
                                     }
 
 
@@ -145,9 +150,7 @@ public class NotificationActivity extends AppCompatActivity {
                             }, new Realm.Transaction.OnSuccess() {
                                 @Override
                                 public void onSuccess() {
-//                                        Intent i = new Intent(Main2Activity.this, MainActivity.class);
-//                                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                                        startActivity(i);
+
                                     List<NotificationComplaintModel> complainList = r1.where(NotificationComplaintModel.class).findAll();
                                     adapter = new NotificationListDataAdapter(NotificationActivity.this, new ArrayList<NotificationComplaintModel>(complainList));
                                     mRecycleView.setLayoutManager(layoutManager);

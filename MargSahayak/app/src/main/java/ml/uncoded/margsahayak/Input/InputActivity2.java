@@ -99,7 +99,6 @@ public class InputActivity2 extends AppCompatActivity {
                     edtDescription.setText(mDiscription);
 
                 mAdd_discription_dialog.show();
-
                 mAdd_discription_dialog.findViewById(R.id.add_discription_dialog).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -151,7 +150,7 @@ public class InputActivity2 extends AppCompatActivity {
         });
 
 
-        findViewById(R.id.imageCaptureCard).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.capture_img).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -160,6 +159,14 @@ public class InputActivity2 extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btn_retry_img_capture).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                captureImage();
+
+            }
+        });
         findViewById(R.id.closeInput).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -551,11 +558,14 @@ public class InputActivity2 extends AppCompatActivity {
 
     private void showImage() {
         findViewById(R.id.cameraIcon).setVisibility(View.INVISIBLE);
-        findViewById(R.id.cameraText).setVisibility(View.INVISIBLE);
         ImageView mImageView = (ImageView) findViewById(R.id.imagePriview);
         mImageView.setVisibility(View.VISIBLE);
+        findViewById(R.id.btn_retry_img_capture).setVisibility(View.VISIBLE);
         mImageView.setImageBitmap(bitmap);
-
+        mImageView.setColorFilter(Color.argb(150, 0, 0, 0));
+        mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        findViewById(R.id.take_picture_instruction).setVisibility(View.INVISIBLE);
+        findViewById(R.id.capture_img).setVisibility(View.GONE);
     }
 
     private void saveOffline(final OfflineComplainModel mInputData) {

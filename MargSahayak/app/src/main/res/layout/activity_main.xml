@@ -8,6 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:background="#f1eeee"
     >
 
 
@@ -29,17 +30,73 @@
             android:layout_height="match_parent"
             tools:context=".MainActivity">
 
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="150dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:elevation="@dimen/dim24dp"
+                    app:cardCornerRadius="30dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@drawable/marg_sahayak_pic"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </android.support.constraint.ConstraintLayout>
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Marg Sahayak"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </android.support.constraint.ConstraintLayout>
+
             <fragment
                 android:id="@+id/fragment2"
                 android:name="ml.uncoded.margsahayak.Offline.OfflineComplainListFragment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/fragment"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
 
             <fragment
@@ -95,14 +152,13 @@
                         android:id="@+id/notificationIcon"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_marginBottom="14dp"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="14dp"
+                        android:layout_marginBottom="14dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_notifications_black_24dp"
-                        />
+                        app:srcCompat="@drawable/ic_notifications_black_24dp" />
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/optionsIcon"
@@ -124,17 +180,17 @@
                 android:id="@+id/add_new_complain_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/btn_add_complain"
                 android:drawablePadding="10dp"
-                android:paddingBottom="19dp"
-                android:paddingEnd="@dimen/dim24dp"
+                android:elevation="@dimen/dim12dp"
                 android:paddingStart="@dimen/dim24dp"
                 android:paddingTop="19dp"
+                android:paddingEnd="@dimen/dim24dp"
+                android:paddingBottom="19dp"
                 android:text="@string/add_complaint"
                 android:textColor="#ffffff"
                 android:textStyle="bold"
                 android:translationZ="@dimen/dim12dp"
-                android:elevation="@dimen/dim12dp"
-                android:background="@drawable/btn_add_complain"
 
                 app:layout_constraintBottom_toTopOf="@+id/view"
                 app:layout_constraintEnd_toEndOf="parent"
