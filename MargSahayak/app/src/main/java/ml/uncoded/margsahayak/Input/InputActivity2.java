@@ -172,12 +172,12 @@ public class InputActivity2 extends AppCompatActivity {
             public void onClick(View v) {
                 Dialogs dialogs;
                 //Get input data & put into mInput Data
-                    if(mGri==null||mGri.length()==0){
+                if(fileUri==null){
+                    dialogs = new Dialogs("Please Capture An Image");
+                    dialogs.show(getFragmentManager(), "ErrMSG");
+                }
+                    else if(mGri==null||mGri.length()==0){
                         dialogs = new Dialogs("Please Select Grievance");
-                        dialogs.show(getFragmentManager(), "ErrMSG");
-                    }
-                    else if(fileUri==null){
-                        dialogs = new Dialogs("Please Capture An Image");
                         dialogs.show(getFragmentManager(), "ErrMSG");
                     }
                     else{
