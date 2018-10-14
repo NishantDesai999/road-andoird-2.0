@@ -139,7 +139,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:text=" string/details"
+                    android:text="Details"
+
                     android:textAppearance="@style/mText"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -258,7 +259,7 @@
 
                 <TextView
                     android:id="@+id/roadName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:layout_marginStart="8dp"
@@ -375,7 +376,7 @@
                     android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_image_black_24dp" />
+                    app:srcCompat="@drawable/ic_email_symbol" />
 
                 <TextView
                     android:id="@+id/textView19"

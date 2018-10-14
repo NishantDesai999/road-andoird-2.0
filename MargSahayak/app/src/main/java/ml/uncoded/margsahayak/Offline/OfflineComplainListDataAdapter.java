@@ -1,5 +1,6 @@
 package ml.uncoded.margsahayak.Offline;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +36,7 @@ import ml.uncoded.margsahayak.Network.mCallBack;
 import ml.uncoded.margsahayak.R;
 import ml.uncoded.margsahayak.models.BisagResponse;
 import ml.uncoded.margsahayak.models.ComplainModel;
+import ml.uncoded.margsahayak.models.Dialogs;
 import ml.uncoded.margsahayak.models.OfflineComplainModel;
 import ml.uncoded.margsahayak.models.StaticMethods;
 
@@ -63,12 +65,11 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
         OfflineComplainModel singleItem = itemsList.get(i);
         holder.grievance.setText(singleItem.getGrievanceName().toUpperCase());
         Log.v("debug", itemsList.toString());
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-
-        options.inSampleSize = 1;
-        Bitmap bitmap = BitmapFactory.decodeFile(singleItem.getImgurl(), options);
-        holder.itemImage.setImageBitmap(bitmap);
+        Glide.with(mContext)
+                .load(singleItem.getImgurl())
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop()
+                .error(R.drawable.ic_close_black_24dp).into(holder.itemImage);
         holder.itemImage.setColorFilter(Color.argb(100, 0, 0, 0));
     }
 
@@ -108,6 +109,7 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
             this.btnCancel = view.findViewById(R.id.btn_cancel);
             this.btnRetryUpload = view.findViewById(R.id.btn_retry_upload);
             this.mProgressBar = view.findViewById(R.id.offlineProgressBar);
+            mProgressBar.setVisibility(View.INVISIBLE);
             c.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -131,8 +133,10 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                     Realm r = Realm.getDefaultInstance();
                     final OfflineComplainModel mInputData = r.where(OfflineComplainModel.class).equalTo("id", singleItem.getId()).findFirst();
                     //Give save offline or cancel dialog with pls enable internet to ulasd internet
-                    if (StaticMethods.checkInternetConnectivity(mContext)){
-                        m.mApi.callBisagApi(mInputData.getLocation().get(0), mInputData.getLocation().get(1))
+                    if (!StaticMethods.checkInternetConnectivity(mContext)){mProgressBar.setVisibility(View.INVISIBLE);}
+                    else{
+                        mProgressBar.setVisibility(View.VISIBLE);
+                         m.mApi.callBisagApi(mInputData.getLocation().get(0), mInputData.getLocation().get(1))
                                 .enqueue(new mCallBack<List<BisagResponse>>(mContext, mProgressBar) {
 
                                     @Override
@@ -180,7 +184,7 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                                         //Upload image ---
                                         //String filePath = "/storage/emulated/0/Pictures/Marg_Sahayak/IMG_20180928_155751.jpg";
                                         String filePath = mInputData.getImgurl();
-                                        Toast.makeText(c, "Filepath : " + filePath, Toast.LENGTH_SHORT).show();
+                                      //  Toast.makeText(c, "Filepath : " + filePath, Toast.LENGTH_SHORT).show();
                                         Log.d("debug", filePath);
                                         ImageUpload mImageUpload = new ImageUpload(mContext, filePath, mProgressBar);
                                         ImageUpload.uploadImage();
@@ -191,7 +195,12 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                                         mComplainModel.setTime(mInputData.getTime());
                                         //Log.d("ImageUrl from offAdap",mInputData.getImgurl());
                                        // Toast.makeText(c, "ImgaeURl"+mInputData.getImgurl(), Toast.LENGTH_SHORT).show();
-                                        mComplainModel.setUrl(mInputData.getImgurl());
+
+                                        String[] tempS = mInputData.getImgurl().split("/");
+                                        mComplainModel.setUrl(tempS[tempS.length - 1]);
+
+                                        Log.d("offlineUrl", "onSuccessfullResponse: " + mInputData.getImgurl() + "  " + tempS[tempS.length -1]);
+
                                         mComplainModel.setLocation(mInputData.getLocation());
                                         mComplainModel.setComplaintStatus("Pending.");
                                         mComplainModel.setRoadCode(mBisagresponse.roadCode);
@@ -209,7 +218,6 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                                                         if (Boolean.parseBoolean(response.getSuccess())) {
 
                                                             Realm r = Realm.getDefaultInstance();
-                                                            progressBar.setVisibility(View.INVISIBLE);
                                                             r.executeTransactionAsync(new Realm.Transaction() {
                                                                 @Override
                                                                 public void execute(Realm realm) {
@@ -225,6 +233,7 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                                                                     ((TextView) mSuccessDialog.findViewById(R.id.customDialog_tv_message)).setText("Complaint Posted Successfully");
                                                                     mSuccessDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
                                                                     mSuccessDialog.show();
+                                                                    mProgressBar.setVisibility(View.INVISIBLE);
                                                                     ((Button) mSuccessDialog.findViewById(R.id.customDialog_btn_Ok)).setOnClickListener(new View.OnClickListener() {
 
                                                                         @Override
@@ -232,9 +241,16 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                                                                             mSuccessDialog.dismiss();
                                                                         }
                                                                     });
+
                                                                 }
                                                             });
                                                         } else {
+                                                            progressBar.setVisibility(View.INVISIBLE);
+                                                            Dialogs dialogs;
+                                                            String strErrMsg="There seems some problem with connectivity.\nPlease try again after sometime";
+                                                            progressBar.setVisibility(View.INVISIBLE);
+                                                            dialogs = new Dialogs(strErrMsg);
+                                                            dialogs.show(((Activity) c).getFragmentManager(), "ErrMSG");
                                                             Toast.makeText(c, "" + response.getMsg(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }

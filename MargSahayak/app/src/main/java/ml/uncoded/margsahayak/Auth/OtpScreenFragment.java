@@ -61,12 +61,12 @@ public class OtpScreenFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
-         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-             IntentFilter i = new IntentFilter();
-             i.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
-             i.addAction(Telephony.Sms.Intents.SMS_RECEIVED_ACTION);
-             getActivity().registerReceiver(receiver, i);
-         }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            IntentFilter i = new IntentFilter();
+            i.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+            i.addAction(Telephony.Sms.Intents.SMS_RECEIVED_ACTION);
+            getActivity().registerReceiver(receiver, i);
+        }
     }
 
     @Override

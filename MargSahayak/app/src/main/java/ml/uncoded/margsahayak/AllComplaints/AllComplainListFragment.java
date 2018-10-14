@@ -3,6 +3,7 @@ package ml.uncoded.margsahayak.AllComplaints;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,7 +44,8 @@ public class AllComplainListFragment extends Fragment {
         adapter = new linearListDataAdapter(getActivity(), new ArrayList<ComplainModel>(complainList));
         mRecycleView.setLayoutManager(new CustomLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRecycleView.setAdapter(adapter);
-        mRecycleView.setNestedScrollingEnabled(false);
+        ViewCompat.setNestedScrollingEnabled(mRecycleView,false);
+        //mRecycleView.setNestedScrollingEnabled(false);
         mRealmChangeListner = new RealmChangeListener() {
             @Override
             public void onChange(Object o) {

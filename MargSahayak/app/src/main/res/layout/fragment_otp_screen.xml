@@ -2,48 +2,48 @@
 
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/register_fragment"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     >
 
 
-<View
-    android:id="@+id/view"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_marginBottom="8dp"
-    android:background="@color/colorAccent"
-    app:layout_constraintBottom_toTopOf="@+id/guideline"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-<ProgressBar
-    android:id="@+id/register_progressbar"
-    style="?android:attr/progressBarStyleHorizontal"
+    <ProgressBar
+        android:id="@+id/otp_progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
 
-    android:layout_width="match_parent"
-    android:layout_height="30dp"
-    android:layout_marginTop="-12dp"
-    android:indeterminate="true"
-    android:indeterminateTint="@color/colorProgressBar"
-    android:progressBackgroundTintMode="src_in"
-    android:visibility="invisible"
-    app:layout_constraintBottom_toTopOf="@+id/guideline2"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.49"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-<android.support.constraint.Guideline
-    android:id="@+id/guideline2"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:visibility="visible"
-    app:layout_constraintGuide_percent="0" />
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="-12dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/colorProgressBar"
+        android:progressBackgroundTintMode="src_in"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintGuide_percent="0" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView2"
@@ -68,22 +68,6 @@ android:layout_height="match_parent"
             android:layout_height="match_parent">
 
 
-            <ProgressBar
-                android:id="@+id/otp_progressbar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:indeterminate="true"
-                android:indeterminateTint="@color/colorProgressBar"
-                android:progressBackgroundTintMode="src_in"
-
-                android:visibility="invisible"
-                app:layout_constraintBottom_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.49"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/otpscreen_color_head"
                 android:layout_width="wrap_content"
@@ -98,7 +82,7 @@ android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/otp_progressbar"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.45999998" />
 
             <TextView
@@ -231,18 +215,18 @@ android:layout_height="match_parent"
 
     </android.support.v7.widget.CardView>
 
-<android.support.constraint.Guideline
-    android:id="@+id/guideline"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    app:layout_constraintGuide_percent="0.5" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
-<android.support.constraint.Guideline
-    android:id="@+id/guideline3"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    app:layout_constraintGuide_percent="0.55" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
 
 </android.support.constraint.ConstraintLayout>

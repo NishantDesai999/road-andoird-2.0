@@ -40,7 +40,7 @@ public class ImageUpload {
         if (ImageUpload.uploadingTries > 5) return;
         File mFile = null;
         mFile = new File(ImageUpload.filePath);
-        Toast.makeText(context, "File : " + mFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "File : " + mFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), mFile);
         MultipartBody.Part body = MultipartBody.Part.createFormData("upload", mFile.getName(), reqFile);
 

@@ -62,61 +62,29 @@ public class Individual_Detail_Activity extends AppCompatActivity {
         mComment = (TextView) findViewById(R.id.comment);
         mDescription = (TextView) findViewById(R.id.descriptions);
 
-//        Realm r=Realm.getDefaultInstance();
-//        ComplainModel complainModel=r.where(ComplainModel.class).equalTo("id",intent.getStringExtra("MComplainIdkey")).findFirst();
-//        mGriType.setText(complainModel.getGrivType());
-//        mComplainId.setText(complainModel.getId());
-//        mStatus.setText(complainModel.getComplaintStatus());
-//        mOfficerName.setText(complainModel.getOfficerName());
-//        mSubmittedDate.setText(complainModel.getTime());
-//        mRoadName.setText(complainModel.getRoadName());
-//        mEstimatedDate.setText(complainModel.getEstimatedTime());
-//        StringBuilder mCommentsString = new StringBuilder();
-//        RealmList<String> commentData = complainModel.getComment();
-//        for(int i=0; i < commentData.size(); i++){
-//            mCommentsString.append(commentData.get(i));
-//        }
-//        mComment.setText(mCommentsString);
-//        mDescription.setText(complainModel.getDescription());
-//        Glide.with(Individual_Detail_Activity.this).load(complainModel.getUrl()).into(new SimpleTarget<GlideDrawable>() {
-//            @Override
-//            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-//                ((android.support.design.widget.CollapsingToolbarLayout)findViewById(R.id.toolbar_layout)).setBackground(resource);
-//            }
-//        });
-
-        Toast.makeText(this, "GrievanceType"+intent.getStringExtra("MGrivTypekey"), Toast.LENGTH_SHORT).show();
-        mGriType.setText(intent.getStringExtra("MGrivTypekey"));
-        mComplainId.setText(intent.getStringExtra("MComplainIdkey"));
-        mStatus.setText(intent.getStringExtra("MComplaintStatuskey"));
-        mOfficerName.setText(intent.getStringExtra("MOfficerNamekey"));
-        mSubmittedDate.setText(intent.getStringExtra("MSubmittedDatekey"));
-        mRoadName.setText(intent.getStringExtra("MRoadNamekey"));
-        mOfficerName.setText(intent.getStringExtra("MOfficerNamekey"));
-        mEstimatedDate.setText(intent.getStringExtra("MEstimatedTimekey"));
-        mComment.setText(intent.getStringExtra("MCommentkey"));
-        mDescription.setText(intent.getStringExtra("MDescriptionkey"));
-
-
-
-
-//        try {
-//            Bitmap mImgBitmap=Glide.with(Individual_Detail_Activity.this)
-//                    .load(i.getStringExtra("MURLkey")).asBitmap().into(400,400).get();
-//            BitmapDrawable background=new BitmapDrawable(mImgBitmap);
-//
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
-        Glide.with(Individual_Detail_Activity.this).load(intent.getStringExtra("MURLkey")).into(new SimpleTarget<GlideDrawable>() {
+        Realm r=Realm.getDefaultInstance();
+        ComplainModel complainModel=r.where(ComplainModel.class).equalTo("id",intent.getStringExtra("MComplainIdkey")).findFirst();
+        mGriType.setText(complainModel.getGrivType());
+        mComplainId.setText(complainModel.getId());
+        mStatus.setText(complainModel.getComplaintStatus());
+        mOfficerName.setText(complainModel.getOfficerName());
+        mSubmittedDate.setText(complainModel.getTime());
+        mRoadName.setText(complainModel.getRoadName());
+        mEstimatedDate.setText(complainModel.getEstimatedTime());
+        StringBuilder mCommentsString = new StringBuilder();
+        RealmList<String> commentData = complainModel.getComment();
+        for(int i=0; i < commentData.size(); i++){
+            mCommentsString.append(commentData.get(i));
+        }
+        mComment.setText(mCommentsString);
+        mDescription.setText(complainModel.getDescription());
+        Glide.with(Individual_Detail_Activity.this).load(complainModel.getUrl()).into(new SimpleTarget<GlideDrawable>() {
             @Override
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
                 ((android.support.design.widget.CollapsingToolbarLayout)findViewById(R.id.toolbar_layout)).setBackground(resource);
             }
         });
+        //Toast.makeText(this, "GrievanceType"+intent.getStringExtra("MGrivTypekey"), Toast.LENGTH_SHORT).show();
 
     }
 

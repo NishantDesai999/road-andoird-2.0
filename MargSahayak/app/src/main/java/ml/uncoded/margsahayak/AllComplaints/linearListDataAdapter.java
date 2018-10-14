@@ -65,7 +65,7 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
 
         Log.v("debug",itemsList.toString());
 
-        Toast.makeText(mContext, "itemUrl"+singleItem.getUrl(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(mContext, "itemUrl"+singleItem.getUrl(), Toast.LENGTH_SHORT).show();
         Glide.with(mContext)
                 .load(singleItem.getUrl())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -118,23 +118,9 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
                 public void onClick(View v) {
 
                    int index = getAdapterPosition();
-                  Intent mIntentToIndividuaalCard =new Intent(mContext,Individual_Detail_Activity.class);
-                    mIntentToIndividuaalCard.putExtra("MGrivTypekey",itemsList.get(index).getGrivType());
-                    mIntentToIndividuaalCard.putExtra("MComplainIdkey",itemsList.get(index).getId());
-                    mIntentToIndividuaalCard.putExtra("MComplaintStatuskey",itemsList.get(index).getComplaintStatus());
-                    mIntentToIndividuaalCard.putExtra("MSubmittedDatekey",itemsList.get(index).getTime());
-                    mIntentToIndividuaalCard.putExtra("MRoadNamekey",itemsList.get(index).getRoadName());
-                    mIntentToIndividuaalCard.putExtra("MOfficerNamekey",itemsList.get(index).getOfficerName());
-                    mIntentToIndividuaalCard.putExtra("MEstimatedTimekey",itemsList.get(index).getEstimatedTime());
-                    mIntentToIndividuaalCard.putExtra("MDescriptionkey",itemsList.get(index).getDescription());
-                    mIntentToIndividuaalCard.putExtra("MURLkey",itemsList.get(index).getUrl());
-                    StringBuilder mComments = new StringBuilder();
-                    RealmList<String> commentData = itemsList.get(index).getComment();
-                    for(int i=0; i < commentData.size(); i++){
-                        mComments.append(commentData.get(i));
-                    }
-                    mIntentToIndividuaalCard.putExtra("MCommentkey",mComments.toString());
-                    mContext.startActivity(mIntentToIndividuaalCard);
+                    Intent mIntentToIndividualCard =new Intent(mContext,Individual_Detail_Activity.class);
+                    mIntentToIndividualCard.putExtra("MComplainIdkey",itemsList.get(index).getId());
+                    mContext.startActivity(mIntentToIndividualCard);
 
                 }
             });

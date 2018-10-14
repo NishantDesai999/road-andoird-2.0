@@ -12,4 +12,12 @@
     <color name="colorBtn">@color/colorAccent</color>
     <color name="colorBtnDisabled">#545454</color>
 
+
+
+    <!-- dots inactive colors -->
+    <color name="dot_dark_screen">#b4e3ff</color>
+
+    <!-- dots active colors -->
+    <color name="dot_light_screen">#0277bd</color>
+
 </resources>

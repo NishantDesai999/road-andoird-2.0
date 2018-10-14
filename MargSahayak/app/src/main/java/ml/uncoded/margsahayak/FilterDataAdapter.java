@@ -1,6 +1,7 @@
 package ml.uncoded.margsahayak;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -109,8 +110,10 @@ public class FilterDataAdapter extends RecyclerView.Adapter<FilterDataAdapter.Si
                 @Override
                 public void onClick(View v) {
 
-
-                    Toast.makeText(v.getContext(),v.getId()+"",Toast.LENGTH_LONG);
+                    int index = getAdapterPosition();
+                    Intent mIntentToIndividualCard =new Intent(mContext,Individual_Detail_Activity.class);
+                    mIntentToIndividualCard.putExtra("MComplainIdkey",itemsList.get(index).getId());
+                    mContext.startActivity(mIntentToIndividualCard);
 
                 }
             });

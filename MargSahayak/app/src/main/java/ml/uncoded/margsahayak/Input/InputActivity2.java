@@ -179,11 +179,16 @@ public class InputActivity2 extends AppCompatActivity {
                         return;
                     }
                     Location l = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-
-                    lon = "" + l.getLongitude();
-                    lat = "" + l.getLatitude();
-
+                    if(l==null){
+                        l = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    }
+                    if(l==null){
+                        l = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                    }
+                    if(l!=null) {
+                        lon = "" + l.getLongitude();
+                        lat = "" + l.getLatitude();
+                    }
                     if (locationListener.lon != null && locationListener.lat != null) {
                         Toast.makeText(InputActivity2.this, "" + locationListener.lon + locationListener.lat, Toast.LENGTH_SHORT).show();
                         lon = locationListener.lon;
@@ -317,7 +322,7 @@ public class InputActivity2 extends AppCompatActivity {
                                     //Upload image ---
                                     //String filePath = "/storage/emulated/0/Pictures/Marg_Sahayak/IMG_20180928_155751.jpg";
                                     String filePath = fileUri.getPath();
-                                    Toast.makeText(c, "Filepath : " + filePath, Toast.LENGTH_SHORT).show();
+                                 //   Toast.makeText(c, "Filepath : " + filePath, Toast.LENGTH_SHORT).show();
                                     Log.d("debug", filePath);
                                     ImageUpload mImageUpload = new ImageUpload(InputActivity2.this, filePath, mProgressBar);
                                     ImageUpload.uploadImage();
@@ -455,7 +460,7 @@ public class InputActivity2 extends AppCompatActivity {
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
-            Toast.makeText(this, "" + picturePath, Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(this, "" + picturePath, Toast.LENGTH_SHORT).show();
             //  fileUri = Uri.fromFile(new File(picturePath));
             fileUri = Uri.parse(picturePath);
             BitmapFactory.Options options = new BitmapFactory.Options();

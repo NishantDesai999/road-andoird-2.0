@@ -15,22 +15,26 @@
         android:textAppearance="@style/mBoldheaderText"
         android:textColor="@color/colorAccent"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_offline_complain_recyclerview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Ofline" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/fragment_offline_complain_recyclerview"
+
+    <FrameLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/offline_textview">
+        >
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_offline_complain_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>
