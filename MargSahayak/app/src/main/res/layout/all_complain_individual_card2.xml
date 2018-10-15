@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/itemImage"
+            android:id="@+id/iv_item_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
@@ -36,7 +36,7 @@
         <!--app:layout_constraintTop_toBottomOf="@+id/tvTitle4" />-->
 
         <TextView
-            android:id="@+id/tvTitle4"
+            android:id="@+id/tv_status"
             style="@style/mWhiteText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,8 +60,8 @@
             android:paddingRight="10dp"
             android:text="In Progress"
             android:textAppearance="@style/mText"
-            app:layout_constraintBottom_toBottomOf="@+id/tvTitle4"
-            app:layout_constraintStart_toEndOf="@+id/tvTitle4" />
+            app:layout_constraintBottom_toBottomOf="@+id/tv_status"
+            app:layout_constraintStart_toEndOf="@+id/tv_status" />
 
         <TextView
             android:id="@+id/textView8"
@@ -89,7 +89,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView8" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/tv_eta"
             style="@style/mWhiteText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,12 +98,12 @@
             android:text="Estimated Time :"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/textView8"
-            app:layout_constraintEnd_toStartOf="@+id/timeOfCompletion1"
+            app:layout_constraintEnd_toStartOf="@+id/tv_eta_data"
             tools:ignore="RtlCompat" />
 
 
         <TextView
-            android:id="@+id/timeOfCompletion1"
+            android:id="@+id/tv_eta_data"
             style="@style/mWhiteBoldText"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -111,9 +111,9 @@
             android:capitalize="words"
             android:text="30:10:2018"
             android:textAppearance="@style/mText"
-            app:layout_constraintBottom_toBottomOf="@+id/textView10"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_eta"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView10"
+            app:layout_constraintTop_toTopOf="@+id/tv_eta"
             tools:ignore="RtlCompat" />
 
 

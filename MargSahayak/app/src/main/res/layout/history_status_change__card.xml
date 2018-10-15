@@ -19,7 +19,7 @@
         android:paddingRight="8dp">
 
         <ImageView
-            android:id="@+id/itemImage"
+            android:id="@+id/iv_item_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
@@ -35,14 +35,14 @@
         <!--app:layout_constraintTop_toBottomOf="@+id/tvTitle4" />-->
 
         <TextView
-            android:id="@+id/tvTitle4"
+            android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:capitalize="words"
             android:text="Status :"
-            app:layout_constraintStart_toEndOf="@+id/itemImage"
+            app:layout_constraintStart_toEndOf="@+id/iv_item_image"
             app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -55,24 +55,24 @@
             android:paddingRight="10dp"
             android:text="In Progress"
             android:textAppearance="@style/mText"
-            app:layout_constraintBottom_toBottomOf="@+id/tvTitle4"
-            app:layout_constraintStart_toEndOf="@+id/tvTitle4"
-            app:layout_constraintTop_toTopOf="@+id/tvTitle4" />
+            app:layout_constraintBottom_toBottomOf="@+id/tv_status"
+            app:layout_constraintStart_toEndOf="@+id/tv_status"
+            app:layout_constraintTop_toTopOf="@+id/tv_status" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/tv_eta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Estimated Time :"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tvTitle4"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle4"
+            app:layout_constraintStart_toStartOf="@+id/tv_status"
+            app:layout_constraintTop_toBottomOf="@+id/tv_status"
             tools:ignore="RtlCompat" />
 
 
         <TextView
-            android:id="@+id/timeOfCompletion1"
+            android:id="@+id/tv_eta_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -80,21 +80,21 @@
             android:text="7 days "
             android:textAppearance="@style/mText"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/textView10"
-            app:layout_constraintStart_toEndOf="@+id/textView10"
-            app:layout_constraintTop_toTopOf="@+id/textView10"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_eta"
+            app:layout_constraintStart_toEndOf="@+id/tv_eta"
+            app:layout_constraintTop_toTopOf="@+id/tv_eta"
             app:layout_constraintVertical_bias="0.0"
             tools:ignore="RtlCompat" />
 
         <TextView
-            android:id="@+id/comments"
+            android:id="@+id/tv_comments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Comments : "
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tvTitle4"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle4" />
+            app:layout_constraintStart_toStartOf="@+id/tv_status"
+            app:layout_constraintTop_toBottomOf="@+id/tv_status" />
 
         <TextView
             android:id="@+id/tv_comment_data"
@@ -106,8 +106,8 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.51"
-            app:layout_constraintStart_toEndOf="@+id/comments"
-            app:layout_constraintTop_toTopOf="@+id/comments" />
+            app:layout_constraintStart_toEndOf="@+id/tv_comments"
+            app:layout_constraintTop_toTopOf="@+id/tv_comments" />
 
 
     </android.support.constraint.ConstraintLayout>
