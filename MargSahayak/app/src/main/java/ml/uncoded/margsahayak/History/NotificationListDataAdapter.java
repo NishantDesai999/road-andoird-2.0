@@ -39,7 +39,7 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
 
     @Override
     public SingleItemRowHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.history_not_approved__card, viewGroup,false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.history_status_change__card, viewGroup,false);
         SingleItemRowHolder mh = new SingleItemRowHolder(v);
         return mh;
     }
@@ -100,12 +100,12 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
             super(view);
 
             this.c = (CardView) view.findViewById(R.id.card);
-            this.status = (TextView) view.findViewById(R.id.status);
+            this.status = (TextView) view.findViewById(R.id.tv_status_data);
             this.date = (TextView) view.findViewById(R.id.date);
             this.itemImage = (ImageView) view.findViewById(R.id.itemImage);
             this.grievance = (TextView) view.findViewById(R.id.textView9);
-            this.completionDate = (TextView) view.findViewById(R.id.textView10);
-            this.completionDate1 = (TextView) view.findViewById(R.id.timeOfCompletion1);
+            this.completionDate = (TextView) view.findViewById(R.id.tv_estimated_time);
+            this.completionDate1 = (TextView) view.findViewById(R.id.tv_estimated_time_data);
             this.comments=view.findViewById(R.id.tv_comment_data);
 
 

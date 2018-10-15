@@ -24,6 +24,10 @@ public class NotificationComplaintModel extends RealmObject {
     @SerializedName("officer_email")
     private String officerEmail;
 
+    @SerializedName("officer_type")
+    private String officerType;
+
+
     public void setComments(RealmList<String> comments) {
         this.comments = comments;
     }

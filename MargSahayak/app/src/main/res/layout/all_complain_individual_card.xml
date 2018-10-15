@@ -19,7 +19,7 @@
         android:paddingRight="8dp">
 
         <ImageView
-            android:id="@+id/iv_item_image"
+            android:id="@+id/itemImage"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_gravity="center_horizontal"
@@ -41,8 +41,8 @@
             android:text="Grievance Type:"
             android:textAlignment="center"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/tv_status"
-            app:layout_constraintStart_toEndOf="@+id/iv_item_image"
+            app:layout_constraintBottom_toTopOf="@+id/tv_status_title"
+            app:layout_constraintStart_toEndOf="@+id/itemImage"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
         <!--app:layout_constraintBottom_toBottomOf="parent"-->
@@ -50,7 +50,7 @@
         <!--app:layout_constraintTop_toBottomOf="@+id/tvTitle4" />-->
 
         <TextView
-            android:id="@+id/tv_status"
+            android:id="@+id/tvTitle4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -58,12 +58,12 @@
             android:capitalize="words"
             android:text="Status :"
             app:layout_constraintBottom_toTopOf="@+id/textView8"
-            app:layout_constraintStart_toEndOf="@+id/iv_item_image"
+            app:layout_constraintStart_toEndOf="@+id/itemImage"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
 
         <TextView
-            android:id="@+id/status"
+            android:id="@+id/tv_status_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -72,8 +72,8 @@
             android:paddingRight="10dp"
             android:text="In Progress"
             android:textAppearance="@style/mText"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_status"
-            app:layout_constraintStart_toEndOf="@+id/tv_status" />
+            app:layout_constraintBottom_toBottomOf="@+id/tv_status_title"
+            app:layout_constraintStart_toEndOf="@+id/tv_status_title" />
 
         <TextView
             android:id="@+id/textView8"
@@ -83,9 +83,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Reported On :"
-            app:layout_constraintBottom_toTopOf="@+id/tv_eta"
-            app:layout_constraintStart_toEndOf="@+id/iv_item_image"
-            app:layout_constraintTop_toBottomOf="@+id/tv_status"
+            app:layout_constraintBottom_toTopOf="@+id/tv_estimated_time"
+            app:layout_constraintStart_toEndOf="@+id/itemImage"
+            app:layout_constraintTop_toBottomOf="@+id/tv_status_title"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
@@ -102,29 +102,29 @@
             app:layout_constraintTop_toTopOf="@+id/textView8" />
 
         <TextView
-            android:id="@+id/tv_eta"
+            android:id="@+id/tv_estimated_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Estimated Time :"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv_item_image"
+            app:layout_constraintStart_toEndOf="@+id/itemImage"
             app:layout_constraintTop_toBottomOf="@+id/textView8"
             tools:ignore="RtlCompat" />
 
 
         <TextView
-            android:id="@+id/tv_eta_data"
+            android:id="@+id/tv_estimated_time_data"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:layout_marginStart="8dp"
             android:capitalize="words"
             android:text="7 days "
             android:textAppearance="@style/mText"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_eta"
-            app:layout_constraintStart_toEndOf="@+id/tv_eta"
-            app:layout_constraintTop_toTopOf="@+id/tv_eta"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_estimated_time"
+            app:layout_constraintStart_toEndOf="@+id/tv_estimated_time"
+            app:layout_constraintTop_toTopOf="@+id/tv_estimated_time"
             app:layout_constraintVertical_bias="0.0"
             tools:ignore="RtlCompat" />
 

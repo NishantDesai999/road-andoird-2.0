@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/iv_item_image"
+            android:id="@+id/itemImage"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
@@ -36,7 +36,7 @@
         <!--app:layout_constraintTop_toBottomOf="@+id/tvTitle4" />-->
 
         <TextView
-            android:id="@+id/tv_status"
+            android:id="@+id/tvTitle4"
             style="@style/mWhiteText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,18 +50,17 @@
 
 
         <TextView
-            android:id="@+id/status"
+            android:id="@+id/tv_status_data"
             style="@style/mWhiteBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:paddingEnd="10dp"
             android:paddingRight="10dp"
             android:text="In Progress"
             android:textAppearance="@style/mText"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_status"
-            app:layout_constraintStart_toEndOf="@+id/tv_status" />
+            app:layout_constraintStart_toEndOf="@+id/tvTitle4"
+            app:layout_constraintTop_toTopOf="@+id/tvTitle4" />
 
         <TextView
             android:id="@+id/textView8"
@@ -89,7 +88,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView8" />
 
         <TextView
-            android:id="@+id/tv_eta"
+            android:id="@+id/tv_estimated_time"
             style="@style/mWhiteText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,12 +97,12 @@
             android:text="Estimated Time :"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/textView8"
-            app:layout_constraintEnd_toStartOf="@+id/tv_eta_data"
+            app:layout_constraintEnd_toStartOf="@+id/tv_estimated_time_data"
             tools:ignore="RtlCompat" />
 
 
         <TextView
-            android:id="@+id/tv_eta_data"
+            android:id="@+id/tv_estimated_time_data"
             style="@style/mWhiteBoldText"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -111,9 +110,9 @@
             android:capitalize="words"
             android:text="30:10:2018"
             android:textAppearance="@style/mText"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_eta"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_estimated_time"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_eta"
+            app:layout_constraintTop_toTopOf="@+id/tv_estimated_time"
             tools:ignore="RtlCompat" />
 
 

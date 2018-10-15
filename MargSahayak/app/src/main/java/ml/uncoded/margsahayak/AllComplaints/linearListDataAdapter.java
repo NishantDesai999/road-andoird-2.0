@@ -12,14 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
-import io.realm.RealmList;
 import ml.uncoded.margsahayak.Individual_Detail_Activity;
 import ml.uncoded.margsahayak.R;
 import ml.uncoded.margsahayak.models.ComplainModel;
@@ -106,12 +104,12 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
             super(view);
 
             this.c = (CardView) view.findViewById(R.id.card);
-            this.status = (TextView) view.findViewById(R.id.status);
+            this.status = (TextView) view.findViewById(R.id.tv_status_data);
             this.date = (TextView) view.findViewById(R.id.date);
             this.itemImage = (ImageView) view.findViewById(R.id.itemImage);
             this.grievance = (TextView) view.findViewById(R.id.textView9);
-            this.completionDate = (TextView) view.findViewById(R.id.textView10);
-            this.completionDate1 = (TextView) view.findViewById(R.id.timeOfCompletion1);
+            this.completionDate = (TextView) view.findViewById(R.id.tv_estimated_time);
+            this.completionDate1 = (TextView) view.findViewById(R.id.tv_estimated_time_data);
 
 
 
