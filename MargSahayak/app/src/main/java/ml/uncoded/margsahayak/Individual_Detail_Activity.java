@@ -78,7 +78,7 @@ public class Individual_Detail_Activity extends AppCompatActivity {
         }
         mComment.setText(mCommentsString);
         mDescription.setText(complainModel.getDescription());
-        Glide.with(Individual_Detail_Activity.this).load(complainModel.getUrl()).into(new SimpleTarget<GlideDrawable>() {
+        Glide.with(Individual_Detail_Activity.this).load(complainModel.getUrl()).fitCenter().into(new SimpleTarget<GlideDrawable>() {
             @Override
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
                 ((android.support.design.widget.CollapsingToolbarLayout)findViewById(R.id.toolbar_layout)).setBackground(resource);

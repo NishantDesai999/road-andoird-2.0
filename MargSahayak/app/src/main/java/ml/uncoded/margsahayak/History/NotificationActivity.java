@@ -126,6 +126,7 @@ public class NotificationActivity extends AppCompatActivity {
                                     List<NotificationComplaintModel> notificationList = response.body();
                                     ComplainModel complainModel;
                                     for (NotificationComplaintModel notificationComplaintModel : notificationList) {
+                                        Log.d(TAG, "execute: "+notificationComplaintModel.getId());
                                             complainModel = realm.where(ComplainModel.class).equalTo("id", notificationComplaintModel.getId()).findFirst();
                                         if(notificationComplaintModel.getComplaintStatus()!=null)
                                             complainModel.setComplaintStatus(notificationComplaintModel.getComplaintStatus());

@@ -18,6 +18,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
+import io.realm.RealmList;
 import ml.uncoded.margsahayak.R;
 import ml.uncoded.margsahayak.models.NotificationComplaintModel;
 
@@ -38,7 +39,7 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
 
     @Override
     public SingleItemRowHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.all_complain_individual_card2, viewGroup,false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.history_not_approved__card, viewGroup,false);
         SingleItemRowHolder mh = new SingleItemRowHolder(v);
         return mh;
     }
@@ -49,10 +50,16 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
 
         NotificationComplaintModel singleItem = itemsList.get(i);
        // holder.area.setText(singleItem.getTaluka().toUpperCase());
-//        holder.status.setText(singleItem.getComplaintStatus().toUpperCase());
+        holder.status.setText(singleItem.getComplaintStatus().toUpperCase());
 //        holder.grievance.setText(singleItem.getGrivType().toUpperCase());
 //        holder.date.setText(singleItem.getTime().toUpperCase().substring(0,10) );
-
+            holder.completionDate1.setText(singleItem.getEstimatedDate());
+        StringBuilder mCommentsString = new StringBuilder();
+        RealmList<String> commentData = singleItem.getComments();
+        for(int j=0;j < commentData.size(); j++){
+            mCommentsString.append(commentData.get(j));
+        }
+            holder.comments.setText(mCommentsString);
 
         Log.d("test",itemsList.toString());
         Glide.with(mContext)
@@ -79,7 +86,7 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
         protected TextView status;
         protected TextView date;
         protected TextView grievance;
-        protected TextView completionDate,completionDate1;
+        protected TextView completionDate,completionDate1,comments;
 
 
         protected Button delete;
@@ -99,7 +106,7 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
             this.grievance = (TextView) view.findViewById(R.id.textView9);
             this.completionDate = (TextView) view.findViewById(R.id.textView10);
             this.completionDate1 = (TextView) view.findViewById(R.id.timeOfCompletion1);
-
+            this.comments=view.findViewById(R.id.tv_comment_data);
 
 
             c.setOnClickListener(new View.OnClickListener() {

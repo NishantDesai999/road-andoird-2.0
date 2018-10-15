@@ -68,7 +68,9 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
         //Toast.makeText(mContext, "itemUrl"+singleItem.getUrl(), Toast.LENGTH_SHORT).show();
         Glide.with(mContext)
                 .load(singleItem.getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .skipMemoryCache(true)
+                .dontAnimate()
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .centerCrop()
                 .error(R.drawable.ic_close_black_24dp).into(holder.itemImage);
 
