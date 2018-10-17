@@ -1,5 +1,4 @@
 package ml.uncoded.margsahayak.Input;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
@@ -59,12 +58,14 @@ import ml.uncoded.margsahayak.models.StaticMethods;
 public class InputActivity2 extends AppCompatActivity {
 
 
-    private Uri fileUri;
+    private Uri fileUri, mCropImagedUri;
     Bitmap bitmap = null;
     String mDiscription, mGri;
+
     // Activity request codes
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
     private static final int GALLERY_IMAGE_REQUEST_CODE = 101;
+    private static final int CROP_IMAGE_REQUEST_CODE = 102;
 
     public static final int MEDIA_TYPE_IMAGE = 1;
     // directory name to store captured images and videos
@@ -78,7 +79,6 @@ public class InputActivity2 extends AppCompatActivity {
         mDiscription = "No Description";
         initListners();
     }
-
     private void initListners() {
 
         final Button btnDescription=findViewById(R.id.add_discription);
@@ -102,7 +102,7 @@ public class InputActivity2 extends AppCompatActivity {
                         mDiscription = edtDescription.getText().toString().trim();
                         if(!mDiscription.equals("No Description")){
                             btnDescription.setText("Edit Description");
-                           edtDescription.setText(mDiscription);
+                            edtDescription.setText(mDiscription);
                         }
                         if(mDiscription==null||mDiscription.trim().length()==0){
                             mDiscription = "No Description";
@@ -176,19 +176,19 @@ public class InputActivity2 extends AppCompatActivity {
             public void onClick(View v) {
                 Dialogs dialogs;
                 //Get input data & put into mInput Data
-                if(fileUri==null){
+                if(mCropImagedUri==null){
                     dialogs = new Dialogs("Please Capture An Image");
                     dialogs.show(getFragmentManager(), "ErrMSG");
                 }
-                    else if(mGri==null||mGri.length()==0){
-                        dialogs = new Dialogs("Please Select Grievance");
-                        dialogs.show(getFragmentManager(), "ErrMSG");
-                    }
-                    else{
+                else if(mGri==null||mGri.length()==0){
+                    dialogs = new Dialogs("Please Select Grievance");
+                    dialogs.show(getFragmentManager(), "ErrMSG");
+                }
+                else{
                     final OfflineComplainModel mInputData = new OfflineComplainModel();
                     mInputData.setGrievanceDescription(mDiscription);
                     mInputData.setGrievanceName(mGri);
-                    String[] path = fileUri.getPath().split("/");
+                    String[] path = mCropImagedUri.getPath().split("/");
                     mInputData.setImgurl(path[path.length - 1]);
 
 
@@ -325,7 +325,7 @@ public class InputActivity2 extends AppCompatActivity {
 
                                         //Upload image ---
                                         //String filePath = "/storage/emulated/0/Pictures/Marg_Sahayak/IMG_20180928_155751.jpg";
-                                        String filePath = fileUri.getPath();
+                                        String filePath = mCropImagedUri.getPath();
                                         //   Toast.makeText(c, "Filepath : " + filePath, Toast.LENGTH_SHORT).show();
                                         Log.d("debug", filePath);
                                         ImageUpload mImageUpload = new ImageUpload(InputActivity2.this, filePath, mProgressBar);
@@ -390,7 +390,7 @@ public class InputActivity2 extends AppCompatActivity {
                     }
 
 
-            }
+                }
 
             }
         });
@@ -457,6 +457,14 @@ public class InputActivity2 extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CROP_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && null != data) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 1;
+            bitmap = BitmapFactory.decodeFile(mCropImagedUri.getPath(), options);
+            showImage();
+        }
+
         if (requestCode == GALLERY_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -468,7 +476,7 @@ public class InputActivity2 extends AppCompatActivity {
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
-          //  Toast.makeText(this, "" + picturePath, Toast.LENGTH_SHORT).show();
+            //  Toast.makeText(this, "" + picturePath, Toast.LENGTH_SHORT).show();
             //  fileUri = Uri.fromFile(new File(picturePath));
             fileUri = Uri.parse(picturePath);
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -498,43 +506,14 @@ public class InputActivity2 extends AppCompatActivity {
                 options.inSampleSize = 1;
                 bitmap = BitmapFactory.decodeFile(fileUri.getPath(), options);
 
-//                String path = MediaStore.Images.Media.insertImage(InputActivity2.this.getContentResolver(), bitmap, "Title", "Image stored");
-//                    fileUri =  Uri.parse(path);
-
-                try {
-                    ExifInterface ei = new ExifInterface(fileUri.getPath());
-                    int ori = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
-
-                    Bitmap rotatedBitmap = null;
-                    switch (ori) {
-
-                        case ExifInterface.ORIENTATION_ROTATE_90:
-                            rotatedBitmap = rotateImage(bitmap, 90);
-                            break;
-
-                        case ExifInterface.ORIENTATION_ROTATE_180:
-                            rotatedBitmap = rotateImage(bitmap, 180);
-                            break;
-
-                        case ExifInterface.ORIENTATION_ROTATE_270:
-                            rotatedBitmap = rotateImage(bitmap, 270);
-                            break;
-
-                        case ExifInterface.ORIENTATION_NORMAL:
-                        default:
-                            rotatedBitmap = bitmap;
-                    }
-                    bitmap = rotatedBitmap;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                showImage();
+                rotateImageFunction();
+                cropImageFunction();
 
             } else if (resultCode == RESULT_CANCELED) {
 
                 // Intent i = new Intent(this,MainActivity.class);
                 // startActivity(i);
-                finish();
+               // finish();
                 Toast.makeText(getApplicationContext(),
                         "User cancelled image capture", Toast.LENGTH_SHORT)
                         .show();
@@ -544,6 +523,65 @@ public class InputActivity2 extends AppCompatActivity {
                         .show();
             }
         }
+    }
+
+
+    void rotateImageFunction() {
+
+
+        try {
+            ExifInterface ei = new ExifInterface(fileUri.getPath());
+            int ori = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
+            Bitmap rotatedBitmap = null;
+            switch (ori) {
+
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    rotatedBitmap = rotateImage(bitmap, 90);
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    rotatedBitmap = rotateImage(bitmap, 180);
+                    break;
+
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    rotatedBitmap = rotateImage(bitmap, 270);
+                    break;
+
+                case ExifInterface.ORIENTATION_NORMAL:
+                default:
+                    rotatedBitmap = bitmap;
+            }
+            bitmap = rotatedBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    void cropImageFunction() {
+//call the standard crop action intent (the user device may not support it)
+        Intent cropIntent = new Intent("com.android.camera.action.CROP");
+        //indicate image type and Uri
+        cropIntent.setDataAndType(fileUri, "image/*");
+        //set crop properties
+        cropIntent.putExtra("crop", "true");
+        //indicate aspect of desired crop
+        cropIntent.putExtra("aspectX", 1);
+        cropIntent.putExtra("aspectY", 1);
+        cropIntent.putExtra("scale", true);
+        //indicate output X and Y
+        cropIntent.putExtra("outputX", 500);
+        cropIntent.putExtra("outputY", 500);
+        //retrieve data on return
+        cropIntent.putExtra("return-data", false);
+
+        mCropImagedUri = Uri.fromFile(getOutputMediaFile(MEDIA_TYPE_IMAGE));
+        cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCropImagedUri);
+        //start the activity - we handle returning in onActivityResult
+        startActivityForResult(cropIntent, CROP_IMAGE_REQUEST_CODE);
+
+
     }
 
     public static Bitmap rotateImage(Bitmap source, float angle) {
@@ -578,7 +616,7 @@ public class InputActivity2 extends AppCompatActivity {
                 offlineComplainModel.setGrievanceDescription(mInputData.getGrievanceDescription());
                 offlineComplainModel.setLocation(mInputData.getLocation());
                 offlineComplainModel.setGrievanceName(mInputData.getGrievanceName());
-                offlineComplainModel.setImgurl(fileUri.getPath());
+                offlineComplainModel.setImgurl(mCropImagedUri.getPath());
 
             }
         }, new Realm.Transaction.OnSuccess() {
@@ -595,3 +633,4 @@ public class InputActivity2 extends AppCompatActivity {
 
     }
 }
+

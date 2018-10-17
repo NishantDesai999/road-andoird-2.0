@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<List<NotificationComplaintModel>> call, final Response<List<NotificationComplaintModel>> response) {
                     if (response.isSuccessful()&& response.body().size()!=0) {
+                        mNotificationCount.setVisibility(View.VISIBLE);
                         mNotificationCount.setText(String.valueOf(response.body().size()));
                         Log.d(TAG, "response : " + response.headers());
                         final Realm r = Realm.getDefaultInstance();
@@ -126,11 +127,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                     //Checking server Internal Errors
                     else {
-                        Log.d(TAG, "Code: " + response.code() + " Message: " + response.message());
-                        Toast.makeText(MainActivity.this, "" + response.code() + " " + response.message(), Toast.LENGTH_SHORT).show();
-                        strErrMsg = response.code() + " " + response.message();
-                        dialogs = new Dialogs(strErrMsg);
-                        dialogs.show(getFragmentManager(), "ErrMSG");
+//                        Log.d(TAG, "Code: " + response.code() + " Message: " + response.message());
+//                        Toast.makeText(MainActivity.this, "" + response.code() + " " + response.message(), Toast.LENGTH_SHORT).show();
+//                        strErrMsg = response.code() + " " + response.message();
+//                        dialogs = new Dialogs(strErrMsg);
+//                        dialogs.show(getFragmentManager(), "ErrMSG");
                     }
                 }
 
@@ -219,7 +220,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         mOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -228,9 +228,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
-
     @Override
     public void onBackPressed() {
 

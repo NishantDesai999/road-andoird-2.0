@@ -96,7 +96,7 @@ public class NotificationActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh_btn:
-                onRefreshNotification();
+               // onRefreshNotification();
                 return true;
 
             default:

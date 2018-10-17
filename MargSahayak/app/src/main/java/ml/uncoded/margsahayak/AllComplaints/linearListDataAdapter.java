@@ -52,16 +52,15 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
 //      holder.grievance.setText(singleItem.getGrivType().toUpperCase());
         holder.date.setText(singleItem.getTime().toUpperCase().substring(0,10) );
 
-        if(singleItem.getComplaintStatus().toUpperCase().equals("PENDING"))
-        {
-            holder.completionDate.setVisibility(View.GONE);
-            holder.completionDate1.setVisibility(View.GONE);
-           // Toast.makeText(mContext, ""+singleItem.getEstimatedTime().toUpperCase(), Toast.LENGTH_SHORT).show();
-        }
-        else
-            holder.completionDate1.setText(singleItem.getEstimatedTime().toUpperCase());
 
-        Log.v("debug",itemsList.toString());
+           if (singleItem.getComplaintStatus().toUpperCase().equals("PENDING")) {
+               holder.completionDate.setVisibility(View.GONE);
+               holder.completionDate1.setVisibility(View.GONE);
+               // Toast.makeText(mContext, ""+singleItem.getEstimatedTime().toUpperCase(), Toast.LENGTH_SHORT).show();
+           } else {
+               holder.completionDate1.setText(singleItem.getEstimatedTime().toUpperCase());
+           }
+
 
         //Toast.makeText(mContext, "itemUrl"+singleItem.getUrl(), Toast.LENGTH_SHORT).show();
         RequestOptions requestOptions = new RequestOptions();
