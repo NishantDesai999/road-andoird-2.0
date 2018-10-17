@@ -36,7 +36,7 @@
         <!--app:layout_constraintTop_toBottomOf="@+id/tvTitle4" />-->
 
         <TextView
-            android:id="@+id/tvTitle4"
+            android:id="@+id/tv_status"
             style="@style/mWhiteText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,11 +59,11 @@
             android:paddingRight="10dp"
             android:text="In Progress"
             android:textAppearance="@style/mText"
-            app:layout_constraintStart_toEndOf="@+id/tvTitle4"
-            app:layout_constraintTop_toTopOf="@+id/tvTitle4" />
+            app:layout_constraintStart_toEndOf="@+id/tv_status"
+            app:layout_constraintTop_toTopOf="@+id/tv_status" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/tv_reported_on"
             style="@style/mWhiteText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,10 +72,10 @@
             android:layout_marginRight="8dp"
             android:text="Reported On :"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/date" />
+            app:layout_constraintEnd_toStartOf="@+id/tv_reported_on_data" />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/tv_reported_on_data"
             style="@style/mWhiteBoldText"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -83,9 +83,9 @@
             android:capitalize="words"
             android:text="20:10:2018"
             android:textAppearance="@style/mText"
-            app:layout_constraintBottom_toBottomOf="@+id/textView8"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_reported_on"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView8" />
+            app:layout_constraintTop_toTopOf="@+id/tv_reported_on" />
 
         <TextView
             android:id="@+id/tv_estimated_time"
@@ -96,7 +96,7 @@
             android:layout_marginEnd="8dp"
             android:text="Estimated Time :"
             android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/textView8"
+            app:layout_constraintBottom_toTopOf="@+id/tv_reported_on"
             app:layout_constraintEnd_toStartOf="@+id/tv_estimated_time_data"
             tools:ignore="RtlCompat" />
 

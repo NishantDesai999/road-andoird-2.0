@@ -33,7 +33,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -56,8 +55,6 @@ import ml.uncoded.margsahayak.models.ComplainModel;
 import ml.uncoded.margsahayak.models.Dialogs;
 import ml.uncoded.margsahayak.models.OfflineComplainModel;
 import ml.uncoded.margsahayak.models.StaticMethods;
-
-import static com.bumptech.glide.load.resource.bitmap.TransformationUtils.rotateImage;
 
 public class InputActivity2 extends AppCompatActivity {
 
@@ -91,7 +88,7 @@ public class InputActivity2 extends AppCompatActivity {
             public void onClick(View view) {
                 final Dialog mAdd_discription_dialog = new Dialog(InputActivity2.this);
                 mAdd_discription_dialog.setContentView(R.layout.discription_add_dialog_layout);
-                final EditText edtDescription=mAdd_discription_dialog.findViewById(R.id.discription_edit_text);
+                final EditText edtDescription=mAdd_discription_dialog.findViewById(R.id.edt_discription);
                 mAdd_discription_dialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
                 if(mDiscription == "No Description")
                     edtDescription.setText("");
@@ -99,7 +96,7 @@ public class InputActivity2 extends AppCompatActivity {
                     edtDescription.setText(mDiscription);
 
                 mAdd_discription_dialog.show();
-                mAdd_discription_dialog.findViewById(R.id.add_discription_dialog).setOnClickListener(new View.OnClickListener() {
+                mAdd_discription_dialog.findViewById(R.id.btn_add_discription).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mDiscription = edtDescription.getText().toString().trim();
@@ -117,7 +114,7 @@ public class InputActivity2 extends AppCompatActivity {
                     }
                 });
 
-                mAdd_discription_dialog.findViewById(R.id.cancle_discription_dialog).setOnClickListener(new View.OnClickListener() {
+                mAdd_discription_dialog.findViewById(R.id.btn_cancle_description).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mAdd_discription_dialog.dismiss();
@@ -562,8 +559,6 @@ public class InputActivity2 extends AppCompatActivity {
         mImageView.setVisibility(View.VISIBLE);
         findViewById(R.id.btn_retry_img_capture).setVisibility(View.VISIBLE);
         mImageView.setImageBitmap(bitmap);
-        mImageView.setColorFilter(Color.argb(150, 0, 0, 0));
-        mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         findViewById(R.id.take_picture_instruction).setVisibility(View.INVISIBLE);
         findViewById(R.id.capture_img).setVisibility(View.GONE);
     }

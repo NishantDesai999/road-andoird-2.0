@@ -29,8 +29,6 @@ public class AllComplainListFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         View v = inflater.inflate(R.layout.fragment_all_complain_list, container, false);
         mRecycleView = (RecyclerView) v.findViewById(R.id.fragment_all_complain_recyclerview);
         Realm.init(getContext());

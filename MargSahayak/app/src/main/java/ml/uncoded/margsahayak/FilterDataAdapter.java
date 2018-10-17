@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
@@ -59,9 +58,7 @@ public class FilterDataAdapter extends RecyclerView.Adapter<FilterDataAdapter.Si
 
         Glide.with(mContext)
                 .load(singleItem.getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .error(R.drawable.ic_close_black_24dp).into(holder.itemImage);
+                .into(holder.itemImage);
 
         holder.itemImage.setColorFilter(Color.argb(150, 0, 0, 0));
         holder.itemImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -96,7 +93,7 @@ public class FilterDataAdapter extends RecyclerView.Adapter<FilterDataAdapter.Si
 
             this.c = (CardView) view.findViewById(R.id.card);
             this.status = (TextView) view.findViewById(R.id.tv_status_data);
-            this.date = (TextView) view.findViewById(R.id.date);
+            this.date = (TextView) view.findViewById(R.id.tv_reported_on_data);
             this.itemImage = (ImageView) view.findViewById(R.id.itemImage);
             this.grievance = (TextView) view.findViewById(R.id.textView9);
             this.completionDate = (TextView) view.findViewById(R.id.tv_estimated_time);

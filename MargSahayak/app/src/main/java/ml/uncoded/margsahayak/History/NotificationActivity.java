@@ -24,7 +24,6 @@ import ml.uncoded.margsahayak.AllComplaints.linearListDataAdapter;
 import ml.uncoded.margsahayak.Auth.SharedPrefrenceUser;
 import ml.uncoded.margsahayak.FilterActivity;
 import ml.uncoded.margsahayak.FilterDataAdapter;
-import ml.uncoded.margsahayak.Main2Activity;
 import ml.uncoded.margsahayak.MainActivity;
 import ml.uncoded.margsahayak.MainApplication;
 import ml.uncoded.margsahayak.R;

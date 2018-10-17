@@ -67,9 +67,7 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
         Log.v("debug", itemsList.toString());
         Glide.with(mContext)
                 .load(singleItem.getImgurl())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .error(R.drawable.ic_close_black_24dp).into(holder.itemImage);
+                .into(holder.itemImage);
         holder.itemImage.setColorFilter(Color.argb(100, 0, 0, 0));
     }
 

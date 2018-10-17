@@ -24,7 +24,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardview2"
-        app:layout_constraintTop_toTopOf="@+id/divider4">
+        app:layout_constraintTop_toTopOf="@+id/divider_line">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -47,6 +47,7 @@
                 android:layout_marginBottom="8dp"
                 android:capitalize="words"
                 android:text="Status :"
+                android:visibility="visible"
                 app:layout_constraintBottom_toTopOf="@+id/tv_estimated_time"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -62,6 +63,7 @@
                 android:paddingRight="10dp"
                 android:text="In Progress"
                 android:textAppearance="@style/mText"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_status_title"
                 app:layout_constraintStart_toEndOf="@+id/tv_status_title"
                 app:layout_constraintTop_toTopOf="@+id/tv_status_title" />
@@ -125,18 +127,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="Your complaint has been forwarded to x officer."
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/tv_comments"
                 app:layout_constraintStart_toStartOf="@+id/tv_status_title"
                 app:layout_constraintTop_toBottomOf="@+id/tv_estimated_time"
                 tools:ignore="RtlCompat" />
+
+            <android.support.constraint.Group
+                android:id="@+id/gp_estimated_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="tv_estimated_time,tv_estimated_time_data" />
+
+            <android.support.constraint.Group
+                android:id="@+id/gp_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="tv_comment_data,tv_comments" />
 
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>
 
     <View
-        android:id="@+id/divider4"
+        android:id="@+id/divider_line"
         android:layout_width="5dp"
         android:layout_height="0dp"
         android:background="@color/colorAccent"
@@ -155,6 +171,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:elevation="12dp"
+        android:background="@drawable/btn_style_2"
         android:innerRadius="0dp"
         android:shape="ring"
         android:thicknessRatio="1.9"
@@ -164,13 +181,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/card">
 
-        <ImageView
-            android:id="@+id/itemImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_image_black_24dp"
-            tools:ignore="VectorDrawableCompat" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_style_2"
+            >
+
+            <ImageView
+                android:id="@+id/itemImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_image_black_24dp"
+                tools:ignore="VectorDrawableCompat" />
+
+        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

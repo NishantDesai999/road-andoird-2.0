@@ -7,6 +7,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,15 +19,19 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import java.util.concurrent.ExecutionException;
 
 import io.realm.Realm;
 import io.realm.RealmList;
 import ml.uncoded.margsahayak.models.ComplainModel;
+
+import static android.graphics.Color.BLUE;
+import static android.graphics.Color.GREEN;
+import static android.graphics.Color.RED;
+import static android.graphics.Color.YELLOW;
 
 public class Individual_Detail_Activity extends AppCompatActivity {
 
@@ -67,6 +73,19 @@ public class Individual_Detail_Activity extends AppCompatActivity {
         mGriType.setText(complainModel.getGrivType());
         mComplainId.setText(complainModel.getId());
         mStatus.setText(complainModel.getComplaintStatus());
+        if(complainModel.getComplaintStatus().toUpperCase().equals("APPROVED"))
+        {
+           mStatus.setTextColor(BLUE);
+        }
+        if(complainModel.getComplaintStatus().toUpperCase().equals("REJECTED")){
+            mStatus.setTextColor(RED);
+        }
+        if(complainModel.getComplaintStatus().toUpperCase().equals("IN PROGRESS")){
+            mStatus.setTextColor(YELLOW);
+        }
+        if(complainModel.getComplaintStatus().toUpperCase().equals("COMPLETED")){
+            mStatus.setTextColor(GREEN);
+        }
         mOfficerName.setText(complainModel.getOfficerName());
         mSubmittedDate.setText(complainModel.getTime());
         mRoadName.setText(complainModel.getRoadName());
@@ -78,10 +97,11 @@ public class Individual_Detail_Activity extends AppCompatActivity {
         }
         mComment.setText(mCommentsString);
         mDescription.setText(complainModel.getDescription());
-        Glide.with(Individual_Detail_Activity.this).load(complainModel.getUrl()).fitCenter().into(new SimpleTarget<GlideDrawable>() {
+        Glide.with(Individual_Detail_Activity.this).load(complainModel.getUrl()).into(new SimpleTarget<Drawable>() {
             @Override
-            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                 ((android.support.design.widget.CollapsingToolbarLayout)findViewById(R.id.toolbar_layout)).setBackground(resource);
+
             }
         });
         //Toast.makeText(this, "GrievanceType"+intent.getStringExtra("MGrivTypekey"), Toast.LENGTH_SHORT).show();

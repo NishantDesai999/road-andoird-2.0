@@ -2,7 +2,9 @@ package ml.uncoded.margsahayak.History;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.constraint.Group;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,12 +17,18 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
 import io.realm.RealmList;
 import ml.uncoded.margsahayak.R;
 import ml.uncoded.margsahayak.models.NotificationComplaintModel;
+
+import static android.graphics.Color.BLUE;
+import static android.graphics.Color.GREEN;
+import static android.graphics.Color.RED;
+import static android.graphics.Color.YELLOW;
 
 
 public class NotificationListDataAdapter extends RecyclerView.Adapter<NotificationListDataAdapter.SingleItemRowHolder> {
@@ -49,24 +57,69 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
 
 
         NotificationComplaintModel singleItem = itemsList.get(i);
-       // holder.area.setText(singleItem.getTaluka().toUpperCase());
-        holder.status.setText(singleItem.getComplaintStatus().toUpperCase());
-//        holder.grievance.setText(singleItem.getGrivType().toUpperCase());
-//        holder.date.setText(singleItem.getTime().toUpperCase().substring(0,10) );
-            holder.completionDate1.setText(singleItem.getEstimatedDate());
         StringBuilder mCommentsString = new StringBuilder();
-        RealmList<String> commentData = singleItem.getComments();
-        for(int j=0;j < commentData.size(); j++){
-            mCommentsString.append(commentData.get(j));
+        int commentListsize=singleItem.getComments().size();
+        if(singleItem.getComplaintStatus().toUpperCase().equals("APPROVED"))
+        {
+            holder.gpEstimatedDate.setVisibility(View.VISIBLE);
+            holder.status.setText(singleItem.getComplaintStatus().toUpperCase());
+            holder.status.setTextColor(BLUE);
+            holder.dividerLine.setBackgroundColor(BLUE);
+            holder.EstimatedDate.setText(singleItem.getEstimatedDate());
+            if(commentListsize!=0){
+                RealmList<String> commentData = singleItem.getComments();
+                for(int j=0;j < commentData.size(); j++){
+                    mCommentsString.append(commentData.get(j));
+                }
+                holder.gpComments.setVisibility(View.VISIBLE);
+                holder.comments.setText(mCommentsString);
+            }
         }
-            holder.comments.setText(mCommentsString);
+         if(singleItem.getComplaintStatus().toUpperCase().equals("REJECTED")){
+               holder.status.setText(singleItem.getComplaintStatus().toUpperCase());
+                holder.status.setTextColor(RED);
+             holder.dividerLine.setBackgroundColor(RED);
+             if(commentListsize!=0){
+                   RealmList<String> commentData = singleItem.getComments();
+                   for(int j=0;j < commentData.size(); j++){
+                       mCommentsString.append(commentData.get(j));
+                   }
+                   holder.gpComments.setVisibility(View.VISIBLE);
+                   holder.comments.setText(mCommentsString);
+               }
 
-        Log.d("test",itemsList.toString());
+        }
+        if(singleItem.getComplaintStatus().toUpperCase().equals("IN PROGRESS")){
+            holder.status.setText(singleItem.getComplaintStatus().toUpperCase());
+            holder.status.setTextColor(YELLOW);
+            holder.dividerLine.setBackgroundColor(YELLOW);
+            if(commentListsize!=0){
+                RealmList<String> commentData = singleItem.getComments();
+                for(int j=0;j < commentData.size(); j++){
+                    mCommentsString.append(commentData.get(j));
+                }
+                holder.gpComments.setVisibility(View.VISIBLE);
+                holder.gpEstimatedDate.setVisibility(View.VISIBLE);
+                holder.EstimatedDate.setText(singleItem.getEstimatedDate());
+                holder.comments.setText(mCommentsString);
+            }
+
+        }
+        if(singleItem.getComplaintStatus().toUpperCase().equals("COMPLETED")){
+            holder.status.setText(singleItem.getComplaintStatus().toUpperCase());
+            holder.status.setTextColor(GREEN);
+            holder.dividerLine.setBackgroundColor(GREEN);
+
+
+        }
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
         Glide.with(mContext)
                 .load(singleItem.getImgUrl())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .error(R.drawable.ic_image_black_24dp).into(holder.itemImage);
+                .apply(requestOptions)
+                .into(holder.itemImage)
+                ;
+        ;
 
         holder.itemImage.setColorFilter(Color.argb(150, 0, 0, 0));
         holder.itemImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -84,14 +137,10 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
         protected ImageView itemImage;
 
         protected TextView status;
-        protected TextView date;
-        protected TextView grievance;
-        protected TextView completionDate,completionDate1,comments;
-
-
-        protected Button delete;
+        protected TextView EstimatedDate,comments;
+        protected Group gpComments,gpEstimatedDate;
         protected Button share;
-
+        protected View dividerLine;
         protected CardView c;
 
 
@@ -101,14 +150,12 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
 
             this.c = (CardView) view.findViewById(R.id.card);
             this.status = (TextView) view.findViewById(R.id.tv_status_data);
-            this.date = (TextView) view.findViewById(R.id.date);
             this.itemImage = (ImageView) view.findViewById(R.id.itemImage);
-            this.grievance = (TextView) view.findViewById(R.id.textView9);
-            this.completionDate = (TextView) view.findViewById(R.id.tv_estimated_time);
-            this.completionDate1 = (TextView) view.findViewById(R.id.tv_estimated_time_data);
+            this.EstimatedDate = (TextView) view.findViewById(R.id.tv_estimated_time_data);
             this.comments=view.findViewById(R.id.tv_comment_data);
-
-
+            this.gpComments=view.findViewById(R.id.gp_comments);
+            this.gpEstimatedDate=view.findViewById(R.id.gp_estimated_time);
+            this.dividerLine=view.findViewById(R.id.divider_line);
             c.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

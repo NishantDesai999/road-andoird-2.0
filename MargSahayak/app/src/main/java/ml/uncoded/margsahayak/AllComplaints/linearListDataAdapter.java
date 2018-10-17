@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
@@ -47,9 +48,8 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
 
         singleItem = itemsList.get(i);
 
-       // holder.area.setText(singleItem.getTaluka().toUpperCase());
         holder.status.setText(singleItem.getComplaintStatus().toUpperCase());
-//        holder.grievance.setText(singleItem.getGrivType().toUpperCase());
+//      holder.grievance.setText(singleItem.getGrivType().toUpperCase());
         holder.date.setText(singleItem.getTime().toUpperCase().substring(0,10) );
 
         if(singleItem.getComplaintStatus().toUpperCase().equals("PENDING"))
@@ -64,13 +64,14 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
         Log.v("debug",itemsList.toString());
 
         //Toast.makeText(mContext, "itemUrl"+singleItem.getUrl(), Toast.LENGTH_SHORT).show();
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
         Glide.with(mContext)
                 .load(singleItem.getUrl())
-                .skipMemoryCache(true)
-                .dontAnimate()
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .centerCrop()
-                .error(R.drawable.ic_close_black_24dp).into(holder.itemImage);
+                .apply(requestOptions)
+              .into(holder.itemImage);
+
+
 
         holder.itemImage.setColorFilter(Color.argb(150, 0, 0, 0));
         holder.itemImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -105,7 +106,7 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
 
             this.c = (CardView) view.findViewById(R.id.card);
             this.status = (TextView) view.findViewById(R.id.tv_status_data);
-            this.date = (TextView) view.findViewById(R.id.date);
+            this.date = (TextView) view.findViewById(R.id.tv_reported_on_data);
             this.itemImage = (ImageView) view.findViewById(R.id.itemImage);
             this.grievance = (TextView) view.findViewById(R.id.textView9);
             this.completionDate = (TextView) view.findViewById(R.id.tv_estimated_time);

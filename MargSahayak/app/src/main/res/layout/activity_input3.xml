@@ -83,16 +83,20 @@
                 app:srcCompat="@drawable/ic_image_black_24dp" />
 
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_retry_img_capture"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/ic_edit_icon"
-                android:visibility="visible"
+                android:background="@drawable/btn_style"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/guideline6"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_edit_icon">
+
+
+            </ImageButton>
 
             <Button
                 android:id="@+id/btn_upload"
