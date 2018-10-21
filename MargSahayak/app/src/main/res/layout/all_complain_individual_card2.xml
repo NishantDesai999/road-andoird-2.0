@@ -27,8 +27,10 @@
             android:tint="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
 
         <!--app:layout_constraintBottom_toBottomOf="parent"-->
@@ -40,8 +42,8 @@
             style="@style/mWhiteText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:capitalize="words"
             android:text="Status :"
@@ -67,11 +69,9 @@
             style="@style/mWhiteText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:text="Reported On :"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tv_grievance_type"
             app:layout_constraintEnd_toStartOf="@+id/tv_reported_on_data" />
 
         <TextView
@@ -92,10 +92,8 @@
             style="@style/mWhiteText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:text="Estimated Time :"
-            android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/tv_reported_on"
             app:layout_constraintEnd_toStartOf="@+id/tv_estimated_time_data"
             tools:ignore="RtlCompat" />
@@ -114,6 +112,50 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_estimated_time"
             tools:ignore="RtlCompat" />
+
+        <TextView
+            android:id="@+id/tv_grievance_type"
+            style="@style/mWhiteBoldText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Grievance Type :"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_grievance_type_data" />
+
+        <TextView
+            android:id="@+id/tv_grievance_type_data"
+            style="@style/mWhiteBoldText"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:text="Some Damage"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_grievance_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_grievance_type" />
+
+        <android.support.constraint.Group
+            android:id="@+id/gp_estimated_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="tv_estimated_time_data,tv_estimated_time" />
+
+        <android.support.constraint.Group
+            android:id="@+id/gp_reported_on"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="tv_reported_on_data,tv_reported_on" />
+
+        <android.support.constraint.Group
+            android:id="@+id/gp_grievance_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="tv_grievance_type,tv_grievance_type_data" />
 
 
     </android.support.constraint.ConstraintLayout>

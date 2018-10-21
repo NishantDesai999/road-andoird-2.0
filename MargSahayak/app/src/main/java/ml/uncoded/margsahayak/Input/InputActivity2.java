@@ -221,8 +221,6 @@ public class InputActivity2 extends AppCompatActivity {
                             lon = locationListener.lon;
                             lat = locationListener.lat;
                         }
-
-
                         locationManager.removeUpdates(locationListener);
                         locationListener = null;
                     }
@@ -261,15 +259,11 @@ public class InputActivity2 extends AppCompatActivity {
                                 finish();
                             }
                         });
-
                     } else {
-
                         //Check Bisag APi
                         final ProgressBar mProgressBar = findViewById(R.id.InputProgressBar);
                         mProgressBar.setVisibility(View.VISIBLE);
                         final MainApplication m = ((MainApplication) getApplicationContext());
-
-
                         Log.d("MyLocationListner", lon + lat);
                         lat = "23.10524664";
                         lon = "72.58701144";
@@ -388,10 +382,7 @@ public class InputActivity2 extends AppCompatActivity {
                                     }
                                 });
                     }
-
-
                 }
-
             }
         });
     }
@@ -458,13 +449,23 @@ public class InputActivity2 extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CROP_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && null != data) {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 1;
-            bitmap = BitmapFactory.decodeFile(mCropImagedUri.getPath(), options);
-            showImage();
-        }
+        if (requestCode == CROP_IMAGE_REQUEST_CODE && null != data) {
+            if (resultCode == RESULT_OK) {
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 1;
+                bitmap = BitmapFactory.decodeFile(mCropImagedUri.getPath(), options);
+                showImage();
+            }
+            else if (resultCode == RESULT_CANCELED) {
 
+                finish();
+
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        "Sorry! Failed to crop image", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
         if (requestCode == GALLERY_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -505,15 +506,12 @@ public class InputActivity2 extends AppCompatActivity {
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 1;
                 bitmap = BitmapFactory.decodeFile(fileUri.getPath(), options);
-
                 rotateImageFunction();
                 cropImageFunction();
 
             } else if (resultCode == RESULT_CANCELED) {
 
-                // Intent i = new Intent(this,MainActivity.class);
-                // startActivity(i);
-               // finish();
+                finish();
                 Toast.makeText(getApplicationContext(),
                         "User cancelled image capture", Toast.LENGTH_SHORT)
                         .show();

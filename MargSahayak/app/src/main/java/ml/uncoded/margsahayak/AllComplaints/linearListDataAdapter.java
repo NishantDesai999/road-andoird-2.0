@@ -3,6 +3,7 @@ package ml.uncoded.margsahayak.AllComplaints;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.constraint.Group;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -49,18 +50,14 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
         singleItem = itemsList.get(i);
 
         holder.status.setText(singleItem.getComplaintStatus().toUpperCase());
-//      holder.grievance.setText(singleItem.getGrivType().toUpperCase());
-        holder.date.setText(singleItem.getTime().toUpperCase().substring(0,10) );
-
-
-           if (singleItem.getComplaintStatus().toUpperCase().equals("PENDING")) {
-               holder.completionDate.setVisibility(View.GONE);
-               holder.completionDate1.setVisibility(View.GONE);
-               // Toast.makeText(mContext, ""+singleItem.getEstimatedTime().toUpperCase(), Toast.LENGTH_SHORT).show();
-           } else {
-               holder.completionDate1.setText(singleItem.getEstimatedTime().toUpperCase());
-           }
-
+        holder.grievance.setText(singleItem.getGrivType().toUpperCase());
+        if (singleItem.getComplaintStatus().toUpperCase().equals("PENDING")) {
+            holder.gpEstimatedTime.setVisibility(View.GONE);
+            holder.reportedDate.setText(singleItem.getTime().toUpperCase().substring(0,10) );
+        }else {
+            holder.gpReportedOn.setVisibility(View.GONE);
+            holder.estimatedTime.setText(singleItem.getEstimatedTime().toUpperCase());
+        }
 
         //Toast.makeText(mContext, "itemUrl"+singleItem.getUrl(), Toast.LENGTH_SHORT).show();
         RequestOptions requestOptions = new RequestOptions();
@@ -72,7 +69,7 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
 
 
 
-        holder.itemImage.setColorFilter(Color.argb(150, 0, 0, 0));
+        holder.itemImage.setColorFilter(Color.argb(50, 0, 0, 0));
         holder.itemImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }
 
@@ -88,15 +85,13 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
         protected ImageView itemImage;
 
         protected TextView status;
-        protected TextView date;
+        protected TextView reportedDate;
         protected TextView grievance;
-        protected TextView completionDate,completionDate1;
-
-
-        protected Button delete;
+        protected TextView estimatedTime;
         protected Button share;
-
         protected CardView c;
+        protected Group gpEstimatedTime,gpReportedOn,gpGrievanceStatus;
+
 
 
 
@@ -105,11 +100,10 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
 
             this.c = (CardView) view.findViewById(R.id.card);
             this.status = (TextView) view.findViewById(R.id.tv_status_data);
-            this.date = (TextView) view.findViewById(R.id.tv_reported_on_data);
+            this.reportedDate = (TextView) view.findViewById(R.id.tv_reported_on_data);
             this.itemImage = (ImageView) view.findViewById(R.id.itemImage);
             this.grievance = (TextView) view.findViewById(R.id.textView9);
-            this.completionDate = (TextView) view.findViewById(R.id.tv_estimated_time);
-            this.completionDate1 = (TextView) view.findViewById(R.id.tv_estimated_time_data);
+            this.estimatedTime = (TextView) view.findViewById(R.id.tv_estimated_time_data);
 
 
 

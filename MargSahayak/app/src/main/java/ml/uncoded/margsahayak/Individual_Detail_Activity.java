@@ -14,6 +14,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.QuickContactBadge;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,8 +37,9 @@ import static android.graphics.Color.YELLOW;
 
 public class Individual_Detail_Activity extends AppCompatActivity {
 
-    TextView mOfficerName, mEstimatedDate, mComment, mDescription, mTalukaName, mDistrictName, mStateName;
-    TextView mRoadType, mGriType, mComplainId, mStatus, mSubmittedDate, mRoadName;
+    TextView mOfficerName, mEstimatedDate, mComment, mDescription;
+    TextView  mGriType, mComplainId, mStatus, mSubmittedDate, mRoadName;
+    ImageView mMailToOfficer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +70,10 @@ public class Individual_Detail_Activity extends AppCompatActivity {
         mEstimatedDate = (TextView) findViewById(R.id.estimatedDate);
         mComment = (TextView) findViewById(R.id.comment);
         mDescription = (TextView) findViewById(R.id.descriptions);
+        mMailToOfficer=findViewById(R.id.iv_email_Officer);
 
         Realm r=Realm.getDefaultInstance();
-        ComplainModel complainModel=r.where(ComplainModel.class).equalTo("id",intent.getStringExtra("MComplainIdkey")).findFirst();
+        final ComplainModel complainModel=r.where(ComplainModel.class).equalTo("id",intent.getStringExtra("MComplainIdkey")).findFirst();
         mGriType.setText(complainModel.getGrivType());
         mComplainId.setText(complainModel.getId());
         mStatus.setText(complainModel.getComplaintStatus());
@@ -86,6 +90,17 @@ public class Individual_Detail_Activity extends AppCompatActivity {
         if(complainModel.getComplaintStatus().toUpperCase().equals("COMPLETED")){
             mStatus.setTextColor(GREEN);
         }
+        mMailToOfficer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("plain/text");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[] { complainModel.getOfficerEmail()});
+                intent.putExtra(Intent.EXTRA_SUBJECT, "subject");
+                intent.putExtra(Intent.EXTRA_TEXT, "mail body");
+                startActivity(Intent.createChooser(intent, ""));
+            }
+        });
         mOfficerName.setText(complainModel.getOfficerName());
         mSubmittedDate.setText(complainModel.getTime());
         mRoadName.setText(complainModel.getRoadName());

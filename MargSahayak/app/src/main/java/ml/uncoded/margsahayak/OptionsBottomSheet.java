@@ -22,27 +22,9 @@ public class OptionsBottomSheet extends BottomSheetDialogFragment {
         final View view=inflater.inflate(R.layout.bottom_sheet_options,container,false);
 
          TextView filter, help, contactus, settigs, logout;
-         filter = (TextView) view.findViewById(R.id.bottomsheet_filter);
-         help = (TextView) view.findViewById(R.id.bottomsheet_help);
          contactus = (TextView) view.findViewById(R.id.bottomsheet_contactus);
          settigs = (TextView) view.findViewById(R.id.bottomsheet_settings);
          logout = (TextView) view.findViewById(R.id.bottomsheet_logout);
-
-         filter.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 dismiss();
-                 Intent i = new Intent(getActivity(),FilterActivity.class);
-                 startActivity(i);
-             }
-         });
-
-         help.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-
-             }
-         });
 
          contactus.setOnClickListener(new View.OnClickListener() {
              @Override

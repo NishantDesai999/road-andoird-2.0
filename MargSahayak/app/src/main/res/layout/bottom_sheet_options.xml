@@ -8,107 +8,66 @@
     >
 
     <TextView
-        android:id="@+id/bottomsheet_filter"
+        android:id="@+id/bottomsheet_contactus"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:drawablePadding="20dp"
-        android:text="Filter"
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="10dp"
+        android:drawablePadding="30dp"
+        android:text="Contact us"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomsheet_settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/bottomsheet_help"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:drawablePadding="20dp"
-        android:text="Help"
-        android:textSize="20sp"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider2"
-
-        />
-
-    <TextView
-        android:id="@+id/bottomsheet_contactus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:drawablePadding="20dp"
-        android:text="Contact us"
-        android:textSize="20sp"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottomsheet_help"
-
+        app:layout_constraintTop_toTopOf="parent"
+        android:drawableStart="@drawable/ic_contact_mail_bottom_sheet"
         />
 
     <TextView
         android:id="@+id/bottomsheet_settings"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:drawablePadding="20dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:drawablePadding="30dp"
         android:text="Settings"
-        android:textSize="20sp"
-        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:drawableStart="@drawable/ic_setting_bottom_sheet"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottomsheet_contactus"
-
-        />
+        app:layout_constraintTop_toBottomOf="@+id/bottomsheet_contactus" />
 
     <TextView
         android:id="@+id/bottomsheet_logout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:drawablePadding="20dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:drawablePadding="30dp"
         android:text="Logout"
-        android:textSize="20sp"
-        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:drawableStart="@drawable/ic_logout_bottom_sheet"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
-
-        />
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
 
     <View
         android:id="@+id/divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="16dp"
         android:background="#dad9d9"
+        app:layout_constraintBottom_toTopOf="@+id/bottomsheet_logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottomsheet_settings"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        />
-
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:background="#dad9d9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@+id/bottomsheet_filter" />
+        app:layout_constraintTop_toBottomOf="@+id/bottomsheet_settings" />
 
 
 </android.support.constraint.ConstraintLayout>

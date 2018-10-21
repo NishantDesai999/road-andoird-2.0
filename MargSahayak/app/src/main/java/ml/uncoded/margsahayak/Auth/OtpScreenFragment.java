@@ -127,6 +127,7 @@ public class OtpScreenFragment extends Fragment {
         mPhoneEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPrefrenceUser.setStateLogin();
                 FragmentTransaction mFragmentTransition = getActivity().getSupportFragmentManager().beginTransaction();
                 mFragmentTransition.replace(R.id.auth_framelayout, new LoginFragment());
                 mFragmentTransition.addToBackStack(null);

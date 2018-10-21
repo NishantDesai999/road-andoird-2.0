@@ -39,7 +39,6 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
     public NotificationListDataAdapter(Context context, ArrayList<NotificationComplaintModel> itemsList) {
         this.itemsList = itemsList;
         this.mContext = context;
-
         for(NotificationComplaintModel x: itemsList){
             Log.d("test", "NotificationListDataAdapter: " + x.getId());
         }
@@ -55,7 +54,6 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
     @Override
     public void onBindViewHolder(SingleItemRowHolder holder, int i) {
 
-
         NotificationComplaintModel singleItem = itemsList.get(i);
         StringBuilder mCommentsString = new StringBuilder();
         int commentListsize=singleItem.getComments().size();
@@ -66,7 +64,7 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
             holder.status.setTextColor(BLUE);
             holder.dividerLine.setBackgroundColor(BLUE);
             holder.EstimatedDate.setText(singleItem.getEstimatedDate());
-            if(commentListsize!=0){
+            if(commentListsize!=0 && singleItem.getComments()!=null){
                 RealmList<String> commentData = singleItem.getComments();
                 for(int j=0;j < commentData.size(); j++){
                     mCommentsString.append(commentData.get(j));
@@ -79,7 +77,7 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
                holder.status.setText(singleItem.getComplaintStatus().toUpperCase());
                 holder.status.setTextColor(RED);
              holder.dividerLine.setBackgroundColor(RED);
-             if(commentListsize!=0){
+             if(commentListsize!=0 && singleItem.getComments()!=null){
                    RealmList<String> commentData = singleItem.getComments();
                    for(int j=0;j < commentData.size(); j++){
                        mCommentsString.append(commentData.get(j));
@@ -93,7 +91,7 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
             holder.status.setText(singleItem.getComplaintStatus().toUpperCase());
             holder.status.setTextColor(YELLOW);
             holder.dividerLine.setBackgroundColor(YELLOW);
-            if(commentListsize!=0){
+            if(commentListsize!=0 && singleItem.getComments()!=null){
                 RealmList<String> commentData = singleItem.getComments();
                 for(int j=0;j < commentData.size(); j++){
                     mCommentsString.append(commentData.get(j));
@@ -109,8 +107,14 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
             holder.status.setText(singleItem.getComplaintStatus().toUpperCase());
             holder.status.setTextColor(GREEN);
             holder.dividerLine.setBackgroundColor(GREEN);
-
-
+            if(commentListsize!=0 && singleItem.getComments()!=null){
+                RealmList<String> commentData = singleItem.getComments();
+                for(int j=0;j < commentData.size(); j++){
+                    mCommentsString.append(commentData.get(j));
+                }
+                holder.gpComments.setVisibility(View.VISIBLE);
+                holder.comments.setText(mCommentsString);
+            }
         }
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
@@ -132,10 +136,7 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
 
     public class SingleItemRowHolder extends RecyclerView.ViewHolder {
 
-        protected TextView area;
-
         protected ImageView itemImage;
-
         protected TextView status;
         protected TextView EstimatedDate,comments;
         protected Group gpComments,gpEstimatedDate;
@@ -156,17 +157,6 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
             this.gpComments=view.findViewById(R.id.gp_comments);
             this.gpEstimatedDate=view.findViewById(R.id.gp_estimated_time);
             this.dividerLine=view.findViewById(R.id.divider_line);
-            c.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-
-                    Toast.makeText(v.getContext(),v.getId()+"",Toast.LENGTH_LONG);
-
-                }
-            });
-
-
         }
 
     }

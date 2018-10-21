@@ -37,6 +37,13 @@ public class SharedPrefrenceUser {
         editor.putString(KEY_STATE, Constant.otp_state);
         editor.apply();
     }
+    public static void setStateLogin() {
+        SharedPreferences mSharedPreferences = context_to_use.getSharedPreferences(USER_Login_SHARED_PREFRENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(KEY_STATE, Constant.login_state);
+        editor.apply();
+    }
+
 
     public static void setStateOtpToRegister(String token) {
         SharedPreferences mSharedPreferences = context_to_use.getSharedPreferences(USER_Login_SHARED_PREFRENCE, Context.MODE_PRIVATE);

@@ -13,7 +13,7 @@
         android:layout_marginStart="8dp"
         android:text="@string/offline_complaints"
         android:textAppearance="@style/mBoldheaderText"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorGray"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
