@@ -203,6 +203,7 @@ public class InputActivity2 extends AppCompatActivity {
                     if (locationManager != null) {
                         Log.d("MyLocationListner", "LocationListner Stopped");
                         if (ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(InputActivity2.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
                             return;
                         }
                         Location l = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);

@@ -13,7 +13,7 @@ import android.view.WindowManager;
 import ml.uncoded.margsahayak.Auth.AuthActivity;
 
 public class SplashScreen extends AppCompatActivity {
-    int splashtime = 1000;
+    int splashtime = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
