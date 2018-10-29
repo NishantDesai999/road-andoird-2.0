@@ -90,10 +90,7 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
         protected TextView estimatedTime;
         protected Button share;
         protected CardView c;
-        protected Group gpEstimatedTime,gpReportedOn,gpGrievanceStatus;
-
-
-
+        protected Group gpEstimatedTime,gpReportedOn;
 
         public SingleItemRowHolder(View view) {
             super(view);
@@ -102,11 +99,8 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
             this.status = (TextView) view.findViewById(R.id.tv_status_data);
             this.reportedDate = (TextView) view.findViewById(R.id.tv_reported_on_data);
             this.itemImage = (ImageView) view.findViewById(R.id.itemImage);
-            this.grievance = (TextView) view.findViewById(R.id.textView9);
+            this.grievance = (TextView) view.findViewById(R.id.tv_grievance_type_data);
             this.estimatedTime = (TextView) view.findViewById(R.id.tv_estimated_time_data);
-
-
-
             c.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

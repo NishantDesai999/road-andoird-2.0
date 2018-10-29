@@ -59,6 +59,11 @@
 
         <activity android:name=".Auth.AuthActivity"/>
 
+        <activity android:name=".SplashScreen"
+            android:screenOrientation="portrait"
+            ></activity>
+
+
         <receiver android:name=".Auth.MySMSBroadCastReceiver">
             <intent-filter android:priority="999">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />

@@ -37,7 +37,7 @@ public class IntroActivity extends AppCompatActivity{
             // Checking for first time launch - before calling setContentView()
             prefManager = new PrefManager(this);
             if (!prefManager.isFirstTimeLaunch()) {
-                launchHomeScreen();
+                startActivity(new Intent(IntroActivity.this, SplashScreen.class));
                 finish();
             }
 

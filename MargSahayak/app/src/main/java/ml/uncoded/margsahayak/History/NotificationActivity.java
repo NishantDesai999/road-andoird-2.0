@@ -67,7 +67,7 @@ public class NotificationActivity extends AppCompatActivity {
 //                List<NotificationComplaintModel> complainList = r1.where(NotificationComplaintModel.class).findAll();
 //                adapter = new NotificationListDataAdapter(NotificationActivity.this, new ArrayList<NotificationComplaintModel>(complainList));
 //                mRecycleView.setAdapter(adapter);
-                Toast.makeText(NotificationActivity.this, "Realm refreseh ", Toast.LENGTH_LONG).show();
+//                Toast.makeText(NotificationActivity.this, "Realm refreseh ", Toast.LENGTH_LONG).show();
             }
         };
         r1.addChangeListener(mRealmChangeListner);

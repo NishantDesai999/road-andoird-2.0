@@ -70,7 +70,7 @@ public class AllComplainListFragment extends Fragment {
                 }
                 adapter = new linearListDataAdapter(getActivity(), new ArrayList<ComplainModel>(complainList));
                 mRecycleView.setAdapter(adapter);
-                Toast.makeText(getActivity(),"Realm refreseh ",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(),"Realm refreseh ",Toast.LENGTH_LONG).show();
             }
         };
 

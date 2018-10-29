@@ -87,7 +87,6 @@ public class FilterDataAdapter extends RecyclerView.Adapter<FilterDataAdapter.Si
             this.estimatedTime = (TextView) view.findViewById(R.id.tv_estimated_time_data);
             this.gpEstimatedTime=view.findViewById(R.id.gp_estimated_time);
             this.gpReportedOn=view.findViewById(R.id.gp_reported_on);
-            this.gpGrievanceType=(Group)view.findViewById(R.id.gp_greivance_type);
 
 
 
