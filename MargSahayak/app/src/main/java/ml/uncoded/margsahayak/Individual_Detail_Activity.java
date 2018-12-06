@@ -79,16 +79,16 @@ public class Individual_Detail_Activity extends AppCompatActivity {
         mStatus.setText(complainModel.getComplaintStatus());
         if(complainModel.getComplaintStatus().toUpperCase().equals("APPROVED"))
         {
-           mStatus.setTextColor(BLUE);
+           mStatus.setTextColor(0xFF0277BD);
         }
         if(complainModel.getComplaintStatus().toUpperCase().equals("REJECTED")){
-            mStatus.setTextColor(RED);
+            mStatus.setTextColor(0xFFC62828);
         }
         if(complainModel.getComplaintStatus().toUpperCase().equals("IN PROGRESS")){
-            mStatus.setTextColor(YELLOW);
+            mStatus.setTextColor(0xFFFBC02D);
         }
         if(complainModel.getComplaintStatus().toUpperCase().equals("COMPLETED")){
-            mStatus.setTextColor(GREEN);
+            mStatus.setTextColor(0xFF2E7D32);
         }
         mMailToOfficer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +110,11 @@ public class Individual_Detail_Activity extends AppCompatActivity {
         for(int i=0; i < commentData.size(); i++){
             mCommentsString.append(commentData.get(i));
         }
+        if(mCommentsString.length()>0 && mCommentsString!=null)
         mComment.setText(mCommentsString);
+        else{
+            mComment.setText("No Comments");
+        }
         mDescription.setText(complainModel.getDescription());
         Glide.with(Individual_Detail_Activity.this).load(complainModel.getUrl()).into(new SimpleTarget<Drawable>() {
             @Override

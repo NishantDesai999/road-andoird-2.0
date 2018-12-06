@@ -111,8 +111,6 @@ public class RegisterFragment extends Fragment {
                                 SharedPrefrenceUser.setStateRegisterOrOTPToHome(mFNameText + " " + mLNameText,mResponse.data);
                                 progressBar.setVisibility(View.INVISIBLE);
                                 c.startActivity(new Intent(c,MainActivity.class));
-
-
                             }
 
                             @Override

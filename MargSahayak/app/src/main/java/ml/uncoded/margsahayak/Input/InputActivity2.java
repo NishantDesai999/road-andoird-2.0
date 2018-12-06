@@ -226,8 +226,9 @@ public class InputActivity2 extends AppCompatActivity {
                         locationListener = null;
                     }
 
-                    lat = "23.10524664";
-                    lon = "72.58701144";
+                    Toast.makeText(InputActivity2.this, "" + lon + lat, Toast.LENGTH_SHORT).show();
+                    lat = "23.173727";
+                    lon = "72.637180";
                     //location set in offline complain model
                     RealmList<String> mLocationList = new RealmList<String>(lat, lon);
                     mInputData.setLocation(mLocationList);

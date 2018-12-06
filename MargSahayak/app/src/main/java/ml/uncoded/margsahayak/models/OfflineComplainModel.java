@@ -9,27 +9,22 @@ public class OfflineComplainModel extends RealmObject {
 
     @PrimaryKey
     private int id;
-
     private String grievanceDescription;
     private String Imgurl;
     private RealmList<String> location;
     private String time;
     private String grievanceName;
 
-
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
 
-
     public String getTime() {
         return time;
     }
-
     public void setTime(String time) {
         this.time = time;
     }
@@ -37,7 +32,6 @@ public class OfflineComplainModel extends RealmObject {
     public String getGrievanceDescription() {
         return grievanceDescription;
     }
-
     public void setGrievanceDescription(String grievanceDescription) {
         this.grievanceDescription = grievanceDescription;
     }
@@ -45,7 +39,6 @@ public class OfflineComplainModel extends RealmObject {
     public String getImgurl() {
         return Imgurl;
     }
-
     public void setImgurl(String imgurl) {
         Imgurl = imgurl;
     }
@@ -54,7 +47,6 @@ public class OfflineComplainModel extends RealmObject {
     public RealmList<String> getLocation() {
         return location;
     }
-
     public void setLocation(RealmList<String> location) {
         this.location = location;
     }
@@ -62,11 +54,9 @@ public class OfflineComplainModel extends RealmObject {
     public String getGrievanceName() {
         return grievanceName;
     }
-
     public void setGrievanceName(String grievanceName) {
         this.grievanceName = grievanceName;
     }
-
 
 
 }

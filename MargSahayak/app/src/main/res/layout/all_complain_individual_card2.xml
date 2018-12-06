@@ -120,7 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="Grievance Type :"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_grievance_type_data" />
 
@@ -149,13 +149,6 @@
             android:layout_height="wrap_content"
             android:visibility="visible"
             app:constraint_referenced_ids="tv_reported_on_data,tv_reported_on" />
-
-        <android.support.constraint.Group
-            android:id="@+id/gp_grievance_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:constraint_referenced_ids="tv_grievance_type,tv_grievance_type_data" />
 
 
     </android.support.constraint.ConstraintLayout>

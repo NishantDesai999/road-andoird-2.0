@@ -156,6 +156,11 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="add_complaint">Add complaint</string>
+    <string name="contactTitle">Contact Us</string>
+    <string name="contactAddress">Secretary\nRoads and Buildings Department\nBlock-14\n2nd
+        Floor\nNew Sachivalaya\nGandhinagar - 382010</string>
+    <string name="contactNo">Tel No. : +91-79-232 51801/2/3/4\nFax No. : +91-79-23252509</string>
+    <string name="contactMail">Email : secrnb@gujarat.gov.in</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

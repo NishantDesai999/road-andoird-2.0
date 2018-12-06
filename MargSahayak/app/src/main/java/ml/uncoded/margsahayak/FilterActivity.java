@@ -108,6 +108,8 @@ public class FilterActivity extends AppCompatActivity {
 
 //        r.addChangeListener(mRealmChangeListner);
 
+        showFilterDialog();
+
     }
 
 

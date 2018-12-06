@@ -203,10 +203,9 @@
                     android:id="@+id/complain_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:text="1"
                     app:layout_constraintBottom_toBottomOf="@+id/textView60"
-                    app:layout_constraintStart_toEndOf="@+id/textView60" />
+                    app:layout_constraintStart_toStartOf="@+id/griTypeScroll" />
 
                 <TextView
                     android:id="@+id/statusScroll"
@@ -242,10 +241,9 @@
                     android:id="@+id/submittedDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:text="10/3/2018"
                     app:layout_constraintBottom_toBottomOf="@+id/textView16"
-                    app:layout_constraintStart_toEndOf="@+id/textView16" />
+                    app:layout_constraintStart_toStartOf="@+id/complain_id" />
 
                 <TextView
                     android:id="@+id/textView17"
@@ -262,10 +260,9 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginStart="8dp"
                     android:text="hello\nhelo"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView17"
+                    app:layout_constraintStart_toStartOf="@+id/submittedDate"
                     app:layout_constraintTop_toTopOf="@+id/textView17" />
 
 
@@ -382,14 +379,12 @@
                     android:id="@+id/textView19"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginTop="8dp"
                     android:text="Contact :"
                     android:textSize="10sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/emailOfficer"
-                    app:layout_constraintEnd_toStartOf="@+id/emailOfficer"
-                    app:layout_constraintTop_toTopOf="@+id/emailOfficer" />
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_email_Officer"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_email_Officer"
+                    app:layout_constraintTop_toTopOf="@+id/iv_email_Officer" />
 
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>

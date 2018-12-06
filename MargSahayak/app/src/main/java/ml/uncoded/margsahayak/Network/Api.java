@@ -20,7 +20,9 @@ import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface Api {
-    String BASE_URL = "https://roadgrievance.herokuapp.com/api/android/";
+//    String BASE_URL = "https://roadgrievance.herokuapp.com/api/android/";
+
+    String BASE_URL = "http://192.168.2.10:3003/api/android/";
 
     @GET("testLate")
     Call<ComplainModel> getLateReply();

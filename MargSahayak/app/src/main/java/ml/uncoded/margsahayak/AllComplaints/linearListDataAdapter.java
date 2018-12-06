@@ -101,6 +101,8 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
             this.itemImage = (ImageView) view.findViewById(R.id.itemImage);
             this.grievance = (TextView) view.findViewById(R.id.tv_grievance_type_data);
             this.estimatedTime = (TextView) view.findViewById(R.id.tv_estimated_time_data);
+            this.gpEstimatedTime=view.findViewById(R.id.gp_estimated_time);
+            this.gpReportedOn=view.findViewById(R.id.gp_reported_on);
             c.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
