@@ -131,7 +131,7 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
                 }
 
                     holder.gpComments.setVisibility(View.VISIBLE);
-                if(mCommentsString.length()>0&&mCommentsString.toString()!=null)
+                if(mCommentsString.length()>0&&!(mCommentsString.toString().equals("null")))
                 {
                     holder.comments.setText(mCommentsString);
                 }
@@ -153,15 +153,14 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
             holder.status.setTextColor(0xFF2E7D32);
             if(holder.getAdapterPosition()==0){holder.dividerLineU.setVisibility(View.GONE);}
             if(holder.getAdapterPosition()==(itemsList.size()-1)){holder.dividerLineL.setVisibility(View.GONE);}
-            if(commentListsize!=0 && singleItem.getComments()!=null){
+            if(commentListsize!=0 && singleItem.getComments()!=null && !(singleItem.getComments().isEmpty())){
                 RealmList<String> commentData = singleItem.getComments();
-
                 for(int j=0;j < commentData.size(); j++){
                     mCommentsString.append(commentData.get(j));
                 }
                 Log.e("Comments from noti",mCommentsString.toString());
                 holder.gpComments.setVisibility(View.VISIBLE);
-                if(mCommentsString.length()>0&&mCommentsString.toString()!=null)
+                if(mCommentsString.length()>0 && !(mCommentsString.toString().equals("null")) )
                 {
                     holder.comments.setText(mCommentsString);
                 }

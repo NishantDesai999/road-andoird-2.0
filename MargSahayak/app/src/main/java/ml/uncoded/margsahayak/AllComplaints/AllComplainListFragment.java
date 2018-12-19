@@ -53,7 +53,7 @@ public class AllComplainListFragment extends Fragment {
 
 
         adapter = new linearListDataAdapter(getActivity(), new ArrayList<ComplainModel>(complainList));
-        mRecycleView.setLayoutManager(new CustomLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mRecycleView.setLayoutManager(new CustomLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true));
         mRecycleView.setAdapter(adapter);
         ViewCompat.setNestedScrollingEnabled(mRecycleView,false);
         //mRecycleView.setNestedScrollingEnabled(false);

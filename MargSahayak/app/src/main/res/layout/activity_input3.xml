@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.4" />
 
 
     <View
@@ -74,6 +74,7 @@
                 android:id="@+id/imagePriview"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:background="@color/colorGray"
                 android:scaleType="centerCrop"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@+id/guideline6"
@@ -114,7 +115,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_discription" />
+                app:layout_constraintTop_toBottomOf="@+id/edt_add_description" />
 
 
             <TextView
@@ -122,14 +123,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="32dp"
                 android:drawableStart="@drawable/ic_info_capture_image"
                 android:drawablePadding="10dp"
                 android:gravity="center"
                 android:text="Take picture of the affected region."
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp"
+                android:textColor="@color/colorBtnDisabled"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/guideline6"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -142,40 +144,56 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="64dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/take_picture_instruction"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.6" />
+
                 <ImageView
                     android:id="@+id/cameraIcon"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="h,1:1"
+                    app:layout_constraintDimensionRatio="w,1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_add_complaint" />
+                    app:srcCompat="@drawable/ic_add_image" />
+
+                <TextView
+                    android:id="@+id/tv_click_here"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Click Here "
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/cameraIcon"
+                    app:layout_constraintStart_toStartOf="@+id/cameraIcon"
+                    app:layout_constraintTop_toTopOf="@+id/guideline9" />
 
             </android.support.constraint.ConstraintLayout>
 
 
-            <Button
-                android:id="@+id/add_discription"
+            <EditText
+                android:id="@+id/edt_add_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
                 android:layout_marginStart="32dp"
-                android:background="@drawable/btn_style_2"
-                android:paddingBottom="5dp"
-                android:paddingEnd="20dp"
-                android:paddingStart="20dp"
-                android:paddingTop="5dp"
-                android:text="Add Discription"
-                android:textColor="@color/colorAccent"
+                android:layout_marginEnd="32dp"
+                android:hint="Add Description (Optional)"
+                android:inputType="textMultiLine"
+                android:maxLength="120"
+                android:paddingStart="10dp"
+                android:textColor="@color/colorBtnDisabled"
                 app:layout_constraintBottom_toTopOf="@+id/btn_upload"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -189,14 +207,16 @@
                 android:layout_marginEnd="32dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
-                android:background="@drawable/btn_style_2"
+                android:background="#fff"
                 android:paddingBottom="5dp"
                 android:paddingEnd="20dp"
                 android:paddingStart="20dp"
                 android:paddingTop="5dp"
+                android:drawableEnd="@drawable/ic_arrow_drop_down"
                 android:text="Select Grievance"
+                android:elevation="5dp"
                 android:textColor="@color/colorAccent"
-                app:layout_constraintBottom_toTopOf="@+id/add_discription"
+                app:layout_constraintBottom_toTopOf="@+id/edt_add_description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -209,6 +229,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.5" />
+
 
 
         </android.support.constraint.ConstraintLayout>

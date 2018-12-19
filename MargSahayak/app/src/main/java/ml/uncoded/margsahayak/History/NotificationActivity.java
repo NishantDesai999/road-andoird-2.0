@@ -53,14 +53,18 @@ public class NotificationActivity extends AppCompatActivity {
 
         setToolBar();
         p = findViewById(R.id.notification_progressBar);
-        layoutManager = new LinearLayoutManager(NotificationActivity.this, LinearLayoutManager.VERTICAL, false);
+        layoutManager = new LinearLayoutManager(NotificationActivity.this, LinearLayoutManager.VERTICAL, true);
         r1 = Realm.getDefaultInstance();
         mRecycleView = findViewById(R.id.notification_recycleview);
         List<NotificationComplaintModel> complainList = r1.where(NotificationComplaintModel.class).findAll();
         Log.d("test", "onCreate: " + complainList.size());
-        adapter = new NotificationListDataAdapter(NotificationActivity.this, new ArrayList<NotificationComplaintModel>(complainList));
+        if (!(complainList.size() > 0)){
+            findViewById(R.id.gp_no_notification).setVisibility(View.VISIBLE);
+        }
+            adapter = new NotificationListDataAdapter(NotificationActivity.this, new ArrayList<NotificationComplaintModel>(complainList));
         mRecycleView.setLayoutManager(layoutManager);
         mRecycleView.setAdapter(adapter);
+
         mRealmChangeListner = new RealmChangeListener() {
             @Override
             public void onChange(Object o) {
@@ -92,17 +96,6 @@ public class NotificationActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_notification, menu);
         return true;
-    }
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.refresh_btn:
-               // onRefreshNotification();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-
-        }
     }
 
     public void onRefreshNotification(){

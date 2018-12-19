@@ -4,7 +4,9 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.support.constraint.Group;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -41,14 +44,13 @@ public class FilterActivity extends AppCompatActivity {
     private FilterDataAdapter adapter;
     Spinner mSpinnerStatus, mSpinnerGrievance;
     TextView mStartingDatePick, mEndingDatePick;
-
+    Group gpmgpNoFilterApplied;
     String mStartDateString;
     String mEndDateString;
     int mSelectedGrievanceIndex;
     int mSelectedStatusIndex;
     Boolean isFirstTime = true;
     Boolean invalid_dates = true;
-    ImageView mNoDataFoundImage;
     TextView errorInvalidDate;
 
 
@@ -60,9 +62,8 @@ public class FilterActivity extends AppCompatActivity {
 
         setToolBar();
 
-        mNoDataFoundImage = (ImageView) findViewById(R.id.no_data_found_imageView);
         mRecycleView = (RecyclerView) findViewById(R.id.filter_recyclerview);
-
+        gpmgpNoFilterApplied=findViewById(R.id.gp_NoFilterApplied);
         //initialize both spinner to zero
         mSelectedGrievanceIndex = mSelectedStatusIndex = 0;
 
@@ -76,7 +77,7 @@ public class FilterActivity extends AppCompatActivity {
 
 
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(FilterActivity.this, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(FilterActivity.this, LinearLayoutManager.VERTICAL, true);
         Realm.init(FilterActivity.this);
         r = Realm.getDefaultInstance();
         List<ComplainModel> complainList = r.where(ComplainModel.class).findAll();
@@ -85,9 +86,9 @@ public class FilterActivity extends AppCompatActivity {
         mRecycleView.setAdapter(adapter);
         mRecycleView.setNestedScrollingEnabled(false);
         if (complainList.size() > 0) {
-            mNoDataFoundImage.setVisibility(View.INVISIBLE);
+            gpmgpNoFilterApplied.setVisibility(View.GONE);
         } else {
-            mNoDataFoundImage.setVisibility(View.VISIBLE);
+            gpmgpNoFilterApplied.setVisibility(View.VISIBLE);
         }
 
 
@@ -150,6 +151,13 @@ public class FilterActivity extends AppCompatActivity {
         mFilterDialog = new Dialog(FilterActivity.this);
         mFilterDialog.setContentView(R.layout.filter_dialog_layout);
         mFilterDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+        Rect displayRectangle = new Rect();
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(mFilterDialog.getWindow().getAttributes());
+        lp.width = ((int)(displayRectangle.width() * 0.9f));
+        mFilterDialog.getWindow().setAttributes(lp);
         mFilterDialog.show();
         errorInvalidDate = (TextView) mFilterDialog.findViewById(R.id.error_invalid_dates);
         errorInvalidDate.setVisibility(View.GONE);
@@ -350,9 +358,9 @@ public class FilterActivity extends AppCompatActivity {
             mRecycleView.setAdapter(adapter);
 
             if (mQueiredList.size() > 0) {
-                mNoDataFoundImage.setVisibility(View.INVISIBLE);
+               gpmgpNoFilterApplied.setVisibility(View.GONE);
             } else {
-                mNoDataFoundImage.setVisibility(View.VISIBLE);
+                gpmgpNoFilterApplied.setVisibility(View.VISIBLE);
             }
         }
     }

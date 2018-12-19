@@ -7,9 +7,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:background="#f1eeee"
-    >
+    android:fillViewport="true">
 
 
     <android.support.constraint.Guideline
@@ -103,10 +102,11 @@
                 android:id="@+id/fragment"
                 android:name="ml.uncoded.margsahayak.AllComplaints.AllComplainListFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="279dp"
                 android:layout_marginTop="16dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fragment2"
                 tools:layout="@layout/fragment_all_complain_list" />
@@ -220,5 +220,36 @@
         </android.support.constraint.ConstraintLayout>
 
     </FrameLayout>
+
+    <ImageView
+        android:id="@+id/img_add_complaint"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/bottomLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_add_image" />
+
+    <TextView
+        android:id="@+id/tv_complaint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:text="Click here to post your first complaint."
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_add_complaint" />
 
 </android.support.constraint.ConstraintLayout>

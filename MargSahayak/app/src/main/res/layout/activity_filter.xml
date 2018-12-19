@@ -12,36 +12,59 @@
         android:background="@color/colorAccent"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/filter_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_filter_activity">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_filter_activity"
+        app:layout_constraintVertical_bias="1.0">
 
 
     </android.support.v7.widget.RecyclerView>
 
     <ImageView
         android:id="@+id/no_data_found_imageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="120dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="120dp"
-        android:visibility="invisible"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="32dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/filter_recyclerview"
-        app:layout_constraintDimensionRatio="w,2:3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/nodatafoundimg" />
+        app:srcCompat="@drawable/ic_complaint" />
+
+    <TextView
+        android:id="@+id/tv_diffCombo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="Try some different combinations!"
+        android:textAlignment="center"
+        android:textColor="#000
+"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/no_data_found_imageView" />
+
+    <android.support.constraint.Group
+        android:id="@+id/gp_NoFilterApplied"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="no_data_found_imageView,tv_diffCombo" />
 
 </android.support.constraint.ConstraintLayout>

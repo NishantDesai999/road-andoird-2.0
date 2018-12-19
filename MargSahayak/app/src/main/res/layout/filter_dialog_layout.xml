@@ -35,10 +35,10 @@
                 android:id="@+id/tv_status_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="32dp"
                 android:text="Status"
                 android:textColor="#5e5e5e"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/filter_heading"
                 app:layout_constraintTop_toBottomOf="@+id/filter_heading" />
 
@@ -58,11 +58,11 @@
                 android:id="@+id/grievance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:text="Grievance"
                 android:textColor="#5e5e5e"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@+id/filter_heading"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_status_data"
                 app:layout_constraintTop_toBottomOf="@+id/tv_status_data" />
 
             <Spinner
@@ -79,21 +79,21 @@
                 android:id="@+id/from"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:text="From"
                 android:textColor="#5e5e5e"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@+id/filter_heading"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/grievance"
                 app:layout_constraintTop_toBottomOf="@+id/grievance" />
 
             <TextView
                 android:id="@+id/to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:text="To"
                 android:textColor="#5e5e5e"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/filter_heading"
                 app:layout_constraintTop_toBottomOf="@+id/from" />
 
@@ -136,8 +136,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
-                android:text="Search filter"
+                android:layout_marginTop="16dp"
+                android:text="Search Filter"
                 android:textColor="#000"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -148,21 +148,21 @@
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="59dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:background="#e7e6e6"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/to" />
+                app:layout_constraintTop_toBottomOf="@+id/error_invalid_dates" />
 
             <Button
                 android:id="@+id/cancel_complaint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/btn_style_2"
                 android:text="CANCEL"
                 android:textColor="#0277bd"

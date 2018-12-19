@@ -36,15 +36,18 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="384dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
+        android:layout_marginBottom="64dp"
         android:paddingLeft="@dimen/desc_padding"
         android:paddingRight="@dimen/desc_padding"
         android:text="The application is applicable only for roads under Roads and Building Department"
         android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/slide_desc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 

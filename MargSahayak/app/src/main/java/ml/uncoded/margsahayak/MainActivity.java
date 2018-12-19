@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.constraint.Group;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,6 +48,7 @@ import java.util.List;
 import io.realm.DynamicRealm;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
+import io.realm.RealmList;
 import ml.uncoded.margsahayak.Auth.SharedPrefrenceUser;
 import ml.uncoded.margsahayak.History.NotificationActivity;
 import ml.uncoded.margsahayak.History.NotificationListDataAdapter;
@@ -58,6 +60,7 @@ import ml.uncoded.margsahayak.Network.mCallBack;
 import ml.uncoded.margsahayak.models.ComplainModel;
 import ml.uncoded.margsahayak.models.Dialogs;
 import ml.uncoded.margsahayak.models.NotificationComplaintModel;
+import ml.uncoded.margsahayak.models.OfflineComplainModel;
 import ml.uncoded.margsahayak.models.StaticMethods;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -78,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
     private long lastBackPressTime = 0;
     private String strErrMsg;
     private Dialogs dialogs;
+    Group gpAddComplaint;
     LinearLayoutManager layoutManager;
 
 
@@ -88,7 +92,37 @@ public class MainActivity extends AppCompatActivity {
         init();
         initListners();
         onRefreshNotification();
+        checkNoOfComplaints();
         StaticMethods.permissionmethod(MainActivity.this);
+
+    }
+
+    private void checkNoOfComplaints() {
+    Realm r=Realm.getDefaultInstance();
+        List<ComplainModel> complainList = r.where(ComplainModel.class).findAll();
+        List<OfflineComplainModel> offlineComplainModelList = r.where(OfflineComplainModel.class).findAll();
+        if(complainList.size()==0 && offlineComplainModelList.size()==0){
+            findViewById(R.id.img_add_complaint).setVisibility(View.VISIBLE);
+            findViewById(R.id.tv_complaint).setVisibility(View.VISIBLE);
+            findViewById(R.id.tv_complaint).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openInputForm();
+                }
+            });
+            findViewById(R.id.img_add_complaint).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openInputForm();
+                }
+            });
+        }
+        else{
+            findViewById(R.id.img_add_complaint).setVisibility(View.GONE);
+            findViewById(R.id.tv_complaint).setVisibility(View.GONE);
+
+        }
+
 
     }
 
@@ -112,14 +146,19 @@ public class MainActivity extends AppCompatActivity {
                             public void execute(Realm realm) {
                                 List<NotificationComplaintModel> notificationList = response.body();
                                 ComplainModel complainModel;
+                                RealmList<String> rl=new RealmList<>();
+                                rl.add("");
                                 //if(notificationList.size()>0) {
                                     for (NotificationComplaintModel notificationComplaintModel : notificationList) {
                                         Log.d(TAG, "execute: " + notificationComplaintModel.getId());
                                         complainModel = realm.where(ComplainModel.class).equalTo("id", notificationComplaintModel.getId()).findFirst();
-                                        if (notificationComplaintModel.getComplaintStatus() != null)
+                                        if (notificationComplaintModel.getComplaintStatus() != null )
                                             complainModel.setComplaintStatus(notificationComplaintModel.getComplaintStatus());
-                                        if (notificationComplaintModel.getComments() != null)
+                                        if (notificationComplaintModel.getComments().isEmpty() || notificationComplaintModel.getComments().equals(null)) {
+                                            complainModel.setComment(rl);
+                                        }else {
                                             complainModel.setComment(notificationComplaintModel.getComments());
+                                        }
                                         if (notificationComplaintModel.getEstimatedDate() != null)
                                             complainModel.setEstimatedTime(notificationComplaintModel.getEstimatedDate());
                                         if (notificationComplaintModel.getOfficerEmail() != null)
@@ -207,8 +246,35 @@ public class MainActivity extends AppCompatActivity {
         mOptions=(ImageView)findViewById(R.id.optionsIcon);
         mAddComplainButton=(Button)findViewById(R.id.add_new_complain_btn);
         mBottomLayout = findViewById(R.id.bottomLayout);
-}
+        }
+    public void openInputForm(){
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+                (MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        } else {
+
+            MyLocationListener locationListener = MyLocationListener.getInstance("mAIN Activity");
+            LocationManager l = SingletonLocationManager.getInstance(getApplication(),"From Main Activity");
+
+            mGoogleApiClient = new GoogleApiClient.Builder(MainActivity.this)
+                    .addApi(LocationServices.API)
+                    .build();
+            mGoogleApiClient.connect();
+
+            if ((!l.isProviderEnabled(LocationManager.GPS_PROVIDER))) {
+                Log.v(TAG,"build called...");
+//                            buildAlertMessageNoGps();
+                showSettingDialog();
+            }else {
+                l.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, locationListener);
+                startActivity(new Intent(MainActivity.this, InputActivity2.class));
+            }
+
+        }
+    }
     public void initListners(){
 
 
@@ -217,32 +283,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
              //   startActivity(new Intent(MainActivity.this,Main2Activity.class));
 
-                if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
-                        (MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
-                } else {
-
-                          MyLocationListener locationListener = MyLocationListener.getInstance("mAIN Activity");
-                          LocationManager l = SingletonLocationManager.getInstance(getApplication(),"From Main Activity");
-
-                        mGoogleApiClient = new GoogleApiClient.Builder(MainActivity.this)
-                                .addApi(LocationServices.API)
-                                .build();
-                        mGoogleApiClient.connect();
-
-                          if ((!l.isProviderEnabled(LocationManager.GPS_PROVIDER))) {
-                            Log.v(TAG,"build called...");
-//                            buildAlertMessageNoGps();
-                            showSettingDialog();
-                        }else {
-                            l.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, locationListener);
-                            startActivity(new Intent(MainActivity.this, InputActivity2.class));
-                        }
-
-                }
+                openInputForm();
 
             }
         });
@@ -372,6 +413,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        checkNoOfComplaints();
         registerReceiver(gpsLocationReceiver, new IntentFilter(BROADCAST_ACTION));//Register broadcast receiver to check the status of GPS
     }
 

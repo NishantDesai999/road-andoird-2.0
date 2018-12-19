@@ -1,4 +1,5 @@
 package ml.uncoded.margsahayak.Input;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
@@ -79,49 +80,21 @@ public class InputActivity2 extends AppCompatActivity {
         mDiscription = "No Description";
         initListners();
     }
+
     private void initListners() {
 
-        final Button btnDescription=findViewById(R.id.add_discription);
+        final EditText edtDescription = findViewById(R.id.edt_add_description);
         //Code for both add discription and select greivance
-        btnDescription.setOnClickListener(new View.OnClickListener() {
+        edtDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog mAdd_discription_dialog = new Dialog(InputActivity2.this);
-                mAdd_discription_dialog.setContentView(R.layout.discription_add_dialog_layout);
-                final EditText edtDescription=mAdd_discription_dialog.findViewById(R.id.edt_discription);
-                mAdd_discription_dialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
-                if(mDiscription == "No Description")
-                    edtDescription.setText("");
-                else
-                    edtDescription.setText(mDiscription);
-
-                mAdd_discription_dialog.show();
-                mAdd_discription_dialog.findViewById(R.id.btn_add_discription).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mDiscription = edtDescription.getText().toString().trim();
-                        if(!mDiscription.equals("No Description")){
-                            btnDescription.setText("Edit Description");
-                            edtDescription.setText(mDiscription);
-                        }
-                        if(mDiscription==null||mDiscription.trim().length()==0){
-                            mDiscription = "No Description";
-                            btnDescription.setText("Add Description");
-
-                        }
-                        mAdd_discription_dialog.dismiss();
-
-                    }
-                });
-
-                mAdd_discription_dialog.findViewById(R.id.btn_cancle_description).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mAdd_discription_dialog.dismiss();
-                    }
-                });
+                String temp=edtDescription.getText().toString().trim();
+                if(temp.length()>0){
+                    mDiscription=temp;
+                }
             }
         });
+
 
         findViewById(R.id.select_grievance).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +111,7 @@ public class InputActivity2 extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         mGri = (String) adapterView.getAdapter().getItem(i);
                         ((Button) findViewById(R.id.select_grievance)).setText(mGri);
+
                         mSelect_grievance_dialog.dismiss();
                     }
                 });
@@ -176,15 +150,13 @@ public class InputActivity2 extends AppCompatActivity {
             public void onClick(View v) {
                 Dialogs dialogs;
                 //Get input data & put into mInput Data
-                if(mCropImagedUri==null){
+                if (mCropImagedUri == null) {
                     dialogs = new Dialogs("Please Capture An Image");
                     dialogs.show(getFragmentManager(), "ErrMSG");
-                }
-                else if(mGri==null||mGri.length()==0){
+                } else if (mGri == null || mGri.length() == 0) {
                     dialogs = new Dialogs("Please Select Grievance");
                     dialogs.show(getFragmentManager(), "ErrMSG");
-                }
-                else{
+                } else {
                     final OfflineComplainModel mInputData = new OfflineComplainModel();
                     mInputData.setGrievanceDescription(mDiscription);
                     mInputData.setGrievanceName(mGri);
@@ -457,8 +429,7 @@ public class InputActivity2 extends AppCompatActivity {
                 options.inSampleSize = 1;
                 bitmap = BitmapFactory.decodeFile(mCropImagedUri.getPath(), options);
                 showImage();
-            }
-            else if (resultCode == RESULT_CANCELED) {
+            } else if (resultCode == RESULT_CANCELED) {
 
                 finish();
 
