@@ -19,6 +19,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import ml.uncoded.margsahayak.Individual_Detail_Activity;
 import ml.uncoded.margsahayak.R;
@@ -32,6 +33,7 @@ public class linearListDataAdapter extends RecyclerView.Adapter<linearListDataAd
     ComplainModel singleItem;
 
     public linearListDataAdapter(Context context, ArrayList<ComplainModel> itemsList) {
+        Collections.reverse(itemsList);
         this.itemsList = itemsList;
         this.mContext = context;
     }

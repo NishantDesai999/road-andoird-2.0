@@ -21,6 +21,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import io.realm.RealmList;
 import ml.uncoded.margsahayak.Individual_Detail_Activity;
@@ -40,6 +41,7 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
     private Context mContext;
 
     public NotificationListDataAdapter(Context context, ArrayList<NotificationComplaintModel> itemsList) {
+        Collections.reverse(itemsList);
         this.itemsList = itemsList;
         this.mContext = context;
         for(NotificationComplaintModel x: itemsList){

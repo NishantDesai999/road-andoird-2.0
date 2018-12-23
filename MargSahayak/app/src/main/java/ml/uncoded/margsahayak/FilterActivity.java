@@ -77,7 +77,7 @@ public class FilterActivity extends AppCompatActivity {
 
 
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(FilterActivity.this, LinearLayoutManager.VERTICAL, true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(FilterActivity.this, LinearLayoutManager.VERTICAL, false);
         Realm.init(FilterActivity.this);
         r = Realm.getDefaultInstance();
         List<ComplainModel> complainList = r.where(ComplainModel.class).findAll();

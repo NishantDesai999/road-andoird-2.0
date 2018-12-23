@@ -167,18 +167,9 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_add_image" />
+                    app:srcCompat="@drawable/ic_add_photo2" />
 
-                <TextView
-                    android:id="@+id/tv_click_here"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Click Here "
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/cameraIcon"
-                    app:layout_constraintStart_toStartOf="@+id/cameraIcon"
-                    app:layout_constraintTop_toTopOf="@+id/guideline9" />
+
 
             </android.support.constraint.ConstraintLayout>
 

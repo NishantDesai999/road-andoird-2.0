@@ -53,7 +53,7 @@ public class NotificationActivity extends AppCompatActivity {
 
         setToolBar();
         p = findViewById(R.id.notification_progressBar);
-        layoutManager = new LinearLayoutManager(NotificationActivity.this, LinearLayoutManager.VERTICAL, true);
+        layoutManager = new LinearLayoutManager(NotificationActivity.this, LinearLayoutManager.VERTICAL, false);
         r1 = Realm.getDefaultInstance();
         mRecycleView = findViewById(R.id.notification_recycleview);
         List<NotificationComplaintModel> complainList = r1.where(NotificationComplaintModel.class).findAll();

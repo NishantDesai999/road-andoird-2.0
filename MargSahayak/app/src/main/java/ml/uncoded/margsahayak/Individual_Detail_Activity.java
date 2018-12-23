@@ -104,9 +104,10 @@ public class Individual_Detail_Activity extends AppCompatActivity {
         mOfficerName.setText(complainModel.getOfficerName());
         mSubmittedDate.setText(complainModel.getTime());
         mRoadName.setText(complainModel.getRoadName());
-        if((complainModel.getEstimatedTime()).length()>0 && (complainModel.getEstimatedTime())!= null) {
+        if((complainModel.getEstimatedTime()!= null) && (complainModel.getEstimatedTime().length()>0)) {
             mEstimatedDate.setText(complainModel.getEstimatedTime());
         }
+
         StringBuilder mCommentsString = new StringBuilder();
         RealmList<String> commentData = complainModel.getComment();
         for(int i=0; i < commentData.size(); i++){

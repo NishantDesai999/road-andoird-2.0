@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.realm.Realm;
@@ -53,7 +54,7 @@ public class AllComplainListFragment extends Fragment {
 
 
         adapter = new linearListDataAdapter(getActivity(), new ArrayList<ComplainModel>(complainList));
-        mRecycleView.setLayoutManager(new CustomLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true));
+        mRecycleView.setLayoutManager(new CustomLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRecycleView.setAdapter(adapter);
         ViewCompat.setNestedScrollingEnabled(mRecycleView,false);
         //mRecycleView.setNestedScrollingEnabled(false);

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import ml.uncoded.margsahayak.models.ComplainModel;
 
@@ -26,6 +27,7 @@ public class FilterDataAdapter extends RecyclerView.Adapter<FilterDataAdapter.Si
     private Context mContext;
 
     public FilterDataAdapter(Context context, ArrayList<ComplainModel> itemsList) {
+        Collections.reverse(itemsList);
         this.itemsList = itemsList;
         this.mContext = context;
     }

@@ -20,13 +20,8 @@ import retrofit2.http.Query;
 public interface Api {
 //    String BASE_URL = "https://roadgrievance.herokuapp.com/api/android/";
 
-    String BASE_URL = "http://192.168.43.149:3003/api/android/";
+    String BASE_URL = "https://192.168.0.111:3003/api/android/";
 
-    @GET("testLate")
-    Call<ComplainModel> getLateReply();
-
-    @GET("test3")
-    Call<ComplainModel> getComplain();
 
     @POST("postNewComplaint")
     Call<ComplainModel> postComplaint(@Header("auth") String auth, @Body ComplainModel mComplainModel);

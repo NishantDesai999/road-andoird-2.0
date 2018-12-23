@@ -11,26 +11,11 @@
                   <entry key="vectorAssetStep">
                     <value>
                       <PersistentState>
-                        <option name="children">
-                          <map>
-                            <entry key="clipartAsset">
-                              <value>
-                                <PersistentState>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_arrow_drop_down_black_24dp.xml" />
-                                    </map>
-                                  </option>
-                                </PersistentState>
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_arrow_drop_down" />
-                            <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\Nishant\Downloads\photo.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_add_photo2" />
+                            <entry key="sourceFile" value="C:\Users\Nishant\Downloads\camera.svg" />
                           </map>
                         </option>
                       </PersistentState>
