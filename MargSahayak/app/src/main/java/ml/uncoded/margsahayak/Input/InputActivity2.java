@@ -61,7 +61,7 @@ public class InputActivity2 extends AppCompatActivity {
 
     private Uri fileUri, mCropImagedUri;
     Bitmap bitmap = null;
-    String mDiscription, mGri;
+    String mDiscription="No Description", mGri;
 
     // Activity request codes
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
@@ -77,23 +77,11 @@ public class InputActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input3);
-        mDiscription = "No Description";
         initListners();
     }
 
     private void initListners() {
 
-        final EditText edtDescription = findViewById(R.id.edt_add_description);
-        //Code for both add discription and select greivance
-        edtDescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String temp=edtDescription.getText().toString().trim();
-                if(temp.length()>0){
-                    mDiscription=temp;
-                }
-            }
-        });
 
 
         findViewById(R.id.select_grievance).setOnClickListener(new View.OnClickListener() {
@@ -149,6 +137,12 @@ public class InputActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Dialogs dialogs;
+
+                String temp=((EditText)findViewById(R.id.edt_add_description)).getText().toString().trim();
+                if(temp.length()>0){
+                    mDiscription=temp;
+                    Log.d(getLocalClassName(),mDiscription);
+                }
                 //Get input data & put into mInput Data
                 if (mCropImagedUri == null) {
                     dialogs = new Dialogs("Please Capture An Image");
@@ -162,8 +156,6 @@ public class InputActivity2 extends AppCompatActivity {
                     mInputData.setGrievanceName(mGri);
                     String[] path = mCropImagedUri.getPath().split("/");
                     mInputData.setImgurl(path[path.length - 1]);
-
-
                     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     Date date = new Date();
                     mInputData.setTime(formatter.format(date));

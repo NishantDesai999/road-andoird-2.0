@@ -20,7 +20,7 @@ import retrofit2.http.Query;
 public interface Api {
 //    String BASE_URL = "https://roadgrievance.herokuapp.com/api/android/";
 
-    String BASE_URL = "https://192.168.0.111:3003/api/android/";
+    String BASE_URL = "https://roadgrievance.herokuapp.com/api/android/";
 
 
     @POST("postNewComplaint")

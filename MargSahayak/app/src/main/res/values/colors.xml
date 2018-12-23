@@ -15,7 +15,7 @@
 
 
     <!-- dots inactive colors -->
-    <color name="dot_dark_screen">#b4e3ff</color>
+    <color name="dot_dark_screen">#bebebe</color>
 
     <!-- dots active colors -->
     <color name="dot_light_screen">#0277bd</color>
