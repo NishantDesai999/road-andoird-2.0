@@ -29,7 +29,7 @@ public class OfflineComplainListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        View v = inflater.inflate(R.layout.fragment_offline_complain_list, container, false);
+        final View v = inflater.inflate(R.layout.fragment_offline_complain_list, container, false);
         mRecycleView = (RecyclerView) v.findViewById(R.id.fragment_offline_complain_recyclerview);
         Realm.init(getContext());
         r= Realm.getDefaultInstance();
@@ -53,9 +53,9 @@ public class OfflineComplainListFragment extends Fragment {
             public void onChange(Object o) {
                 List<OfflineComplainModel> complainList = r.where(OfflineComplainModel.class).findAll();
                 if(complainList.size() > 0){
-                    getActivity().findViewById(R.id.offline_textview).setVisibility(View.VISIBLE);
+                    v.findViewById(R.id.offline_textview).setVisibility(View.VISIBLE);
                 }else{
-                    getActivity().findViewById(R.id.offline_textview).setVisibility(View.GONE);
+                    v.findViewById(R.id.offline_textview).setVisibility(View.GONE);
                 }
                 adapter = new OfflineComplainListDataAdapter(getActivity(), new ArrayList<OfflineComplainModel>(complainList));
                 mRecycleView.setAdapter(adapter);

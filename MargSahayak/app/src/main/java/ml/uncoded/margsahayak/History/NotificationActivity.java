@@ -186,7 +186,7 @@ public class NotificationActivity extends AppCompatActivity {
 
                         } else {
 
-                            strErrMsg = "NETWORK CONNECTION SEEMS SLOW\\nPLEASE AFTER SOME TIME\"";
+                            strErrMsg = "NETWORK CONNECTION SEEMS SLOW\nPLEASE TRY AFTER SOME TIME";
                             dialogs = new Dialogs(strErrMsg);
 
                         }

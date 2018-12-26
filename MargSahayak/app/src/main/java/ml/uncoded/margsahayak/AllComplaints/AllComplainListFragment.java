@@ -32,7 +32,7 @@ public class AllComplainListFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_all_complain_list, container, false);
+        final View v = inflater.inflate(R.layout.fragment_all_complain_list, container, false);
         mRecycleView = (RecyclerView) v.findViewById(R.id.fragment_all_complain_recyclerview);
         Realm.init(getContext());
         r= Realm.getDefaultInstance();
@@ -63,11 +63,11 @@ public class AllComplainListFragment extends Fragment {
             public void onChange(Object o) {
                 List<ComplainModel> complainList = r.where(ComplainModel.class).findAll();
                 if(complainList.size() > 0){
-                    getActivity().findViewById(R.id.complaints_tetview).setVisibility(View.VISIBLE);
-                    getActivity().findViewById(R.id.btn_filter).setVisibility(View.VISIBLE);
+                    v.findViewById(R.id.complaints_tetview).setVisibility(View.VISIBLE);
+                    v.findViewById(R.id.btn_filter).setVisibility(View.VISIBLE);
                 }else{
-                    getActivity().findViewById(R.id.complaints_tetview).setVisibility(View.GONE);
-                    getActivity().findViewById(R.id.btn_filter).setVisibility(View.GONE);
+                    v.findViewById(R.id.complaints_tetview).setVisibility(View.GONE);
+                    v.findViewById(R.id.btn_filter).setVisibility(View.GONE);
                 }
                 adapter = new linearListDataAdapter(getActivity(), new ArrayList<ComplainModel>(complainList));
                 mRecycleView.setAdapter(adapter);
