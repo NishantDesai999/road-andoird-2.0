@@ -113,7 +113,15 @@ public class InputActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                captureImage();
+                if (ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+                        (InputActivity2.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+                    ActivityCompat.requestPermissions(InputActivity2.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+
+                } else {
+                    captureImage();
+                }
 
             }
         });
@@ -122,9 +130,19 @@ public class InputActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                captureImage();
 
-            }
+                //    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                  //      android.Manifest.permission.MEDIA_CONTENT_CONTROL
+                   //     android.Manifest.permission.CAMERA
+                if (ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+                        (InputActivity2.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+                    ActivityCompat.requestPermissions(InputActivity2.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+
+                } else {
+                captureImage();
+            }}
         });
         findViewById(R.id.closeInput).setOnClickListener(new View.OnClickListener() {
             @Override
