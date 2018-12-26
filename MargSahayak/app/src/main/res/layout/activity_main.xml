@@ -212,7 +212,6 @@
                 android:textColor="#ffffff"
                 android:textStyle="bold"
                 android:translationZ="@dimen/dim12dp"
-
                 app:layout_constraintBottom_toTopOf="@+id/view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

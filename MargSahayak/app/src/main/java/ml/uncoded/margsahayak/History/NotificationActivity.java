@@ -161,7 +161,7 @@ public class NotificationActivity extends AppCompatActivity {
                         else {
                             Log.d(TAG, "Code: " + response.code() + " Message: " + response.message());
                             p.setVisibility(View.INVISIBLE);
-                            Toast.makeText(NotificationActivity.this, "" + response.code() + " " + response.message(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(NotificationActivity.this, "" + response.code() + " " + response.message(), Toast.LENGTH_SHORT).show();
                             strErrMsg = response.code() + " " + response.message();
                             dialogs = new Dialogs(strErrMsg);
                             dialogs.show(getFragmentManager(), "ErrMSG");
@@ -175,7 +175,7 @@ public class NotificationActivity extends AppCompatActivity {
                         t.printStackTrace();
                         Log.d(TAG, "OnFailure");
                         p.setVisibility(View.INVISIBLE);
-                        Toast.makeText(NotificationActivity.this, "" + t.getCause() + " :: " + " ---> " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(NotificationActivity.this, "" + t.getCause() + " :: " + " ---> " + t.getMessage(), Toast.LENGTH_SHORT).show();
                         if (t.getCause() != null && t.getCause().toString().contains("java.net.ConnectException")) {
                             strErrMsg = "FAILED TO CONNECT TO SERVER\nNETWORK IS UNREACHABLE";
                             dialogs = new Dialogs(strErrMsg);

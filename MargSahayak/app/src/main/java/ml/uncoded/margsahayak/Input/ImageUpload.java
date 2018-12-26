@@ -52,11 +52,11 @@ public class ImageUpload {
                     public void onSuccessfullResponse(View progressBar, AuthResponse response, Context c) {
                         if (!Boolean.parseBoolean(response.success)) {
                             ImageUpload.uploadingTries++;
-                            Toast.makeText(c, "response not succesful# " + ImageUpload.uploadingTries, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(c, "response not succesful# " + ImageUpload.uploadingTries, Toast.LENGTH_SHORT).show();
                             ImageUpload.uploadImage();
                         } else {
                             progressBar.setVisibility(View.INVISIBLE);
-                            Toast.makeText(ImageUpload.context, "Image Uploaded", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(ImageUpload.context, "Image Uploaded", Toast.LENGTH_SHORT).show();
                         }
                     }
 

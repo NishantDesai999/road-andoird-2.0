@@ -72,21 +72,21 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
             if(holder.getAdapterPosition()==0){holder.dividerLineU.setVisibility(View.GONE);}
             if(holder.getAdapterPosition()==(itemsList.size()-1)){holder.dividerLineL.setVisibility(View.GONE);}
             holder.EstimatedDate.setText(singleItem.getEstimatedDate());
-            if(commentListsize!=0 && singleItem.getComments()!=null){
-                RealmList<String> commentData = singleItem.getComments();
-                for(int j=0;j < commentData.size(); j++){
-                    mCommentsString.append(commentData.get(j));
-                }
-                holder.gpComments.setVisibility(View.VISIBLE);
-                if(mCommentsString.length()>0&&mCommentsString.toString()!=null)
-                {
-                    holder.comments.setText(mCommentsString);
-                }
-                else
-                {
-                    holder.comments.setText("No Comments");
-                }
-            }
+//            if(commentListsize!=0 && singleItem.getComments()!=null){
+//                RealmList<String> commentData = singleItem.getComments();
+//                for(int j=0;j < commentData.size(); j++){
+//                    mCommentsString.append(commentData.get(j));
+//                }
+//                holder.gpComments.setVisibility(View.VISIBLE);
+//                if(mCommentsString.length()>0&&mCommentsString.toString()!=null)
+//                {
+//                    holder.comments.setText(mCommentsString);
+//                }
+//                else
+//                {
+//                    holder.comments.setText("No Comments");
+//                }
+//            }
 
         }
          if(singleItem.getComplaintStatus().toUpperCase().equals("REJECTED"))
@@ -97,24 +97,24 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
                 holder.status.setTextColor(0xFFC62828);
              if(holder.getAdapterPosition()==0){holder.dividerLineU.setVisibility(View.GONE);}
              if(holder.getAdapterPosition()==(itemsList.size()-1)){holder.dividerLineL.setVisibility(View.GONE);}
-             if(commentListsize!=0 && singleItem.getComments()!=null){
-                   RealmList<String> commentData = singleItem.getComments();
-                   for(int j=0;j < commentData.size(); j++){
-                       mCommentsString.append(commentData.get(j));
-                   }
-                   holder.gpComments.setVisibility(View.VISIBLE);
-                 //  holder.comments.setText(mCommentsString);
-                 if(mCommentsString.length()>0&&mCommentsString.toString()!=null)
-                 {
-                     holder.comments.setText(mCommentsString);
-                 }
-                 else
-                 {
-                     holder.comments.setText("No Comments");
-                 }
-
-
-             }
+//             if(commentListsize!=0 && singleItem.getComments()!=null){
+//                   RealmList<String> commentData = singleItem.getComments();
+//                   for(int j=0;j < commentData.size(); j++){
+//                       mCommentsString.append(commentData.get(j));
+//                   }
+//                   holder.gpComments.setVisibility(View.VISIBLE);
+//                 //  holder.comments.setText(mCommentsString);
+//                 if(mCommentsString.length()>0&&mCommentsString.toString()!=null)
+//                 {
+//                     holder.comments.setText(mCommentsString);
+//                 }
+//                 else
+//                 {
+//                     holder.comments.setText("No Comments");
+//                 }
+//
+//
+//             }
 
         }
         if(singleItem.getComplaintStatus().toUpperCase().equals("IN PROGRESS")){
@@ -126,27 +126,27 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
 
 
 
-            if(commentListsize!=0 && singleItem.getComments()!=null){
-                RealmList<String> commentData = singleItem.getComments();
-                for(int j=0;j < commentData.size(); j++){
-                    mCommentsString.append(commentData.get(j));
-                }
-
-                    holder.gpComments.setVisibility(View.VISIBLE);
-                if(mCommentsString.length()>0&&!(mCommentsString.toString().equals("null")))
-                {
-                    holder.comments.setText(mCommentsString);
-                }
-                else
-                {
-                    holder.comments.setText("No Comments");
-                }
-
+//            if(commentListsize!=0 && singleItem.getComments()!=null){
+//                RealmList<String> commentData = singleItem.getComments();
+//                for(int j=0;j < commentData.size(); j++){
+//                    mCommentsString.append(commentData.get(j));
+//                }
+//
+//                    holder.gpComments.setVisibility(View.VISIBLE);
+//                if(mCommentsString.length()>0&&!(mCommentsString.toString().equals("null")))
+//                {
+//                    holder.comments.setText(mCommentsString);
+//                }
+//                else
+//                {
+//                    holder.comments.setText("No Comments");
+//                }
+//
                 holder.gpEstimatedDate.setVisibility(View.VISIBLE);
                 holder.EstimatedDate.setText(singleItem.getEstimatedDate());
-
-
-            }
+//
+//
+//            }
 
         }
         if(singleItem.getComplaintStatus().toUpperCase().equals("COMPLETED")){
@@ -155,23 +155,23 @@ public class NotificationListDataAdapter extends RecyclerView.Adapter<Notificati
             holder.status.setTextColor(0xFF2E7D32);
             if(holder.getAdapterPosition()==0){holder.dividerLineU.setVisibility(View.GONE);}
             if(holder.getAdapterPosition()==(itemsList.size()-1)){holder.dividerLineL.setVisibility(View.GONE);}
-            if(commentListsize!=0 && singleItem.getComments()!=null && !(singleItem.getComments().isEmpty())){
-                RealmList<String> commentData = singleItem.getComments();
-                for(int j=0;j < commentData.size(); j++){
-                    mCommentsString.append(commentData.get(j));
-                }
-                Log.e("Comments from noti",mCommentsString.toString());
-                holder.gpComments.setVisibility(View.VISIBLE);
-                if(mCommentsString.length()>0 && !(mCommentsString.toString().equals("null")) )
-                {
-                    holder.comments.setText(mCommentsString);
-                }
-                else
-                {
-                    holder.comments.setText("No Comments");
-                }
-
-            }
+//            if(commentListsize!=0 && singleItem.getComments()!=null && !(singleItem.getComments().isEmpty())){
+//                RealmList<String> commentData = singleItem.getComments();
+//                for(int j=0;j < commentData.size(); j++){
+//                    mCommentsString.append(commentData.get(j));
+//                }
+//                Log.e("Comments from noti",mCommentsString.toString());
+//                holder.gpComments.setVisibility(View.VISIBLE);
+//                if(mCommentsString.length()>0 && !(mCommentsString.toString().equals("null")) )
+//                {
+//                    holder.comments.setText(mCommentsString);
+//                }
+//                else
+//                {
+//                    holder.comments.setText("No Comments");
+//                }
+//
+//            }
         }
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);

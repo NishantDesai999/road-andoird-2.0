@@ -33,6 +33,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -78,6 +79,7 @@ public class InputActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input3);
         initListners();
+       // captureImage();
     }
 
     private void initListners() {
@@ -107,6 +109,8 @@ public class InputActivity2 extends AppCompatActivity {
                 mSelect_grievance_dialog.show();
             }
         });
+
+
 
 
         findViewById(R.id.capture_img).setOnClickListener(new View.OnClickListener() {
@@ -200,7 +204,7 @@ public class InputActivity2 extends AppCompatActivity {
                             lat = "" + l.getLatitude();
                         }
                         if (locationListener.lon != null && locationListener.lat != null) {
-                            Toast.makeText(InputActivity2.this, "" + locationListener.lon + locationListener.lat, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(InputActivity2.this, "" + locationListener.lon + locationListener.lat, Toast.LENGTH_SHORT).show();
                             lon = locationListener.lon;
                             lat = locationListener.lat;
                         }
@@ -208,9 +212,9 @@ public class InputActivity2 extends AppCompatActivity {
                         locationListener = null;
                     }
 
-                    Toast.makeText(InputActivity2.this, "" + lon + lat, Toast.LENGTH_SHORT).show();
-                    lat = "23.173727";
-                    lon = "72.637180";
+                    //Toast.makeText(InputActivity2.this, "" + lon + lat, Toast.LENGTH_SHORT).show();
+                    //lat = "23.173727";
+                    //lon = "72.637180";
                     //location set in offline complain model
                     RealmList<String> mLocationList = new RealmList<String>(lat, lon);
                     mInputData.setLocation(mLocationList);
@@ -249,10 +253,10 @@ public class InputActivity2 extends AppCompatActivity {
                         mProgressBar.setVisibility(View.VISIBLE);
                         final MainApplication m = ((MainApplication) getApplicationContext());
                         Log.d("MyLocationListner", lon + lat);
-                        lat = "23.10524664";
-                        lon = "72.58701144";
-                        Toast.makeText(InputActivity2.this, "" + lat + lon, Toast.LENGTH_SHORT).show();
-
+                        //lat = "23.10524664";
+                        //lon = "72.58701144";
+                        //Toast.makeText(InputActivity2.this, "" + lat + lon, Toast.LENGTH_SHORT).show();
+                        findViewById(R.id.btn_upload).setClickable(false);
                         m.mApi.callBisagApi(lat, lon)
                                 .enqueue(new mCallBack<List<BisagResponse>>(InputActivity2.this, mProgressBar) {
 
@@ -274,32 +278,31 @@ public class InputActivity2 extends AppCompatActivity {
                                         // ok
 
                                         if (minD > 1.5) {
-                                            String strErrMsg = "You are too far away from road.";
-                                            Dialogs dialogs;
-                                            dialogs = new Dialogs(strErrMsg);
-                                            dialogs.show(((Activity) c).getFragmentManager(), "ErrMSG");
+//                                            String strErrMsg = "You are too far away from road.";
+//                                            Dialogs dialogs;
+//                                            dialogs = new Dialogs(strErrMsg);
+//                                            dialogs.show(((Activity) c).getFragmentManager(), "ErrMSG");
 
-//      Dialog mDistanceDialog=new Dialog(InputActivity2.this);
-//                                        mDistanceDialog.setContentView(R.layout.custom_dialog_layout);
-//                                        ((TextView)mDistanceDialog.findViewById(R.id.customDialog_tv_message)).setText("You are too far away from road");
-//                                        mDistanceDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
-//                                        mDistanceDialog.show();
-//
-//                                        ((Button)mDistanceDialog.findViewById(R.id.customDialog_btn_Ok)).setOnClickListener(new View.OnClickListener() {
-//
-//                                            @Override
-//                                            public void onClick(View v) {
-//                                                finish();
-//                                            }
-//                                        });
+                                        Dialog mDistanceDialog=new Dialog(InputActivity2.this);
+                                        mDistanceDialog.setContentView(R.layout.custom_dialog_layout);
+                                        ((TextView)mDistanceDialog.findViewById(R.id.customDialog_tv_message)).setText("You are too far away from road");
+                                        mDistanceDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                                        mDistanceDialog.show();
+                                        ((Button)mDistanceDialog.findViewById(R.id.customDialog_btn_Ok)).setOnClickListener(new View.OnClickListener() {
+
+                                            @Override
+                                            public void onClick(View v) {
+                                                finish();
+                                            }
+                                        });
                                             return;
                                         }
 
                                         BisagResponse mBisagresponse = response.get(index);
 
-                                        Toast.makeText(InputActivity2.this, "" +
-                                                mBisagresponse.roadCode + " " + mBisagresponse.roadName + " " +
-                                                mBisagresponse.raodType, Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(InputActivity2.this, "" +
+//                                                mBisagresponse.roadCode + " " + mBisagresponse.roadName + " " +
+//                                                mBisagresponse.raodType, Toast.LENGTH_SHORT).show();
 
                                         //Upload image ---
                                         //String filePath = "/storage/emulated/0/Pictures/Marg_Sahayak/IMG_20180928_155751.jpg";
@@ -348,7 +351,7 @@ public class InputActivity2 extends AppCompatActivity {
                                                                 }
                                                             });
                                                         } else {
-                                                            Toast.makeText(c, "" + response.getMsg(), Toast.LENGTH_SHORT).show();
+                                                           // Toast.makeText(c, "" + response.getMsg(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
 
@@ -362,7 +365,7 @@ public class InputActivity2 extends AppCompatActivity {
 
                                     @Override
                                     public void onFailureResponse(View progressBar, Context c) {
-                                        Toast.makeText(InputActivity2.this, "Bisag Response failure", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(InputActivity2.this, "Bisag Response failure", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     }

@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.UiThread;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -118,13 +119,16 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
             btnCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    btnCancel.setClickable(false);
                     deleteComplaint(getAdapterPosition());
                 }
             });
 
             btnRetryUpload.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
+                    btnRetryUpload.setClickable(false);
                     MainApplication m = (MainApplication) mContext.getApplicationContext();
                     final int complainIndex = getAdapterPosition();
                     OfflineComplainModel singleItem = itemsList.get(complainIndex);
@@ -168,6 +172,8 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                                                     mDistanceDialog.dismiss();
                                                     deleteComplaint(complainIndex);
 
+
+
                                                 }
                                             });
                                             return;
@@ -175,10 +181,10 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
 
                                         BisagResponse mBisagresponse = response.get(index);
 
-                                        Toast.makeText(mContext, "" +
+                                      /*  Toast.makeText(mContext, "" +
                                                 mBisagresponse.roadCode + " " + mBisagresponse.roadName + " " +
                                                 mBisagresponse.raodType, Toast.LENGTH_SHORT).show();
-
+*/
                                         //Upload image ---
                                         //String filePath = "/storage/emulated/0/Pictures/Marg_Sahayak/IMG_20180928_155751.jpg";
                                         String filePath = mInputData.getImgurl();
@@ -249,7 +255,7 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                                                             progressBar.setVisibility(View.INVISIBLE);
                                                             dialogs = new Dialogs(strErrMsg);
                                                             dialogs.show(((Activity) c).getFragmentManager(), "ErrMSG");
-                                                            Toast.makeText(c, "" + response.getMsg(), Toast.LENGTH_SHORT).show();
+//                                                            Toast.makeText(c, "" + response.getMsg(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
 
@@ -263,7 +269,7 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
 
                                     @Override
                                     public void onFailureResponse(View progressBar, Context c) {
-                                        Toast.makeText(mContext, "Bisag Response failure", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(mContext, "Bisag Response failure", Toast.LENGTH_SHORT).show();
 
                                     }
                                 });
