@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import io.realm.Realm;
+import io.realm.exceptions.RealmException;
 
 public class SharedPrefrenceUser {
 
@@ -99,10 +100,12 @@ public class SharedPrefrenceUser {
 //    }
 //
     public void logout() {
+       try{
         Realm r=Realm.getDefaultInstance();
+        if(!r.isEmpty() && !r.isInTransaction()){
         r.beginTransaction();
         r.deleteAll();
-        r.commitTransaction();
+        r.commitTransaction();}}catch (RealmException re){re.printStackTrace();}
         SharedPreferences sharedPreferences = context_to_use.getSharedPreferences(USER_Login_SHARED_PREFRENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();

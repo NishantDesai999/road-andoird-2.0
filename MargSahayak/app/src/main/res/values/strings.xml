@@ -55,7 +55,7 @@
     <string name="otp">OTP</string>
     <string name="verify">VERIFY</string>
     <string name="verify_otp">Verify OTP</string>
-    <string name="waiting_to_automatically_datect_an_sms_send_to_n_your_nmumber">Waiting to automatically datect an SMS send to  your nmumber</string>
+    <string name="waiting_to_automatically_datect_an_sms_send_to_n_your_nmumber">Waiting to automatically detect an SMS send to  your number</string>
     <string name="enter_4_digit_otp">Enter 4 digit otp</string>
     <string name="enter_your_details">Enter Your Details</string>
     <string name="save">Save</string>

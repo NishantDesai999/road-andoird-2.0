@@ -186,7 +186,7 @@ public class NotificationActivity extends AppCompatActivity {
 
                         } else {
 
-                            strErrMsg = "JSON PARSING ERROR";
+                            strErrMsg = "NETWORK CONNECTION SEEMS SLOW\\nPLEASE AFTER SOME TIME\"";
                             dialogs = new Dialogs(strErrMsg);
 
                         }

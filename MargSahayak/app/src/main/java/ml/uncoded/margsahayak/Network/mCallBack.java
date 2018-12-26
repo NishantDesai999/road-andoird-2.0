@@ -71,7 +71,7 @@ public abstract class mCallBack<T> implements interClassBack<T> {
                 strErrMsg = "CONNECTION TIMED OUT";
                 dialogs = new Dialogs(strErrMsg);
             } else {
-                strErrMsg = "JSON PARSING ERROR";
+                strErrMsg = "NETWORK CONNECTION SEEMS SLOW\nPLEASE AFTER SOME TIME";
                 dialogs = new Dialogs(strErrMsg);
             }
             dialogs.show(((Activity) c).getFragmentManager(), "ErrMSG");

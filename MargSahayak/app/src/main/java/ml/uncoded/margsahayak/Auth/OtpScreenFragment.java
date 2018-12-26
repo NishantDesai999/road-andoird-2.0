@@ -89,7 +89,7 @@ public class OtpScreenFragment extends Fragment {
             LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receiver, new IntentFilter("otp"));
         }
 
-        resendCountDownCounter mCount = new resendCountDownCounter(12000,1000,mTimerText,mResendOtp,getActivity());
+        resendCountDownCounter mCount = new resendCountDownCounter(30000,1000,mTimerText,mResendOtp,getActivity());
         mCount.start();
         return v;
 
