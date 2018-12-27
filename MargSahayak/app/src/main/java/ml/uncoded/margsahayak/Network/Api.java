@@ -18,9 +18,9 @@ import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface Api {
-//    String BASE_URL = "https://roadgrievance.herokuapp.com/api/android/";
+    String BASE_URL = "https://roadgrievance.herokuapp.com/api/android/";
 
-    String BASE_URL = "http://192.168.43.149:3003/api/android/";
+//    String BASE_URL = "http://192.168.43.149:3003/api/android/";
 
 
     @POST("postNewComplaint")
@@ -45,6 +45,11 @@ public interface Api {
     @Multipart
     @POST("imageUpload")
     Call<AuthResponse> uploadImage(@Header("auth") String auth, @Part MultipartBody.Part file1);
+
+//    @Multipart
+//    @POST("http://192.168.43.149:3999/imageUpload")
+//    Call<AuthResponse> uploadImage(@Header("auth") String auth, @Part MultipartBody.Part file1);
+
 
     @GET("https://ncog.gov.in/RNB_mob_data/get_road?code=4862")
         //PAss Code 4862

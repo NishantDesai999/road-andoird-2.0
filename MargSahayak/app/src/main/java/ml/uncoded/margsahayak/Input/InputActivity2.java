@@ -287,7 +287,7 @@ public class InputActivity2 extends AppCompatActivity {
 
                                         Dialog mDistanceDialog=new Dialog(InputActivity2.this);
                                         mDistanceDialog.setContentView(R.layout.custom_dialog_layout);
-                                        ((TextView)mDistanceDialog.findViewById(R.id.customDialog_tv_message)).setText("You are too far away from road");
+                                        ((TextView)mDistanceDialog.findViewById(R.id.customDialog_tv_message)).setText("This road is not under the jurisdiction of R&B Department");
                                         mDistanceDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
                                         mDistanceDialog.show();
                                         ((Button)mDistanceDialog.findViewById(R.id.customDialog_btn_Ok)).setOnClickListener(new View.OnClickListener() {

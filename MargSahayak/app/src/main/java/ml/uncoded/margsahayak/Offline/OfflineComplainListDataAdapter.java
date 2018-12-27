@@ -163,7 +163,7 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                                         if (minD > 1.5) {
                                             final Dialog mDistanceDialog = new Dialog(mContext);
                                             mDistanceDialog.setContentView(R.layout.custom_dialog_layout);
-                                            ((TextView) mDistanceDialog.findViewById(R.id.customDialog_tv_message)).setText("You are too far away from road");
+                                            ((TextView) mDistanceDialog.findViewById(R.id.customDialog_tv_message)).setText("This road is not under the jurisdiction of R&B Department");
                                             mDistanceDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
                                             mDistanceDialog.show();
 
