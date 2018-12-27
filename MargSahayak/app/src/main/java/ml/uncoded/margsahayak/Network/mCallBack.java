@@ -68,10 +68,10 @@ public abstract class mCallBack<T> implements interClassBack<T> {
                 strErrMsg = "FAILED TO CONNECT TO SERVER\nNETWORK IS UNREACHABLE";
                 dialogs = new Dialogs(strErrMsg);
             } else if (t.getCause() == null) {
-                strErrMsg = "CONNECTION TIMED OUT";
+                strErrMsg = "CONNECTION TIMED Out";
                 dialogs = new Dialogs(strErrMsg);
             } else {
-                strErrMsg = "NETWORK CONNECTION SEEMS SLOW\nPLEASE TRY AFTER SOME TIME";
+                strErrMsg = "Network Connection Seems Slow\nPlease Try After Some Time";
                 dialogs = new Dialogs(strErrMsg);
             }
             dialogs.show(((Activity) c).getFragmentManager(), "ErrMSG");

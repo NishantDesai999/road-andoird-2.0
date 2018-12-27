@@ -135,7 +135,9 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                     Realm r = Realm.getDefaultInstance();
                     final OfflineComplainModel mInputData = r.where(OfflineComplainModel.class).equalTo("id", singleItem.getId()).findFirst();
                     //Give save offline or cancel dialog with pls enable internet to ulasd internet
-                    if (!StaticMethods.checkInternetConnectivity(mContext)){mProgressBar.setVisibility(View.INVISIBLE);}
+                    if (!StaticMethods.checkInternetConnectivity(mContext)){mProgressBar.setVisibility(View.INVISIBLE);
+                    btnRetryUpload.setClickable(true);
+                    }
                     else{
                         mProgressBar.setVisibility(View.VISIBLE);
                          m.mApi.callBisagApi(mInputData.getLocation().get(0), mInputData.getLocation().get(1))

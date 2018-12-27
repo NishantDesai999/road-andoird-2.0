@@ -79,6 +79,8 @@ public class InputActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input3);
         initListners();
+        StaticMethods.permissionmethod(InputActivity2.this);
+
        // captureImage();
     }
 
@@ -357,7 +359,7 @@ public class InputActivity2 extends AppCompatActivity {
 
                                                     @Override
                                                     public void onFailureResponse(View progressBar, Context c) {
-
+                                                        findViewById(R.id.btn_upload).setClickable(true);
                                                     }
                                                 });
 
@@ -366,6 +368,7 @@ public class InputActivity2 extends AppCompatActivity {
                                     @Override
                                     public void onFailureResponse(View progressBar, Context c) {
                                         //Toast.makeText(InputActivity2.this, "Bisag Response failure", Toast.LENGTH_SHORT).show();
+                                        findViewById(R.id.btn_upload).setClickable(true);
                                     }
                                 });
                     }
