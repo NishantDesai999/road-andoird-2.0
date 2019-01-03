@@ -20,10 +20,16 @@ import ml.uncoded.margsahayak.R;
 public class Dialogs extends DialogFragment {
     TextView textView;
     Button btnOk;
-    String strErrMsg;
-   public Dialogs(){}
-   @SuppressLint("ValidFragment")
-   public Dialogs(String s){
+    View.OnClickListener clickListener;
+    public String strErrMsg;
+    public Dialogs(){}
+    @SuppressLint("ValidFragment")
+    public Dialogs(String s,View.OnClickListener clickListener){
+        this.clickListener=clickListener;
+        strErrMsg=s;
+    }
+    @SuppressLint("ValidFragment")
+    public Dialogs(String s){
         strErrMsg=s;
     }
     @Override
@@ -33,12 +39,21 @@ public class Dialogs extends DialogFragment {
         textView=(TextView)view.findViewById(R.id.customDialog_tv_message);
         btnOk =(Button) view.findViewById(R.id.customDialog_btn_Ok);
         textView.setText(strErrMsg);
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
+        if(clickListener==null){
+            btnOk.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dismiss();
+                }
+            });
+        }
+        else{
+
+            btnOk.setOnClickListener(clickListener);
+
+        }
+
+
         return view;
     }
 

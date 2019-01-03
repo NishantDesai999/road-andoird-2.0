@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -21,11 +22,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,6 +39,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.location.LocationRequest;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,12 +63,13 @@ import ml.uncoded.margsahayak.models.Dialogs;
 import ml.uncoded.margsahayak.models.OfflineComplainModel;
 import ml.uncoded.margsahayak.models.StaticMethods;
 
-public class InputActivity2 extends AppCompatActivity {
+public class InputActivity2 extends AppCompatActivity{
 
 
     private Uri fileUri, mCropImagedUri;
     Bitmap bitmap = null;
     String mDiscription="No Description", mGri;
+
 
     // Activity request codes
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
@@ -115,6 +122,7 @@ public class InputActivity2 extends AppCompatActivity {
 
 
 
+
         findViewById(R.id.capture_img).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,7 +168,8 @@ public class InputActivity2 extends AppCompatActivity {
         findViewById(R.id.btn_upload).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialogs dialogs;
+                 Dialogs dialogs = null;
+                Log.d("inputLocation", "onClick: "+getLocationMode(getApplicationContext()));
 
                 String temp=((EditText)findViewById(R.id.edt_add_description)).getText().toString().trim();
                 if(temp.length()>0){
@@ -168,13 +177,25 @@ public class InputActivity2 extends AppCompatActivity {
                     Log.d(getLocalClassName(),mDiscription);
                 }
                 //Get input data & put into mInput Data
-                if (mCropImagedUri == null) {
+                if(getLocationMode(getApplicationContext())!=3){
+                    final Dialogs finalDialogs = dialogs;
+                    dialogs=new Dialogs("Please Turn On GPS In High Accuracy Mode", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                           finalDialogs.dismiss();
+                        }
+                    });
+
+                }
+                else if (mCropImagedUri == null) {
                     dialogs = new Dialogs("Please Capture An Image");
                     dialogs.show(getFragmentManager(), "ErrMSG");
                 } else if (mGri == null || mGri.length() == 0) {
                     dialogs = new Dialogs("Please Select Grievance");
                     dialogs.show(getFragmentManager(), "ErrMSG");
-                } else {
+                }
+                else {
                     final OfflineComplainModel mInputData = new OfflineComplainModel();
                     mInputData.setGrievanceDescription(mDiscription);
                     mInputData.setGrievanceName(mGri);
@@ -255,8 +276,8 @@ public class InputActivity2 extends AppCompatActivity {
                         mProgressBar.setVisibility(View.VISIBLE);
                         final MainApplication m = ((MainApplication) getApplicationContext());
                         Log.d("MyLocationListner", lon + lat);
-                        //lat = "23.10524664";
-                        //lon = "72.58701144";
+//                        lat = "23.10524664";
+//                        lon = "72.58701144";
                         //Toast.makeText(InputActivity2.this, "" + lat + lon, Toast.LENGTH_SHORT).show();
                         findViewById(R.id.btn_upload).setClickable(false);
                         m.mApi.callBisagApi(lat, lon)
@@ -264,7 +285,10 @@ public class InputActivity2 extends AppCompatActivity {
 
                                     @Override
                                     public void onSuccessfullResponse(View progressBar, List<BisagResponse> response, Context c) {
+                                        for(BisagResponse bs:response){
+                                            Log.d("BisagResponse", bs.distance+"--"+bs.roadCode+"--"+bs.roadName);
 
+                                        }
                                         float minD = Float.parseFloat(response.get(0).distance), tempD;
                                         int index = 0;
                                         for (int i = 0; i < response.size(); i++) {
@@ -280,23 +304,15 @@ public class InputActivity2 extends AppCompatActivity {
                                         // ok
 
                                         if (minD > 1.5) {
-//                                            String strErrMsg = "You are too far away from road.";
-//                                            Dialogs dialogs;
-//                                            dialogs = new Dialogs(strErrMsg);
-//                                            dialogs.show(((Activity) c).getFragmentManager(), "ErrMSG");
+                                            Dialogs dialogs;
+                                            dialogs = new Dialogs("This road is not under the jurisdiction of R&B Department", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    finish();
+                                                }
+                                            });
+                                            dialogs.show(((Activity) c).getFragmentManager(), "ErrMSG");
 
-                                        Dialog mDistanceDialog=new Dialog(InputActivity2.this);
-                                        mDistanceDialog.setContentView(R.layout.custom_dialog_layout);
-                                        ((TextView)mDistanceDialog.findViewById(R.id.customDialog_tv_message)).setText("This road is not under the jurisdiction of R&B Department");
-                                        mDistanceDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
-                                        mDistanceDialog.show();
-                                        ((Button)mDistanceDialog.findViewById(R.id.customDialog_btn_Ok)).setOnClickListener(new View.OnClickListener() {
-
-                                            @Override
-                                            public void onClick(View v) {
-                                                finish();
-                                            }
-                                        });
                                             return;
                                         }
 
@@ -331,9 +347,9 @@ public class InputActivity2 extends AppCompatActivity {
 
                                                     @Override
                                                     public void onSuccessfullResponse(final View progressBar, final ComplainModel response, Context c) {
-
-
+                                                        Log.d("postComplaint", "onSuccessfullResponse: ");
                                                         if (Boolean.parseBoolean(response.getSuccess())) {
+                                                            Log.d("postComplaint", "InRealmTransaction: ");
 
                                                             Realm r = Realm.getDefaultInstance();
                                                             progressBar.setVisibility(View.INVISIBLE);
@@ -346,6 +362,7 @@ public class InputActivity2 extends AppCompatActivity {
                                                             }, new Realm.Transaction.OnSuccess() {
                                                                 @Override
                                                                 public void onSuccess() {
+                                                                    Log.d("postComplaint", "onSuccess: ");
 //                                                                Intent i = new Intent(InputActivity2.this, MainActivity.class);
 //                                                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //                                                                startActivity(i);
@@ -353,12 +370,37 @@ public class InputActivity2 extends AppCompatActivity {
                                                                 }
                                                             });
                                                         } else {
-                                                           // Toast.makeText(c, "" + response.getMsg(), Toast.LENGTH_SHORT).show();
+
+                                                            Dialogs dialogs;
+                                                            dialogs = new Dialogs(response.getMsg(), new View.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(View v) {
+                                                                    finish();
+                                                                }
+                                                            });
+                                                            dialogs.show(((Activity) c).getFragmentManager(), "ErrMSG");
+
+
+
+//                                                            Dialog mDistanceDialog=new Dialog(InputActivity2.this);
+//                                                            mDistanceDialog.setContentView(R.layout.custom_dialog_layout);
+//                                                            ((TextView)mDistanceDialog.findViewById(R.id.customDialog_tv_message)).setText(response.getMsg());
+//                                                            mDistanceDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+//
+//                                                            mDistanceDialog.show();
+//                                                            ((Button)mDistanceDialog.findViewById(R.id.customDialog_btn_Ok)).setOnClickListener(new View.OnClickListener() {
+//
+//                                                                @Override
+//                                                                public void onClick(View v) {
+//
+//                                                                }
+//                                                            });
                                                         }
                                                     }
 
                                                     @Override
                                                     public void onFailureResponse(View progressBar, Context c) {
+                                                        Log.d("postComplaint", "onFailureResponse: ");
                                                         findViewById(R.id.btn_upload).setClickable(true);
                                                     }
                                                 });
@@ -367,6 +409,7 @@ public class InputActivity2 extends AppCompatActivity {
 
                                     @Override
                                     public void onFailureResponse(View progressBar, Context c) {
+                                        Log.d("InputActivity", "onFailureResponse: ");
                                         //Toast.makeText(InputActivity2.this, "Bisag Response failure", Toast.LENGTH_SHORT).show();
                                         findViewById(R.id.btn_upload).setClickable(true);
                                     }
@@ -576,6 +619,16 @@ public class InputActivity2 extends AppCompatActivity {
         matrix.postRotate(angle);
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
                 matrix, true);
+    }
+
+    public int getLocationMode(Context context)
+    {
+        try {
+            return Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+            return -99999;
     }
 
     private void showImage() {

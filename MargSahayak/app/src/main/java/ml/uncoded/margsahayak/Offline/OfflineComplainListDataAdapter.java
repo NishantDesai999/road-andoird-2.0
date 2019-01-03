@@ -139,6 +139,7 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                     btnRetryUpload.setClickable(true);
                     }
                     else{
+                        Dialogs d;
                         mProgressBar.setVisibility(View.VISIBLE);
                          m.mApi.callBisagApi(mInputData.getLocation().get(0), mInputData.getLocation().get(1))
                                 .enqueue(new mCallBack<List<BisagResponse>>(mContext, mProgressBar) {
@@ -161,23 +162,34 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                                         // ok
 
                                         if (minD > 1.5) {
-                                            final Dialog mDistanceDialog = new Dialog(mContext);
-                                            mDistanceDialog.setContentView(R.layout.custom_dialog_layout);
-                                            ((TextView) mDistanceDialog.findViewById(R.id.customDialog_tv_message)).setText("This road is not under the jurisdiction of R&B Department");
-                                            mDistanceDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
-                                            mDistanceDialog.show();
-
-                                            ((Button) mDistanceDialog.findViewById(R.id.customDialog_btn_Ok)).setOnClickListener(new View.OnClickListener() {
-
+                                            Dialogs d = null;
+                                            final Dialogs finalD = d;
+                                            d=new Dialogs("This road is not under the jurisdiction of R&B Department", new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                                    mDistanceDialog.dismiss();
+                                                    finalD.dismiss();
                                                     deleteComplaint(complainIndex);
-
-
-
                                                 }
                                             });
+
+
+//                                            final Dialog mDistanceDialog = new Dialog(mContext);
+//                                            mDistanceDialog.setContentView(R.layout.custom_dialog_layout);
+//                                            ((TextView) mDistanceDialog.findViewById(R.id.customDialog_tv_message)).setText("This road is not under the jurisdiction of R&B Department");
+//                                            mDistanceDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+//                                            mDistanceDialog.show();
+//
+//                                            ((Button) mDistanceDialog.findViewById(R.id.customDialog_btn_Ok)).setOnClickListener(new View.OnClickListener() {
+//
+//                                                @Override
+//                                                public void onClick(View v) {
+//                                                    mDistanceDialog.dismiss();
+//                                                    deleteComplaint(complainIndex);
+//
+//
+//
+//                                                }
+//                                            });
                                             return;
                                         }
 
@@ -234,19 +246,32 @@ public class OfflineComplainListDataAdapter extends RecyclerView.Adapter<Offline
                                                                 @Override
                                                                 public void onSuccess() {
                                                                     deleteComplaint(complainIndex);
-                                                                    final Dialog mSuccessDialog = new Dialog(mContext);
-                                                                    mSuccessDialog.setContentView(R.layout.custom_dialog_layout);
-                                                                    ((TextView) mSuccessDialog.findViewById(R.id.customDialog_tv_message)).setText("Complaint Posted Successfully");
-                                                                    mSuccessDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
-                                                                    mSuccessDialog.show();
-                                                                    mProgressBar.setVisibility(View.INVISIBLE);
-                                                                    ((Button) mSuccessDialog.findViewById(R.id.customDialog_btn_Ok)).setOnClickListener(new View.OnClickListener() {
 
+                                                                    Dialogs d = null;
+                                                                    final Dialogs finalD = d;
+                                                                    d=new Dialogs("Complaint Posted Successfully", new View.OnClickListener() {
                                                                         @Override
                                                                         public void onClick(View v) {
-                                                                            mSuccessDialog.dismiss();
+                                                                            finalD.dismiss();
+
                                                                         }
                                                                     });
+
+
+
+//                                                                    final Dialog mSuccessDialog = new Dialog(mContext);
+//                                                                    mSuccessDialog.setContentView(R.layout.custom_dialog_layout);
+//                                                                    ((TextView) mSuccessDialog.findViewById(R.id.customDialog_tv_message)).setText("Complaint Posted Successfully");
+//                                                                    mSuccessDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+//                                                                    mSuccessDialog.show();
+//                                                                    mProgressBar.setVisibility(View.INVISIBLE);
+//                                                                    ((Button) mSuccessDialog.findViewById(R.id.customDialog_btn_Ok)).setOnClickListener(new View.OnClickListener() {
+//
+//                                                                        @Override
+//                                                                        public void onClick(View v) {
+//                                                                            mSuccessDialog.dismiss();
+//                                                                        }
+//                                                                    });
 
                                                                 }
                                                             });

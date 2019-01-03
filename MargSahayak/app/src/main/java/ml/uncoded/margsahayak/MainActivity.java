@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -93,6 +95,10 @@ public class MainActivity extends AppCompatActivity {
         initListners();
         onRefreshNotification();
         checkNoOfComplaints();
+        mGoogleApiClient = new GoogleApiClient.Builder(MainActivity.this)
+                .addApi(LocationServices.API)
+                .build();
+
         StaticMethods.permissionmethod(MainActivity.this);
 
     }
@@ -259,6 +265,8 @@ public class MainActivity extends AppCompatActivity {
             MyLocationListener locationListener = MyLocationListener.getInstance("mAIN Activity");
             LocationManager l = SingletonLocationManager.getInstance(getApplication(),"From Main Activity");
 
+
+
             mGoogleApiClient = new GoogleApiClient.Builder(MainActivity.this)
                     .addApi(LocationServices.API)
                     .build();
@@ -275,6 +283,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
     public void initListners(){
 
 
@@ -306,6 +315,47 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+//    public static void locationChecker(GoogleApiClient mGoogleApiClient, final Activity activity) {
+//        LocationRequest locationRequest = LocationRequest.create();
+//        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+//        locationRequest.setInterval(30 * 1000);
+//        locationRequest.setFastestInterval(5 * 1000);
+//        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+//                .addLocationRequest(locationRequest);
+//        builder.setAlwaysShow(true);
+//        PendingResult<LocationSettingsResult> result =
+//                LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
+//        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+//            @Override
+//            public void onResult(LocationSettingsResult result) {
+//                final Status status = result.getStatus();
+//                final LocationSettingsStates state = result.getLocationSettingsStates();
+//                switch (status.getStatusCode()) {
+//                    case LocationSettingsStatusCodes.SUCCESS:
+//                        // All location settings are satisfied. The client can initialize location
+//                        // requests here.
+//                        break;
+//                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+//                        // Location settings are not satisfied. But could be fixed by showing the user
+//                        // a dialog.
+//                        try {
+//                            // Show the dialog by calling startResolutionForResult(),
+//                            // and check the result in onActivityResult().
+//                            status.startResolutionForResult(
+//                                    activity, 1000);
+//                        } catch (IntentSender.SendIntentException e) {
+//                            // Ignore the error.
+//                        }
+//                        break;
+//                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+//                        // Location settings are not satisfied. However, we have no way to fix the
+//                        // settings so we won't show the dialog.
+//                        break;
+//                }
+//            }
+//        });
+//    }
 
     protected void buildAlertMessageNoGps() {
         Log.v("tesing", "building alert dialog");
@@ -415,6 +465,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         checkNoOfComplaints();
         registerReceiver(gpsLocationReceiver, new IntentFilter(BROADCAST_ACTION));//Register broadcast receiver to check the status of GPS
+        mGoogleApiClient.connect();
     }
 
     @Override
@@ -485,4 +536,19 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+
+    }
+
 }

@@ -129,7 +129,7 @@
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:minHeight="30dp">
 
                 <TextView
@@ -204,7 +204,8 @@
                     android:layout_height="wrap_content"
                     android:text="1"
                     app:layout_constraintBottom_toBottomOf="@+id/textView60"
-                    app:layout_constraintStart_toStartOf="@+id/griTypeScroll" />
+                    app:layout_constraintStart_toStartOf="@+id/griTypeScroll"
+                    app:layout_constraintTop_toTopOf="@+id/textView60" />
 
                 <TextView
                     android:id="@+id/statusScroll"
@@ -234,7 +235,7 @@
                     android:layout_marginTop="8dp"
                     android:text="Submitted On :"
                     app:layout_constraintStart_toStartOf="@+id/textView20"
-                    app:layout_constraintTop_toBottomOf="@+id/textView60" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
                 <TextView
                     android:id="@+id/submittedDate"
@@ -242,7 +243,8 @@
                     android:layout_height="wrap_content"
                     android:text="10/3/2018"
                     app:layout_constraintBottom_toBottomOf="@+id/textView16"
-                    app:layout_constraintStart_toStartOf="@+id/complain_id" />
+                    app:layout_constraintStart_toStartOf="@+id/tv_complaint_upload_time"
+                    app:layout_constraintTop_toTopOf="@+id/textView16" />
 
                 <TextView
                     android:id="@+id/textView17"
@@ -263,6 +265,25 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/submittedDate"
                     app:layout_constraintTop_toTopOf="@+id/textView17" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Submit TIme:"
+                    app:layout_constraintStart_toStartOf="@+id/textView20"
+                    app:layout_constraintTop_toBottomOf="@+id/textView60" />
+
+                <TextView
+                    android:id="@+id/tv_complaint_upload_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12:00p.m"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                    app:layout_constraintStart_toStartOf="@+id/complain_id"
+                    app:layout_constraintTop_toTopOf="@+id/textView7" />
 
 
             </android.support.constraint.ConstraintLayout>

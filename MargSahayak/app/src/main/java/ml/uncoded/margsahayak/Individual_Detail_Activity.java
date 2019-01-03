@@ -37,7 +37,7 @@ import static android.graphics.Color.YELLOW;
 
 public class Individual_Detail_Activity extends AppCompatActivity {
 
-    TextView mOfficerName, mEstimatedDate, mComment, mDescription;
+    TextView mOfficerName, mEstimatedDate, mComment, mDescription,mComplaintUploadTime;
     TextView  mGriType, mComplainId, mStatus, mSubmittedDate, mRoadName;
     ImageView mMailToOfficer;
 
@@ -71,6 +71,7 @@ public class Individual_Detail_Activity extends AppCompatActivity {
         mComment = (TextView) findViewById(R.id.comment);
         mDescription = (TextView) findViewById(R.id.descriptions);
         mMailToOfficer=findViewById(R.id.iv_email_Officer);
+        mComplaintUploadTime=findViewById(R.id.tv_complaint_upload_time);
 
         Realm r=Realm.getDefaultInstance();
         final ComplainModel complainModel=r.where(ComplainModel.class).equalTo("id",intent.getStringExtra("MComplainIdkey")).findFirst();
@@ -126,6 +127,7 @@ public class Individual_Detail_Activity extends AppCompatActivity {
 
             }
         });
+        mComplaintUploadTime.setText(complainModel.getTime());
         //Toast.makeText(this, "GrievanceType"+intent.getStringExtra("MGrivTypekey"), Toast.LENGTH_SHORT).show();
 
     }
