@@ -2,6 +2,7 @@ package ml.uncoded.margsahayak.Auth;
 
 import android.app.Notification;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
+import java.util.Locale;
 
 import ml.uncoded.margsahayak.FilterActivity;
 import ml.uncoded.margsahayak.Individual_Detail_Activity;
@@ -29,6 +32,11 @@ public class AuthActivity extends AppCompatActivity {
         //startActivity(new Intent(AuthActivity.this, FilterActivity.class));
 
         SharedPrefrenceUser mSharedUser = SharedPrefrenceUser.getInstance(this);
+
+        //setting apps language
+        setAppLanguage(SharedPrefrenceUser.getLanguage());
+
+
         if(mSharedUser.getState().equals(Constant.home_state)){
             Intent i = new Intent(AuthActivity.this,MainActivity.class);
             startActivity(i);
@@ -51,18 +59,29 @@ public class AuthActivity extends AppCompatActivity {
                     fm.beginTransaction().remove(fm.findFragmentById(R.id.login_fragment));
 
                 fm.beginTransaction()
-                  .replace(R.id.auth_framelayout, new OtpScreenFragment())
-                  .commit();
+                        .replace(R.id.auth_framelayout, new OtpScreenFragment())
+                        .commit();
                 break;
             case Constant.register_state:
                 fm.beginTransaction()
-                   .replace(R.id.auth_framelayout, new RegisterFragment()).commit();
+                        .replace(R.id.auth_framelayout, new RegisterFragment()).commit();
                 break;
             default:
                 finish();
 
         }
     }
+
+    public void setAppLanguage(String language){
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+
+    }
+
 
     @Override
     public void onBackPressed() {

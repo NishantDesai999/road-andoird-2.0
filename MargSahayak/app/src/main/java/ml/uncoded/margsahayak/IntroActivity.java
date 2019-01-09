@@ -36,7 +36,10 @@ public class IntroActivity extends AppCompatActivity{
 
             // Checking for first time launch - before calling setContentView()
             prefManager = new PrefManager(this);
-            if (!prefManager.isFirstTimeLaunch()) {
+
+
+
+            if (!prefManager.isFirstTimeLaunch() && !prefManager.fromSettingsToIntro()) {
                 startActivity(new Intent(IntroActivity.this, SplashScreen.class));
                 finish();
             }
@@ -89,6 +92,7 @@ public class IntroActivity extends AppCompatActivity{
                         // move to next screen
                         viewPager.setCurrentItem(current);
                     } else {
+
                         launchHomeScreen();
                     }
                 }
@@ -117,10 +121,18 @@ public class IntroActivity extends AppCompatActivity{
         }
 
         private void launchHomeScreen() {
+            if(prefManager.fromSettingsToIntro()){
+                prefManager.setfromSettingsToIntro(false);
+                startActivity(new Intent(IntroActivity.this, MainActivity.class));
+                finish();
+            }
             prefManager.setFirstTimeLaunch(false);
             startActivity(new Intent(IntroActivity.this, AuthActivity.class));
             finish();
+
         }
+
+
 
         //	viewpager change listener
         ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {

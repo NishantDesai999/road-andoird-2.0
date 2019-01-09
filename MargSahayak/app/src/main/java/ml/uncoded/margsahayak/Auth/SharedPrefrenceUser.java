@@ -16,6 +16,7 @@ public class SharedPrefrenceUser {
     private static final String KEY_PHONE = "keyphone";
     private static final String KEY_TOKEN = "keytoken";
     private static final String KEY_STATE = "keystate";
+    private static final String KEY_LANGUAGE = "keylanguage";
 
     private static SharedPrefrenceUser sharedPrefrence_User_instance;
     private static Context context_to_use;
@@ -99,13 +100,28 @@ public class SharedPrefrenceUser {
 //        editor.apply();
 //    }
 //
+
+
+
+    public static void setLanguage(String language) {
+        SharedPreferences mSharedPreferences = context_to_use.getSharedPreferences(USER_Login_SHARED_PREFRENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(KEY_LANGUAGE, language);
+        editor.apply();
+
+    }
+    public static String getLanguage() {
+        SharedPreferences mSharedPreferences = context_to_use.getSharedPreferences(USER_Login_SHARED_PREFRENCE, Context.MODE_PRIVATE);
+        return mSharedPreferences.getString(KEY_LANGUAGE, "en");
+    }
+
     public void logout() {
-       try{
-        Realm r=Realm.getDefaultInstance();
-        if(!r.isEmpty() && !r.isInTransaction()){
-        r.beginTransaction();
-        r.deleteAll();
-        r.commitTransaction();}}catch (RealmException re){re.printStackTrace();}
+        try{
+            Realm r=Realm.getDefaultInstance();
+            if(!r.isEmpty() && !r.isInTransaction()){
+                r.beginTransaction();
+                r.deleteAll();
+                r.commitTransaction();}}catch (RealmException re){re.printStackTrace();}
         SharedPreferences sharedPreferences = context_to_use.getSharedPreferences(USER_Login_SHARED_PREFRENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();

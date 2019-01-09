@@ -59,9 +59,9 @@
     <string name="enter_4_digit_otp">Enter 4 digit otp</string>
     <string name="enter_your_details">Enter Your Details</string>
     <string name="save">Save</string>
-    <string name="first_name">First Name</string>
+    <string name="full_name">Full Name</string>
     <string name="last_name">Last Name</string>
-    <string name="email">Email</string>
+    <string name="email">Email (Optional)</string>
     <string name="your_complaints">Your Complaints</string>
     <string name="offline_complaints">Offline Complaints</string>
     <string name="title_activity_individual_compain_full">individualCompainFullActivity</string>
@@ -165,4 +165,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_individual__detail_">Individual_Detail_Activity</string>
+    <string name="take_picture_of_the_affected_region">Take picture of the affected region.</string>
+    <string name="select_grievance">Select Grievance</string>
+    <string name="add_description_optional">Add Description (Optional)</string>
+    <string name="upload">Upload</string>
 </resources>

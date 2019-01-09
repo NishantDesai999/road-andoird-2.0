@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string-array name="status_array">
+        <item>सब कुछ</item>
+        <item>अपूर्ण</item>
+        <item>स्वीकृत</item>
+        <item>अस्वीकृत</item>
+        <item>चालू</item>
+        <item>पूर्ण</item>
+    </string-array>
+
+    <string name="take_picture_of_the_affected_region">प्रभावित क्षेत्र की तस्वीर लें</string>
+    <string name="select_grievance">शिकायत का चयन</string>
+    <string name="add_description_optional">शिकायत का विवरण (वैकल्पिक)</string>
+    <string name="upload">अपलोड</string>
+
+
+    <string-array name="grievance_array">
+        <item>सब</item>
+        <item>क्षतिग्रस्त पुल</item>
+        <item>क्षतिग्रस्त पुल रेलिंग</item>
+        <item>सड़क में दरार</item>
+        <item>क्षतिग्रस्त रेलिंग</item>
+        <item>तीखा मोड़</item>
+        <item>आकस्मिक क्षेत्र</item>
+        <item>क्षतिग्रस्त संरचनाएं</item>
+        <item>गड्ढे</item>
+        <item>गिरा हुआ पेड़</item>
+        <item>निम्‍नीकृत सड़क</item>
+        <item>दरारें</item>
+    </string-array>
+
+
+
+</resources>

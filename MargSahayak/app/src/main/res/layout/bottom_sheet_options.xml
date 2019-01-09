@@ -11,44 +11,70 @@
         android:id="@+id/bottomsheet_contactus"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_contact_mail_bottom_sheet"
         android:drawablePadding="30dp"
+        android:drawableStart="@drawable/ic_contact_mail_bottom_sheet"
         android:gravity="center_vertical"
+        android:paddingBottom="20dp"
         android:paddingLeft="20dp"
         android:paddingTop="20dp"
-        android:paddingBottom="10dp"
         android:text="Contact us"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomsheet_logout"
+        app:layout_constraintBottom_toTopOf="@+id/bottomsheet_settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/bottomsheet_settings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawablePadding="30dp"
+        android:drawableStart="@drawable/ic_setting_bottom_sheet"
+        android:gravity="center_vertical"
+        android:paddingBottom="20dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:text="Settings"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomsheet_logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottomsheet_contactus" />
+
+    <TextView
         android:id="@+id/bottomsheet_logout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_logout_bottom_sheet"
         android:drawablePadding="30dp"
+        android:drawableStart="@drawable/ic_logout_bottom_sheet"
         android:gravity="center_vertical"
+        android:paddingBottom="20dp"
         android:paddingLeft="20dp"
         android:paddingTop="20dp"
-        android:paddingBottom="20dp"
         android:text="Logout"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottomsheet_contactus" />
+        app:layout_constraintTop_toBottomOf="@+id/bottomsheet_settings" />
 
     <View
-        android:id="@+id/divider"
+        android:id="@+id/divider1"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="#dad9d9"
         app:layout_constraintBottom_toTopOf="@+id/bottomsheet_logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:background="#dad9d9"
+        app:layout_constraintBottom_toTopOf="@+id/bottomsheet_settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -60,7 +60,8 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ContactUsActivity"></activity>
+        <activity android:name=".ContactUsActivity" />
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>

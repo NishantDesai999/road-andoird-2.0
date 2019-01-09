@@ -58,8 +58,13 @@ public class RegisterFragment extends Fragment {
 
     void verifyAndUploadData() {
         String mEmailText = mEMail.getText().toString();
+        if(mEmailText.trim().equals("") || mEmailText==null){
+            mEmailText="no_email_entered@gmail.com";
+        }
+
+
         final String mFNameText = mFName.getText().toString();
-        final String mLNameText = mLName.getText().toString();
+        //final String mLNameText = mLName.getText().toString();
 
         //Verify email and data
 
@@ -73,29 +78,33 @@ public class RegisterFragment extends Fragment {
             mEMail.requestFocus();
             return;
 
-        } else if (mLNameText.isEmpty() || (mLNameText.trim().length() == 0)) {
-            mLName.setError(getString(R.string.error_required_field));
-            mLName.requestFocus();
-            // Toast.makeText(getActivity(), "Please Fill All Fields ", Toast.LENGTH_SHORT).show();
-            return;
-        } else if (!(Pattern.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", mEmailText))) {
+        }
+// else if (mLNameText.isEmpty() || (mLNameText.trim().length() == 0)) {
+//            mLName.setError(getString(R.string.error_required_field));
+//            mLName.requestFocus();
+//            // Toast.makeText(getActivity(), "Please Fill All Fields ", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+        else if (!(Pattern.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", mEmailText))) {
             mEMail.setError(getString(R.string.error_email_invalid));
             mEMail.requestFocus();
-        } else if (!(Pattern.matches("[a-zA-Z]+", mLNameText))) {
-            mLName.setError(getString(R.string.error_name_invalid));
-            mLName.requestFocus();
-        } else if (!(Pattern.matches("[a-zA-Z]+", mFNameText))) {
+        }
+//        else if (!(Pattern.matches("[a-zA-Z]+", mLNameText))) {
+//            mLName.setError(getString(R.string.error_name_invalid));
+//            mLName.requestFocus();
+//        }
+        else if (!(Pattern.matches("^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", mFNameText))) {
             mFName.setError(getString(R.string.error_name_invalid));
             mFName.requestFocus();
         } else {
             if (StaticMethods.checkInternetConnectivity(getActivity())) {
 
 
-                mLName.setFocusable(false);
+                // mLName.setFocusable(false);
                 mFName.setFocusable(false);
                 mEMail.setFocusable(false);
                 mFName.setEnabled(false);
-                mLName.setEnabled(false);
+                // mLName.setEnabled(false);
                 mEMail.setEnabled(false);
                 btnOtpVerify.setEnabled(false);
                 btnOtpVerify.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SCREEN);
@@ -104,13 +113,13 @@ public class RegisterFragment extends Fragment {
 
 
                 ((MainApplication) getActivity().getApplicationContext()).mApi
-                        .register(SharedPrefrenceUser.getInstance(getActivity()).getToken(), mFNameText + " " + mLNameText, mEmailText)
+                        .register(SharedPrefrenceUser.getInstance(getActivity()).getToken(), mFNameText, mEmailText)
                         .enqueue(new mCallBack<AuthResponse>(getActivity(), mProgresBar) {
                             @Override
                             public void onSuccessfullResponse(View progressBar, AuthResponse mResponse, Context c) {
-                                SharedPrefrenceUser.setStateRegisterOrOTPToHome(mFNameText + " " + mLNameText,mResponse.data);
+                                SharedPrefrenceUser.setStateRegisterOrOTPToHome(mFNameText, mResponse.data);
                                 progressBar.setVisibility(View.INVISIBLE);
-                                c.startActivity(new Intent(c,MainActivity.class));
+                                c.startActivity(new Intent(c, MainActivity.class));
                             }
 
                             @Override
@@ -118,7 +127,7 @@ public class RegisterFragment extends Fragment {
 
                                 ((AuthActivity) c).findViewById(R.id.register_email).setEnabled(true);
                                 ((AuthActivity) c).findViewById(R.id.register_firstname).setEnabled(true);
-                                ((AuthActivity) c).findViewById(R.id.register_lastname).setEnabled(true);
+                                // ((AuthActivity) c).findViewById(R.id.register_lastname).setEnabled(true);
                                 ((AuthActivity) c).findViewById(R.id.btn_input_upload).setEnabled(true);
                                 ((AuthActivity) c).findViewById(R.id.btn_input_upload).setBackground(c.getResources().getDrawable(R.drawable.btn_style));
                                 StaticMethods.showSoftKeyboard((Activity) c, ((AuthActivity) c).findViewById(R.id.register_firstname));

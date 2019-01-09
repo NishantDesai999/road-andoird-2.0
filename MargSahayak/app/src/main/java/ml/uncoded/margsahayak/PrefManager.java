@@ -16,8 +16,10 @@ public class PrefManager {
 
     // Shared preferences file name
     private static final String PREF_NAME = "androidhive-welcome";
+    private static final String FROM_SETTINGS_TO_INTRO="fromSettingsToIntro";
 
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
+
 
     public PrefManager(Context context) {
         this._context = context;
@@ -32,6 +34,15 @@ public class PrefManager {
 
     public boolean isFirstTimeLaunch() {
         return pref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
+    }
+
+    public void setfromSettingsToIntro(boolean fromStoI) {
+        editor.putBoolean(FROM_SETTINGS_TO_INTRO, fromStoI);
+        editor.commit();
+    }
+
+    public boolean fromSettingsToIntro() {
+        return pref.getBoolean(FROM_SETTINGS_TO_INTRO, false);
     }
 
 }
