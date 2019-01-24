@@ -16,7 +16,6 @@
     <string name="add_description_optional">शिकायत का विवरण (वैकल्पिक)</string>
     <string name="upload">अपलोड</string>
 
-
     <string-array name="grievance_array">
         <item>सब</item>
         <item>क्षतिग्रस्त पुल</item>
@@ -31,6 +30,52 @@
         <item>निम्‍नीकृत सड़क</item>
         <item>दरारें</item>
     </string-array>
+
+
+
+
+
+
+
+    <string-array name="select_grievance_array">
+        <item>क्षतिग्रस्त पुल</item>
+        <item>क्षतिग्रस्त पुल रेलिंग</item>
+        <item>सड़क में दरार</item>
+        <item>क्षतिग्रस्त रेलिंग</item>
+        <item>तीखा मोड़</item>
+        <item>आकस्मिक क्षेत्र</item>
+        <item>क्षतिग्रस्त संरचनाएं</item>
+        <item>गड्ढे</item>
+        <item>गिरा हुआ पेड़</item>
+        <item>निम्‍नीकृत सड़क</item>
+        <item>दरारें</item>
+    </string-array>
+
+
+
+
+
+    <string name="click_here_to_post_your_first_complaint">अपनी पहली शिकायत पोस्ट करने के लिए यहां क्लिक करें.</string>
+    <string name="add_complaint">शिकायत जोड़ें</string>
+    <string name="contact_us">हमसे संपर्क करें</string>
+    <string name="help">मदद</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="logout">लोग आउट</string>
+    <string name="no_notifications">कोई सूचनाएं नहीं।</string>
+    <string name="change_language">भाषा बदलो</string>
+    <string name="status">स्थिति</string>
+    <string name="grievance">शिकायत</string>
+    <string name="from">से</string>
+    <string name="to">तक</string>
+    <string name="starting_date">शुरू करने की तारीख</string>
+    <string name="ending_date">समाप्त होने की तारीख</string>
+    <string name="search_filter">खोज फ़िल्टर</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="apply">लागू करें</string>
+    <string name="invalid_order_of_dates_nplease_enter_valid_dates">तारीखों का अवैध आदेश | कृपया मान्य तिथियां दर्ज करें</string>
+
+
+
 
 
 

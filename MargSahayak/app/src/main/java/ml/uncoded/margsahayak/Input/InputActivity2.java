@@ -63,12 +63,12 @@ import ml.uncoded.margsahayak.models.Dialogs;
 import ml.uncoded.margsahayak.models.OfflineComplainModel;
 import ml.uncoded.margsahayak.models.StaticMethods;
 
-public class InputActivity2 extends AppCompatActivity{
+public class InputActivity2 extends AppCompatActivity {
 
 
     private Uri fileUri, mCropImagedUri;
     Bitmap bitmap = null;
-    String mDiscription="No Description", mGri;
+    String mDiscription = "No Description", mGri;
 
 
     // Activity request codes
@@ -88,28 +88,41 @@ public class InputActivity2 extends AppCompatActivity{
         initListners();
         StaticMethods.permissionmethod(InputActivity2.this);
 
-       // captureImage();
+        // captureImage();
     }
 
     private void initListners() {
 
 
-
         findViewById(R.id.select_grievance).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                final String[] mListOfGrievanceInEnglish = {
+                        "DAMAGED BRIDGE",
+                        "DAMAGED BRIDGE PARAPET",
+                        "BREACH ON A ROAD",
+                        "DAMAGED RAILING",
+                        "SHARP CURVE",
+                        "ACCIDENT PRONE ZONE",
+                        "DAMAGE STRUCTURES",
+                        "POT HOLES",
+                        " FALLEN TREE",
+                        "DEGREDED ROADS",
+                        "CRACKS LEVELING"};
                 final Dialog mSelect_grievance_dialog = new Dialog(InputActivity2.this);
                 mSelect_grievance_dialog.setContentView(R.layout.grievance_select_dialog_layout);
                 mSelect_grievance_dialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
                 final ListView mGrievanceListView = (ListView) mSelect_grievance_dialog.findViewById(R.id.select_grievance_list);
-                String[] mListOfGrievance = getResources().getStringArray(R.array.select_grievance_array);
+                final String[] mListOfGrievance = getResources().getStringArray(R.array.select_grievance_array);
                 ArrayAdapter mGrievanceAdapter = new ArrayAdapter(InputActivity2.this, android.R.layout.simple_list_item_1, mListOfGrievance);
                 mGrievanceListView.setAdapter(mGrievanceAdapter);
                 mGrievanceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        mGri = (String) adapterView.getAdapter().getItem(i);
-                        ((Button) findViewById(R.id.select_grievance)).setText(mGri);
+                        mGri = mListOfGrievanceInEnglish[i];
+                        Toast.makeText(InputActivity2.this, mGri, Toast.LENGTH_SHORT).show();
+                        ((Button) findViewById(R.id.select_grievance)).setText(mListOfGrievance[i]);
 
                         mSelect_grievance_dialog.dismiss();
                     }
@@ -118,9 +131,6 @@ public class InputActivity2 extends AppCompatActivity{
                 mSelect_grievance_dialog.show();
             }
         });
-
-
-
 
 
         findViewById(R.id.capture_img).setOnClickListener(new View.OnClickListener() {
@@ -146,8 +156,8 @@ public class InputActivity2 extends AppCompatActivity{
 
 
                 //    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                  //      android.Manifest.permission.MEDIA_CONTENT_CONTROL
-                   //     android.Manifest.permission.CAMERA
+                //      android.Manifest.permission.MEDIA_CONTENT_CONTROL
+                //     android.Manifest.permission.CAMERA
                 if (ActivityCompat.checkSelfPermission(InputActivity2.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
                         (InputActivity2.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -155,8 +165,9 @@ public class InputActivity2 extends AppCompatActivity{
                     ActivityCompat.requestPermissions(InputActivity2.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
                 } else {
-                captureImage();
-            }}
+                    captureImage();
+                }
+            }
         });
         findViewById(R.id.closeInput).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,34 +179,32 @@ public class InputActivity2 extends AppCompatActivity{
         findViewById(R.id.btn_upload).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 Dialogs dialogs = null;
-                Log.d("inputLocation", "onClick: "+getLocationMode(getApplicationContext()));
+                Dialogs dialogs = null;
+                Log.d("inputLocation", "onClick: " + getLocationMode(getApplicationContext()));
 
-                String temp=((EditText)findViewById(R.id.edt_add_description)).getText().toString().trim();
-                if(temp.length()>0){
-                    mDiscription=temp;
-                    Log.d(getLocalClassName(),mDiscription);
+                String temp = ((EditText) findViewById(R.id.edt_add_description)).getText().toString().trim();
+                if (temp.length() > 0) {
+                    mDiscription = temp;
+                    Log.d(getLocalClassName(), mDiscription);
                 }
                 //Get input data & put into mInput Data
-                if(getLocationMode(getApplicationContext())!=3){
+                if (getLocationMode(getApplicationContext()) != 3) {
                     final Dialogs finalDialogs = dialogs;
-                    dialogs=new Dialogs("Please Turn On GPS In High Accuracy Mode", new View.OnClickListener() {
+                    dialogs = new Dialogs("Please Turn On GPS In High Accuracy Mode", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                           finalDialogs.dismiss();
+                            finalDialogs.dismiss();
                         }
                     });
 
-                }
-                else if (mCropImagedUri == null) {
+                } else if (mCropImagedUri == null) {
                     dialogs = new Dialogs("Please Capture An Image");
                     dialogs.show(getFragmentManager(), "ErrMSG");
                 } else if (mGri == null || mGri.length() == 0) {
                     dialogs = new Dialogs("Please Select Grievance");
                     dialogs.show(getFragmentManager(), "ErrMSG");
-                }
-                else {
+                } else {
                     final OfflineComplainModel mInputData = new OfflineComplainModel();
                     mInputData.setGrievanceDescription(mDiscription);
                     mInputData.setGrievanceName(mGri);
@@ -285,8 +294,8 @@ public class InputActivity2 extends AppCompatActivity{
 
                                     @Override
                                     public void onSuccessfullResponse(View progressBar, List<BisagResponse> response, Context c) {
-                                        for(BisagResponse bs:response){
-                                            Log.d("BisagResponse", bs.distance+"--"+bs.roadCode+"--"+bs.roadName);
+                                        for (BisagResponse bs : response) {
+                                            Log.d("BisagResponse", bs.distance + "--" + bs.roadCode + "--" + bs.roadName);
 
                                         }
                                         float minD = Float.parseFloat(response.get(0).distance), tempD;
@@ -379,7 +388,6 @@ public class InputActivity2 extends AppCompatActivity{
                                                                 }
                                                             });
                                                             dialogs.show(((Activity) c).getFragmentManager(), "ErrMSG");
-
 
 
 //                                                            Dialog mDistanceDialog=new Dialog(InputActivity2.this);
@@ -621,14 +629,13 @@ public class InputActivity2 extends AppCompatActivity{
                 matrix, true);
     }
 
-    public int getLocationMode(Context context)
-    {
+    public int getLocationMode(Context context) {
         try {
             return Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
         } catch (Settings.SettingNotFoundException e) {
             e.printStackTrace();
         }
-            return -99999;
+        return -99999;
     }
 
     private void showImage() {

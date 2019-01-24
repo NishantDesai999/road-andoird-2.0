@@ -29,6 +29,7 @@ public class OptionsBottomSheet extends BottomSheetDialogFragment {
         contactus = (TextView) view.findViewById(R.id.bottomsheet_contactus);
         logout = (TextView) view.findViewById(R.id.bottomsheet_logout);
         settigs = (TextView) view.findViewById(R.id.bottomsheet_settings);
+        help = (TextView) view.findViewById(R.id.bottomsheet_help);
 
         contactus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +56,15 @@ public class OptionsBottomSheet extends BottomSheetDialogFragment {
             }
         });
 
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PrefManager prefManager = new PrefManager(getActivity());
+                prefManager.setfromSettingsToIntro(true);
+                startActivity(new Intent(getActivity(),IntroActivity.class));
+                dismiss();
+            }
+        });
 
         return view;
     }
